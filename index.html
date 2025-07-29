@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        img-src 'self' https://i.imgur.com https://unpkg.com;
+        style-src 'self' 'unsafe-inline' https://unpkg.com;
+        script-src 'self' 'unsafe-inline' https://unpkg.com;
+        font-src 'self';
+        connect-src 'self';
+        object-src 'none';
+        base-uri 'none';
+        form-action 'none';
+        frame-ancestors 'none';
+    ">
     <title>Africa: An Interactive Canvas (Fortified)</title>
 
     <!-- 
@@ -138,7 +152,7 @@
     <!-- [REMEDIATION VULN-007] Fallback content for No-JS environments -->
     <div class="noscript-fallback">
         <p>This interactive map requires JavaScript to be enabled for full functionality.</p>
-        <img src="https://i.imgur.com/vHqB3pG.jpeg" alt="A beautifully illustrated map of Africa.">
+        <img src="https://i.imgur.com/pJeD3tG.jpeg" alt="A beautifully illustrated map of Africa.">
     </div>
 
     <div id="info-panel" role="dialog" aria-modal="true" aria-labelledby="country-name" aria-hidden="true">
@@ -152,9 +166,9 @@
 
     <script>
         // --- DATA and ASSETS ---
-        const imageUrl = 'https://i.imgur.com/vHqB3pG.jpeg';
-        const imageWidth = 1080;
-        const imageHeight = 1271;
+        const imageUrl = 'https://i.imgur.com/pJeD3tG.jpeg';
+        const imageWidth = 800;
+        const imageHeight = 938;
         
         /*
           [REMEDIATION VULN-006]
@@ -169,17 +183,7 @@
           clickSound.play = () => {};
         };
         
-        const countryData = {
-            egypt: { name: "Egypt", description: "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World.", coords: [[162, 694], [162, 856], [320, 856], [320, 694]] },
-            libya: { name: "Libya", description: "Showcasing the majestic ruins of Leptis Magna, a prominent city of the Roman Empire.", coords: [[217, 497], [217, 678], [372, 678], [372, 497]] },
-            algeria: { name: "Algeria", description: "The Martyrs' Memorial (Maqam Echahid) stands tall, commemorating the Algerian war for independence.", coords: [[167, 260], [167, 452], [350, 452], [350, 260]] },
-            nigeria: { name: "Nigeria", description: "A grand mosque is depicted, representing the rich architectural heritage and cultural diversity of West Africa.", coords: [[446, 314], [446, 477], [568, 477], [568, 314]] },
-            kenya: { name: "Kenya", description: "A sanctuary for wildlife, represented here by a rhinoceros. Kenya's national parks are crucial for conservation.", coords: [[620, 810], [620, 915], [740, 915], [740, 810]] },
-            tanzania: { name: "Tanzania", description: "The 'King of the Savanna', the lion, is illustrated before Mount Kilimanjaro, capturing iconic Serengeti scenery.", coords: [[716, 780], [716, 912], [840, 912], [840, 780]] },
-            south_africa: { name: "South Africa", description: "The African elephant stands near the King Protea, the national flower, symbolizing the nation's rich biodiversity.", coords: [[1020, 560], [1020, 760], [1180, 760], [1180, 560]] },
-            namibia: { name: "Namibia", description: "A giraffe, the tallest land animal, roams the plains, evoking the vast landscapes of Etosha National Park.", coords: [[910, 510], [910, 610], [1050, 610], [1050, 510]] },
-            madagascar: { name: "Madagascar", description: "The unique Avenue of the Baobabs showcases the island's extraordinary and distinct flora.", coords: [[800, 955], [800, 1025], [1050, 1025], [1050, 955]] }
-        };
+        let countryData = {};
 
         // --- MAP INITIALIZATION ---
         const map = L.map('map-container', { crs: L.CRS.Simple, zoomControl: false, attributionControl: false, minZoom: -1.5, maxZoom: 2 });
@@ -193,36 +197,51 @@
         const countryDescEl = document.getElementById('country-description');
         const closePanelBtn = document.getElementById('close-panel');
         let lastFocusedElement = null; // [REMEDIATION VULN-004] Variable to store focus
+        let polygonLayer;
 
-        const polygonLayer = L.geoJSON(null, {
-            style: () => ({ fillColor: 'var(--highlight-color)', weight: 0, opacity: 1, fillOpacity: 0 }),
-            onEachFeature: (feature, layer) => {
-                const element = layer.getElement();
-                // [REMEDIATION VULN-001, VULN-002] Make polygons accessible
-                element.setAttribute('tabindex', '0');
-                element.setAttribute('role', 'button');
-                element.setAttribute('aria-label', feature.properties.name);
+        function initializeMap(data) {
+            countryData = data;
+            polygonLayer = L.geoJSON(null, {
+                style: () => ({ fillColor: 'var(--highlight-color)', weight: 0, opacity: 1, fillOpacity: 0 }),
+                onEachFeature: (feature, layer) => {
+                    const element = layer.getElement();
+                    // [REMEDIATION VULN-001, VULN-002] Make polygons accessible
+                    element.setAttribute('tabindex', '0');
+                    element.setAttribute('role', 'button');
+                    element.setAttribute('aria-label', feature.properties.name);
 
-                const openFeature = () => {
-                    lastFocusedElement = document.activeElement; // [REMEDIATION VULN-004] Store focus before opening
-                    showCountryInfo(feature.properties.id);
-                };
+                    const openFeature = () => {
+                        lastFocusedElement = document.activeElement; // [REMEDIATION VULN-004] Store focus before opening
+                        showCountryInfo(feature.properties.id);
+                    };
 
-                layer.on({
-                    mouseover: e => e.target.setStyle({ fillOpacity: 0.3 }),
-                    mouseout: e => e.target.setStyle({ fillOpacity: 0 }),
-                    click: e => { L.DomEvent.stopPropagation(e); openFeature(); },
-                    keydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeature(); } }
-                });
-            }
-        }).addTo(map);
+                    layer.on({
+                        mouseover: e => e.target.setStyle({ fillOpacity: 0.3 }),
+                        mouseout: e => e.target.setStyle({ fillOpacity: 0 }),
+                        click: e => { L.DomEvent.stopPropagation(e); openFeature(); },
+                        keydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeature(); } }
+                    });
+                }
+            }).addTo(map);
 
-        polygonLayer.addData(Object.keys(countryData).map(id => {
-            const country = countryData[id];
-            const geoJsonCoords = [country.coords.map(p => [p[1], p[0]])];
-            geoJsonCoords[0].push(geoJsonCoords[0][0]);
-            return { type: "Feature", properties: { id, name: country.name }, geometry: { type: "Polygon", coordinates: geoJsonCoords } };
-        }));
+            polygonLayer.addData(Object.keys(countryData).map(id => {
+                const country = countryData[id];
+                const geoJsonCoords = [country.coords.map(p => [p[1], p[0]])];
+                geoJsonCoords[0].push(geoJsonCoords[0][0]);
+                return { type: "Feature", properties: { id, name: country.name }, geometry: { type: "Polygon", coordinates: geoJsonCoords } };
+            }));
+        }
+
+        fetch('country-data.json')
+            .then(response => response.json())
+            .then(data => initializeMap(data))
+            .catch(error => console.error('Error loading country data:', error));
+
+        function sanitizeHTML(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
 
         function showCountryInfo(id) {
             const country = countryData[id];
@@ -233,8 +252,8 @@
             
             clickSound.play().catch(()=>{/* Gracefully handle play interruption */});
 
-            countryNameEl.textContent = country.name;
-            countryDescEl.textContent = country.description;
+            countryNameEl.textContent = sanitizeHTML(country.name);
+            countryDescEl.textContent = sanitizeHTML(country.description);
             
             infoPanel.classList.add('visible');
             infoPanel.setAttribute('aria-hidden', 'false');
@@ -265,9 +284,22 @@
         
         // [REMEDIATION VULN-004] Manage focus trapping and Escape key
         infoPanel.addEventListener('keydown', e => {
-            if (e.key === 'Escape') hidePanel();
-            // Since there's only one focusable element (close button), trap the tab key
-            if (e.key === 'Tab') e.preventDefault();
+            if (e.key === 'Escape') {
+                hidePanel();
+            } else if (e.key === 'Tab') {
+                // Trap focus within the panel
+                if (e.shiftKey) {
+                    if (document.activeElement === closePanelBtn) {
+                        e.preventDefault();
+                        closePanelBtn.focus(); // Loop back to the close button
+                    }
+                } else {
+                    if (document.activeElement === closePanelBtn) {
+                        e.preventDefault();
+                        closePanelBtn.focus(); // Loop back to the close button
+                    }
+                }
+            }
         });
     </script>
 </body>
