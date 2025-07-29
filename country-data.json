@@ -1,0 +1,11 @@
+{
+    "egypt": { "name": "Egypt", "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World.", "coords": [[162, 694], [162, 856], [320, 856], [320, 694]] },
+    "libya": { "name": "Libya", "description": "Showcasing the majestic ruins of Leptis Magna, a prominent city of the Roman Empire.", "coords": [[217, 497], [217, 678], [372, 678], [372, 497]] },
+    "algeria": { "name": "Algeria", "description": "The Martyrs' Memorial (Maqam Echahid) stands tall, commemorating the Algerian war for independence.", "coords": [[167, 260], [167, 452], [350, 452], [350, 260]] },
+    "nigeria": { "name": "Nigeria", "description": "A grand mosque is depicted, representing the rich architectural heritage and cultural diversity of West Africa.", "coords": [[446, 314], [446, 477], [568, 477], [568, 314]] },
+    "kenya": { "name": "Kenya", "description": "A sanctuary for wildlife, represented here by a rhinoceros. Kenya's national parks are crucial for conservation.", "coords": [[620, 810], [620, 915], [740, 915], [740, 810]] },
+    "tanzania": { "name": "Tanzania", "description": "The 'King of the Savanna', the lion, is illustrated before Mount Kilimanjaro, capturing iconic Serengeti scenery.", "coords": [[716, 780], [716, 912], [840, 912], [840, 780]] },
+    "south_africa": { "name": "South Africa", "description": "The African elephant stands near the King Protea, the national flower, symbolizing the nation's rich biodiversity.", "coords": [[1020, 560], [1020, 760], [1180, 760], [1180, 560]] },
+    "namibia": { "name": "Namibia", "description": "A giraffe, the tallest land animal, roams the plains, evoking the vast landscapes of Etosha National Park.", "coords": [[910, 510], [910, 610], [1050, 610], [1050, 510]] },
+    "madagascar": { "name": "Madagascar", "description": "The unique Avenue of the Baobabs showcases the island's extraordinary and distinct flora.", "coords": [[800, 955], [800, 1025], [1050, 1025], [1050, 955]] }
+}
