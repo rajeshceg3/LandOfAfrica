@@ -1,0 +1,127 @@
+:root {
+    --background-color: #0d1a26;
+    --panel-background: rgba(245, 245, 247, 0.75);
+    --panel-border: rgba(100, 100, 100, 0.2);
+    --text-color: #1d1d1f;
+    --subtle-text: #6e6e73;
+    --highlight-color: rgba(255, 255, 255, 0.3);
+    --focus-outline-color: #007aff; /* A distinct focus color */
+    --animation-curve: cubic-bezier(0.65, 0, 0.35, 1);
+    --animation-duration: 0.8s;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background-color);
+}
+
+/* [REMEDIATION VULN-007] Hide the No-JS fallback if JS is enabled */
+body.js-enabled .noscript-fallback {
+    display: none;
+}
+.noscript-fallback {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #fff;
+    text-align: center;
+}
+.noscript-fallback img {
+    max-width: 80%;
+    max-height: 70%;
+    border-radius: 8px;
+}
+
+#map-container {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+#map-container:active {
+    cursor: grabbing;
+}
+
+.hidden {
+    display: none;
+}
+
+#error-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(200, 50, 50, 0.85);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 2000;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    max-width: 80%;
+}
+
+.leaflet-control-container, .leaflet-attribution-flag {
+    display: none !important;
+}
+
+/* [REMEDIATION VULN-001, VULN-002] Styling for keyboard focus on SVG shapes */
+.leaflet-interactive:focus {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+}
+
+#info-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background: var(--panel-background);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border-left: 1px solid var(--panel-border);
+    box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+    transition: right var(--animation-duration) var(--animation-curve);
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+    z-index: 1001;
+}
+
+#info-panel.visible {
+    right: 0;
+}
+
+.panel-content { padding: 40px 30px; overflow-y: auto; }
+.panel-content h2 { font-size: 28px; font-weight: 600; margin: 0 0 10px 0; letter-spacing: -0.5px; }
+.panel-content p { font-size: 17px; line-height: 1.6; color: var(--subtle-text); font-weight: 400; }
+
+#close-panel {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: rgba(0,0,0,0.1);
+    color: var(--subtle-text);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: 300;
+    transition: background 0.2s, color 0.2s;
+}
+#close-panel:hover, #close-panel:focus {
+    background: rgba(0,0,0,0.2);
+    color: var(--text-color);
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 1px;
+}
