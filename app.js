@@ -57,7 +57,8 @@ function initializeMap(data) {
 
 fetch('country-data.json')
     .then(response => {
-        if (!response.ok) {
+        // [REMEDIATION VULN-008] Accommodate local file loading (status 0)
+        if (!response.ok && response.status !== 0) {
             throw new Error('Network response was not ok');
         }
         return response.json();
