@@ -6,13 +6,25 @@ const imageWidth = 800;
 const imageHeight = 938;
 
 
-let countryData = {};
+const countryData = {
+    "egypt": { "name": "Egypt", "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World.", "coords": [[162, 694], [162, 856], [320, 856], [320, 694]] },
+    "libya": { "name": "Libya", "description": "Showcasing the majestic ruins of Leptis Magna, a prominent city of the Roman Empire.", "coords": [[217, 497], [217, 678], [372, 678], [372, 497]] },
+    "algeria": { "name": "Algeria", "description": "The Martyrs' Memorial (Maqam Echahid) stands tall, commemorating the Algerian war for independence.", "coords": [[167, 260], [167, 452], [350, 452], [350, 260]] },
+    "nigeria": { "name": "Nigeria", "description": "A grand mosque is depicted, representing the rich architectural heritage and cultural diversity of West Africa.", "coords": [[446, 314], [446, 477], [568, 477], [568, 314]] },
+    "kenya": { "name": "Kenya", "description": "A sanctuary for wildlife, represented here by a rhinoceros. Kenya's national parks are crucial for conservation.", "coords": [[620, 810], [620, 915], [740, 915], [740, 810]] },
+    "tanzania": { "name": "Tanzania", "description": "The 'King of the Savanna', the lion, is illustrated before Mount Kilimanjaro, capturing iconic Serengeti scenery.", "coords": [[716, 780], [716, 912], [840, 912], [840, 780]] },
+    "south_africa": { "name": "South Africa", "description": "The African elephant stands near the King Protea, the national flower, symbolizing the nation's rich biodiversity.", "coords": [[1020, 560], [1020, 760], [1180, 760], [1180, 560]] },
+    "namibia": { "name": "Namibia", "description": "A giraffe, the tallest land animal, roams the plains, evoking the vast landscapes of Etosha National Park.", "coords": [[910, 510], [910, 610], [1050, 610], [1050, 510]] },
+    "madagascar": { "name": "Madagascar", "description": "The unique Avenue of the Baobabs showcases the island's extraordinary and distinct flora.", "coords": [[800, 955], [800, 1025], [1050, 1025], [1050, 955]] }
+};
 
 // --- MAP INITIALIZATION ---
 const map = L.map('map-container', { crs: L.CRS.Simple, zoomControl: false, attributionControl: false, minZoom: -1.5, maxZoom: 2 });
 const bounds = [[0, 0], [imageHeight, imageWidth]];
 L.imageOverlay(imageUrl, bounds).addTo(map);
 map.fitBounds(bounds);
+
+initializeMap();
 
 // --- INTERACTION LOGIC & STATE ---
 const infoPanel = document.getElementById('info-panel');
@@ -22,8 +34,7 @@ const closePanelBtn = document.getElementById('close-panel');
 let lastFocusedElement = null; // [REMEDIATION VULN-004] Variable to store focus
 let polygonLayer;
 
-function initializeMap(data) {
-    countryData = data;
+function initializeMap() {
     polygonLayer = L.geoJSON(null, {
         style: () => ({ fillColor: 'var(--highlight-color)', weight: 0, opacity: 1, fillOpacity: 0 }),
         onEachFeature: (feature, layer) => {
@@ -55,21 +66,6 @@ function initializeMap(data) {
     }));
 }
 
-fetch('country-data.json')
-    .then(response => {
-        // [REMEDIATION VULN-008] Accommodate local file loading (status 0)
-        if (!response.ok && response.status !== 0) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => initializeMap(data))
-    .catch(error => {
-        console.error('Error loading country data:', error);
-        const errorMessage = document.getElementById('error-message');
-        errorMessage.textContent = 'Could not load country data. Please try refreshing the page.';
-        errorMessage.classList.remove('hidden');
-    });
 
 function encodeHTML(str) {
     const temp = document.createElement('div');
