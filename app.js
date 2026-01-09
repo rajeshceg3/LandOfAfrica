@@ -24,8 +24,6 @@ const bounds = [[0, 0], [imageHeight, imageWidth]];
 L.imageOverlay(imageUrl, bounds).addTo(map);
 map.fitBounds(bounds);
 
-initializeMap();
-
 // --- INTERACTION LOGIC & STATE ---
 const infoPanel = document.getElementById('info-panel');
 const countryNameEl = document.getElementById('country-name');
@@ -34,15 +32,29 @@ const closePanelBtn = document.getElementById('close-panel');
 let lastFocusedElement = null; // [REMEDIATION VULN-004] Variable to store focus
 let polygonLayer;
 
+initializeMap();
+
 function initializeMap() {
     polygonLayer = L.geoJSON(null, {
         style: () => ({ fillColor: 'var(--highlight-color)', weight: 0, opacity: 1, fillOpacity: 0 }),
         onEachFeature: (feature, layer) => {
-            const element = layer.getElement();
             // [REMEDIATION VULN-001, VULN-002] Make polygons accessible
-            element.setAttribute('tabindex', '0');
-            element.setAttribute('role', 'button');
-            element.setAttribute('aria-label', feature.properties.name);
+            // We must wait for the layer to be added to the DOM to access getElement()
+            if (layer.getElement()) {
+                 const element = layer.getElement();
+                 element.setAttribute('tabindex', '0');
+                 element.setAttribute('role', 'button');
+                 element.setAttribute('aria-label', feature.properties.name);
+            } else {
+                layer.on('add', () => {
+                    const element = layer.getElement();
+                    if (element) {
+                        element.setAttribute('tabindex', '0');
+                        element.setAttribute('role', 'button');
+                        element.setAttribute('aria-label', feature.properties.name);
+                    }
+                });
+            }
 
             const openFeature = () => {
                 lastFocusedElement = document.activeElement; // [REMEDIATION VULN-004] Store focus before opening
