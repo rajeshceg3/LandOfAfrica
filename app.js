@@ -37,13 +37,14 @@ initializeMap();
 
 function initializeMap() {
     polygonLayer = L.geoJSON(null, {
-        // Base style: invisible hit area
+        // Base style: invisible hit area but responsive
         style: () => ({
-            fillColor: '#38bdf8', /* Sky 400 - Neon Blue */
+            fillColor: '#00d4ff', /* Matching CSS accent-color */
             weight: 1,
-            color: '#38bdf8',
+            color: '#00d4ff',
             opacity: 0,
-            fillOpacity: 0
+            fillOpacity: 0,
+            className: 'country-poly' // Hook for potential CSS transitions
         }),
         onEachFeature: (feature, layer) => {
             if (layer.getElement()) {
@@ -51,6 +52,8 @@ function initializeMap() {
                  element.setAttribute('tabindex', '0');
                  element.setAttribute('role', 'button');
                  element.setAttribute('aria-label', feature.properties.name);
+                 // Add class for CSS styling if needed
+                 element.classList.add('map-feature');
             } else {
                 layer.on('add', () => {
                     const element = layer.getElement();
@@ -58,6 +61,7 @@ function initializeMap() {
                         element.setAttribute('tabindex', '0');
                         element.setAttribute('role', 'button');
                         element.setAttribute('aria-label', feature.properties.name);
+                        element.classList.add('map-feature');
                     }
                 });
             }
@@ -69,12 +73,15 @@ function initializeMap() {
 
             layer.on({
                 mouseover: e => {
-                    // Hover effect: Neon glow
+                    // Hover effect: More sophisticated glow
                     e.target.setStyle({
-                        fillOpacity: 0.15,
-                        opacity: 0.8,
+                        fillOpacity: 0.1, // Subtle fill
+                        opacity: 0.9,     // Bright border
                         weight: 2
                     });
+
+                    // Optional: Change cursor to indicate interactivity explicitly
+                    document.getElementById('map-container').style.cursor = 'pointer';
                 },
                 mouseout: e => {
                     e.target.setStyle({
@@ -82,6 +89,7 @@ function initializeMap() {
                         opacity: 0,
                         weight: 1
                     });
+                    document.getElementById('map-container').style.cursor = '';
                 },
                 click: e => { L.DomEvent.stopPropagation(e); openFeature(); },
                 keydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeature(); } }
@@ -119,10 +127,10 @@ function showCountryInfo(id) {
     closePanelBtn.focus();
 
     const polygon = L.polygon(country.coords);
-    // Smooth, cinematic pan
-    map.flyToBounds(polygon.getBounds().pad(0.4), {
-        duration: 1.2,
-        easeLinearity: 0.2
+    // Cinematography: Slower, smoother camera movement
+    map.flyToBounds(polygon.getBounds().pad(0.5), { // More padding for breathing room
+        duration: 1.5, // Slower duration for elegance
+        easeLinearity: 0.1 // More curve to the easing
     });
 }
 
@@ -136,16 +144,17 @@ function hidePanel() {
         lastFocusedElement = null;
     }
 
-    // Return to full view
+    // Return to full view with matching elegant ease
     map.flyToBounds(bounds, {
-        duration: 1.2,
-        easeLinearity: 0.2
+        duration: 1.5,
+        easeLinearity: 0.1
     });
 }
 
 closePanelBtn.addEventListener('click', hidePanel);
 map.on('click', hidePanel);
 
+// Keyboard Trap for Accessibility (Best Practice)
 infoPanel.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         hidePanel();
