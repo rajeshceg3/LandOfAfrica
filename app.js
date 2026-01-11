@@ -19,6 +19,7 @@ const countryData = {
 };
 
 // --- MAP INITIALIZATION ---
+// Using slightly darker background for the container
 const map = L.map('map-container', { crs: L.CRS.Simple, zoomControl: false, attributionControl: false, minZoom: -1.5, maxZoom: 2 });
 const bounds = [[0, 0], [imageHeight, imageWidth]];
 L.imageOverlay(imageUrl, bounds).addTo(map);
@@ -29,17 +30,22 @@ const infoPanel = document.getElementById('info-panel');
 const countryNameEl = document.getElementById('country-name');
 const countryDescEl = document.getElementById('country-description');
 const closePanelBtn = document.getElementById('close-panel');
-let lastFocusedElement = null; // [REMEDIATION VULN-004] Variable to store focus
+let lastFocusedElement = null;
 let polygonLayer;
 
 initializeMap();
 
 function initializeMap() {
     polygonLayer = L.geoJSON(null, {
-        style: () => ({ fillColor: 'var(--highlight-color)', weight: 0, opacity: 1, fillOpacity: 0 }),
+        // Base style: invisible hit area
+        style: () => ({
+            fillColor: '#38bdf8', /* Sky 400 - Neon Blue */
+            weight: 1,
+            color: '#38bdf8',
+            opacity: 0,
+            fillOpacity: 0
+        }),
         onEachFeature: (feature, layer) => {
-            // [REMEDIATION VULN-001, VULN-002] Make polygons accessible
-            // We must wait for the layer to be added to the DOM to access getElement()
             if (layer.getElement()) {
                  const element = layer.getElement();
                  element.setAttribute('tabindex', '0');
@@ -57,13 +63,26 @@ function initializeMap() {
             }
 
             const openFeature = () => {
-                lastFocusedElement = document.activeElement; // [REMEDIATION VULN-004] Store focus before opening
+                lastFocusedElement = document.activeElement;
                 showCountryInfo(feature.properties.id);
             };
 
             layer.on({
-                mouseover: e => e.target.setStyle({ fillOpacity: 0.3 }),
-                mouseout: e => e.target.setStyle({ fillOpacity: 0 }),
+                mouseover: e => {
+                    // Hover effect: Neon glow
+                    e.target.setStyle({
+                        fillOpacity: 0.15,
+                        opacity: 0.8,
+                        weight: 2
+                    });
+                },
+                mouseout: e => {
+                    e.target.setStyle({
+                        fillOpacity: 0,
+                        opacity: 0,
+                        weight: 1
+                    });
+                },
                 click: e => { L.DomEvent.stopPropagation(e); openFeature(); },
                 keydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeature(); } }
             });
@@ -89,7 +108,6 @@ function showCountryInfo(id) {
     const country = countryData[id];
     if (!country) return;
 
-    // [REMEDIATION VULN-005] Stop any ongoing animation before starting a new one.
     map.stop();
 
     countryNameEl.textContent = encodeHTML(country.name);
@@ -98,31 +116,36 @@ function showCountryInfo(id) {
     infoPanel.classList.add('visible');
     infoPanel.setAttribute('aria-hidden', 'false');
 
-    // [REMEDIATION VULN-004] Move focus into the panel
     closePanelBtn.focus();
 
     const polygon = L.polygon(country.coords);
-    map.flyToBounds(polygon.getBounds().pad(0.1), { duration: 1.2, easeLinearity: 0.1 });
+    // Smooth, cinematic pan
+    map.flyToBounds(polygon.getBounds().pad(0.4), {
+        duration: 1.2,
+        easeLinearity: 0.2
+    });
 }
 
 function hidePanel() {
-    if (!infoPanel.classList.contains('visible')) return; // Prevent multiple calls
+    if (!infoPanel.classList.contains('visible')) return;
     infoPanel.classList.remove('visible');
     infoPanel.setAttribute('aria-hidden', 'true');
 
-    // [REMEDIATION VULN-004] Return focus to the element that opened the panel
     if (lastFocusedElement) {
         lastFocusedElement.focus();
         lastFocusedElement = null;
     }
 
-    map.flyToBounds(bounds, { duration: 1.2, easeLinearity: 0.1 });
+    // Return to full view
+    map.flyToBounds(bounds, {
+        duration: 1.2,
+        easeLinearity: 0.2
+    });
 }
 
 closePanelBtn.addEventListener('click', hidePanel);
 map.on('click', hidePanel);
 
-// [REMEDIATION VULN-004] Manage focus trapping and Escape key
 infoPanel.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         hidePanel();
@@ -134,13 +157,11 @@ infoPanel.addEventListener('keydown', e => {
         const lastElement = focusableElements[focusableElements.length - 1];
 
         if (e.shiftKey) {
-            // if shift + tab
             if (document.activeElement === firstElement) {
                 lastElement.focus();
                 e.preventDefault();
             }
         } else {
-            // if tab
             if (document.activeElement === lastElement) {
                 firstElement.focus();
                 e.preventDefault();
