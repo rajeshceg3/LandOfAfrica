@@ -20,7 +20,16 @@ const countryData = {
 
 // --- MAP INITIALIZATION ---
 // Using slightly darker background for the container
-const map = L.map('map-container', { crs: L.CRS.Simple, zoomControl: false, attributionControl: false, minZoom: -1.5, maxZoom: 2 });
+const map = L.map('map-container', {
+    crs: L.CRS.Simple,
+    zoomControl: false,
+    attributionControl: false,
+    minZoom: -1.5,
+    maxZoom: 2,
+    zoomSnap: 0.1, // Smoother zooming
+    zoomDelta: 0.5
+});
+
 const bounds = [[0, 0], [imageHeight, imageWidth]];
 L.imageOverlay(imageUrl, bounds).addTo(map);
 map.fitBounds(bounds);
@@ -30,81 +39,104 @@ const infoPanel = document.getElementById('info-panel');
 const countryNameEl = document.getElementById('country-name');
 const countryDescEl = document.getElementById('country-description');
 const closePanelBtn = document.getElementById('close-panel');
+
 let lastFocusedElement = null;
 let polygonLayer;
+let selectedFeatureId = null;
+
+// Styles matching CSS variables
+const defaultStyle = {
+    fillColor: '#38bdf8', /* Sky 400 */
+    weight: 1,
+    color: '#38bdf8',
+    opacity: 0,
+    fillOpacity: 0,
+    className: 'country-poly'
+};
+
+const hoverStyle = {
+    fillOpacity: 0.15,
+    opacity: 0.9,
+    weight: 2,
+    color: '#38bdf8'
+};
+
+const activeStyle = {
+    fillOpacity: 0.25,
+    opacity: 1,
+    weight: 3,
+    color: '#818cf8' /* Indigo 400 accent */
+};
 
 initializeMap();
 
 function initializeMap() {
     polygonLayer = L.geoJSON(null, {
-        // Base style: invisible hit area but responsive
-        style: () => ({
-            fillColor: '#00d4ff', /* Matching CSS accent-color */
-            weight: 1,
-            color: '#00d4ff',
-            opacity: 0,
-            fillOpacity: 0,
-            className: 'country-poly' // Hook for potential CSS transitions
-        }),
+        style: () => defaultStyle,
         onEachFeature: (feature, layer) => {
+            // Accessibility Setup
             if (layer.getElement()) {
                  const element = layer.getElement();
-                 element.setAttribute('tabindex', '0');
-                 element.setAttribute('role', 'button');
-                 element.setAttribute('aria-label', feature.properties.name);
-                 // Add class for CSS styling if needed
-                 element.classList.add('map-feature');
+                 setupA11y(element, feature);
             } else {
                 layer.on('add', () => {
                     const element = layer.getElement();
-                    if (element) {
-                        element.setAttribute('tabindex', '0');
-                        element.setAttribute('role', 'button');
-                        element.setAttribute('aria-label', feature.properties.name);
-                        element.classList.add('map-feature');
-                    }
+                    if (element) setupA11y(element, feature);
                 });
             }
 
             const openFeature = () => {
                 lastFocusedElement = document.activeElement;
-                showCountryInfo(feature.properties.id);
+                showCountryInfo(feature.properties.id, layer);
             };
 
             layer.on({
                 mouseover: e => {
-                    // Hover effect: More sophisticated glow
-                    e.target.setStyle({
-                        fillOpacity: 0.1, // Subtle fill
-                        opacity: 0.9,     // Bright border
-                        weight: 2
-                    });
-
-                    // Optional: Change cursor to indicate interactivity explicitly
-                    document.getElementById('map-container').style.cursor = 'pointer';
+                    if (selectedFeatureId !== feature.properties.id) {
+                        e.target.setStyle(hoverStyle);
+                        document.getElementById('map-container').style.cursor = 'pointer';
+                    }
                 },
                 mouseout: e => {
-                    e.target.setStyle({
-                        fillOpacity: 0,
-                        opacity: 0,
-                        weight: 1
-                    });
-                    document.getElementById('map-container').style.cursor = '';
+                    if (selectedFeatureId !== feature.properties.id) {
+                        polygonLayer.resetStyle(e.target);
+                        document.getElementById('map-container').style.cursor = '';
+                    }
                 },
-                click: e => { L.DomEvent.stopPropagation(e); openFeature(); },
-                keydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeature(); } }
+                click: e => {
+                    L.DomEvent.stopPropagation(e);
+                    openFeature();
+                },
+                keydown: e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openFeature();
+                    }
+                }
             });
         }
     }).addTo(map);
 
+    // Load Data
     polygonLayer.addData(Object.keys(countryData).map(id => {
         const country = countryData[id];
+        // Swap coordinates for Leaflet [lat, lng] -> [y, x]
         const geoJsonCoords = [country.coords.map(p => [p[1], p[0]])];
-        geoJsonCoords[0].push(geoJsonCoords[0][0]);
-        return { type: "Feature", properties: { id, name: country.name }, geometry: { type: "Polygon", coordinates: geoJsonCoords } };
+        geoJsonCoords[0].push(geoJsonCoords[0][0]); // Close polygon
+        return {
+            type: "Feature",
+            properties: { id, name: country.name },
+            geometry: { type: "Polygon", coordinates: geoJsonCoords }
+        };
     }));
 }
 
+function setupA11y(element, feature) {
+    element.setAttribute('tabindex', '0');
+    element.setAttribute('role', 'button');
+    element.setAttribute('aria-label', `View info about ${feature.properties.name}`);
+    element.classList.add('map-feature');
+}
 
 function encodeHTML(str) {
     const temp = document.createElement('div');
@@ -112,9 +144,26 @@ function encodeHTML(str) {
     return temp.innerHTML;
 }
 
-function showCountryInfo(id) {
+function showCountryInfo(id, layer) {
     const country = countryData[id];
     if (!country) return;
+
+    // Reset previous selection
+    if (selectedFeatureId && selectedFeatureId !== id) {
+        // We need to find the previous layer to reset its style
+        // This is a bit inefficient but safe: reset all and then highlight current
+        polygonLayer.eachLayer(l => {
+            polygonLayer.resetStyle(l);
+        });
+    }
+
+    selectedFeatureId = id;
+
+    // Highlight current
+    if (layer) {
+        layer.setStyle(activeStyle);
+        layer.bringToFront();
+    }
 
     map.stop();
 
@@ -126,11 +175,24 @@ function showCountryInfo(id) {
 
     closePanelBtn.focus();
 
+    // Smart Padding for Mobile vs Desktop
+    const isMobile = window.innerWidth <= 768;
+
+    // Desktop: Panel is on right (width ~460px incl margins) -> Pad Right
+    // Mobile: Panel is on bottom (height ~40-50%) -> Pad Bottom
+    const paddingOptions = isMobile
+        ? { paddingBottomRight: [0, window.innerHeight * 0.45], paddingTopLeft: [0, 0] }
+        : { paddingBottomRight: [500, 0], paddingTopLeft: [0, 0] };
+
     const polygon = L.polygon(country.coords);
+
     // Cinematography: Slower, smoother camera movement
-    map.flyToBounds(polygon.getBounds().pad(0.5), { // More padding for breathing room
-        duration: 1.5, // Slower duration for elegance
-        easeLinearity: 0.1 // More curve to the easing
+    map.flyToBounds(polygon.getBounds(), {
+        paddingTopLeft: paddingOptions.paddingTopLeft,
+        paddingBottomRight: paddingOptions.paddingBottomRight,
+        maxZoom: 0.5, // Don't zoom in *too* close, keep context
+        duration: 1.2,
+        easeLinearity: 0.2
     });
 }
 
@@ -138,6 +200,10 @@ function hidePanel() {
     if (!infoPanel.classList.contains('visible')) return;
     infoPanel.classList.remove('visible');
     infoPanel.setAttribute('aria-hidden', 'true');
+
+    // Reset selection state
+    selectedFeatureId = null;
+    polygonLayer.eachLayer(l => polygonLayer.resetStyle(l));
 
     if (lastFocusedElement) {
         lastFocusedElement.focus();
@@ -154,7 +220,7 @@ function hidePanel() {
 closePanelBtn.addEventListener('click', hidePanel);
 map.on('click', hidePanel);
 
-// Keyboard Trap for Accessibility (Best Practice)
+// Keyboard Trap for Accessibility
 infoPanel.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         hidePanel();
