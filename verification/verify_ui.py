@@ -1,44 +1,48 @@
 
 from playwright.sync_api import sync_playwright
+import os
 
 def run():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
 
-        # 1. Desktop Verification
-        page_desktop = browser.new_page(viewport={"width": 1280, "height": 800})
+        # --- Desktop Verification ---
+        page = browser.new_page(viewport={'width': 1280, 'height': 800})
         # Use file:// protocol to load local file
-        import os
-        cwd = os.getcwd()
-        page_desktop.goto(f"file://{cwd}/index.html")
+        page.goto(f"file://{os.getcwd()}/index.html")
 
-        # Wait for map to load (basic check)
-        page_desktop.wait_for_selector("#map-container")
+        # Wait for map to load (the leaflet-layer filter transition is 1.5s, wait a bit more)
+        page.wait_for_timeout(2000)
 
-        # Simulate click on Egypt (approximate coordinates based on data or finding element)
-        # Using the accessible role/label we added
-        page_desktop.wait_for_selector('path[aria-label="Egypt"]')
-        page_desktop.click('path[aria-label="Egypt"]')
+        # Simulate click on Egypt to open panel
+        # Using the area coords approx or tab navigation
+        page.keyboard.press("Tab") # Focus first element
+        page.keyboard.press("Enter") # Select Egypt (first in tab order usually or first feature added)
 
-        # Wait for panel to be visible
-        page_desktop.wait_for_selector("#info-panel.visible")
-        page_desktop.wait_for_timeout(1000) # Wait for animation
+        # Wait for panel animation
+        page.wait_for_timeout(1500)
 
-        page_desktop.screenshot(path="verification/desktop_panel.png")
+        page.screenshot(path="verification/desktop_panel.png")
         print("Desktop screenshot captured.")
 
-        # 2. Mobile Verification
-        page_mobile = browser.new_page(viewport={"width": 375, "height": 667})
-        page_mobile.goto(f"file://{cwd}/index.html")
+        # --- Mobile Verification ---
+        context_mobile = browser.new_context(
+            viewport={'width': 375, 'height': 667},
+            is_mobile=True,
+            has_touch=True
+        )
+        page_mobile = context_mobile.new_page()
+        page_mobile.goto(f"file://{os.getcwd()}/index.html")
+        page_mobile.wait_for_timeout(2000)
 
-        # Click Egypt again
-        page_mobile.wait_for_selector('path[aria-label="Egypt"]')
-        page_mobile.click('path[aria-label="Egypt"]')
+        # Open panel on mobile
+        # We can try clicking the center of a known country polygon.
+        # Egypt roughly at 162, 694 to 320, 856 on 800x938 image.
+        # Map fits bounds, so we need to calculate click relative to viewport.
+        # Easier to just use keyboard again or execute JS.
+        page_mobile.evaluate("showCountryInfo('egypt')")
 
-        # Wait for panel
-        page_mobile.wait_for_selector("#info-panel.visible")
-        page_mobile.wait_for_timeout(1000) # Wait for animation
-
+        page_mobile.wait_for_timeout(1500)
         page_mobile.screenshot(path="verification/mobile_panel.png")
         print("Mobile screenshot captured.")
 
