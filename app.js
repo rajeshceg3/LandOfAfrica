@@ -19,15 +19,15 @@ const countryData = {
 };
 
 // --- MAP INITIALIZATION ---
-// Using slightly darker background for the container
 const map = L.map('map-container', {
     crs: L.CRS.Simple,
     zoomControl: false,
     attributionControl: false,
     minZoom: -1.5,
     maxZoom: 2,
-    zoomSnap: 0.1, // Smoother zooming
-    zoomDelta: 0.5
+    zoomSnap: 0.05, // Ultra-smooth zooming
+    zoomDelta: 0.5,
+    wheelPxPerZoomLevel: 120 // Slower scroll zoom
 });
 
 const bounds = [[0, 0], [imageHeight, imageWidth]];
@@ -47,7 +47,7 @@ let selectedFeatureId = null;
 // Styles matching CSS variables
 const defaultStyle = {
     fillColor: '#38bdf8', /* Sky 400 */
-    weight: 1,
+    weight: 0, // Invisible until interacted
     color: '#38bdf8',
     opacity: 0,
     fillOpacity: 0,
@@ -55,16 +55,16 @@ const defaultStyle = {
 };
 
 const hoverStyle = {
-    fillOpacity: 0.15,
-    opacity: 0.9,
-    weight: 2,
+    fillOpacity: 0.1,
+    opacity: 0.8,
+    weight: 1.5,
     color: '#38bdf8'
 };
 
 const activeStyle = {
-    fillOpacity: 0.25,
+    fillOpacity: 0.2,
     opacity: 1,
-    weight: 3,
+    weight: 2.5,
     color: '#818cf8' /* Indigo 400 accent */
 };
 
@@ -150,8 +150,6 @@ function showCountryInfo(id, layer) {
 
     // Reset previous selection
     if (selectedFeatureId && selectedFeatureId !== id) {
-        // We need to find the previous layer to reset its style
-        // This is a bit inefficient but safe: reset all and then highlight current
         polygonLayer.eachLayer(l => {
             polygonLayer.resetStyle(l);
         });
@@ -178,11 +176,11 @@ function showCountryInfo(id, layer) {
     // Smart Padding for Mobile vs Desktop
     const isMobile = window.innerWidth <= 768;
 
-    // Desktop: Panel is on right (width ~460px incl margins) -> Pad Right
+    // Desktop: Panel is on right (width ~400px incl margins) -> Pad Right
     // Mobile: Panel is on bottom (height ~40-50%) -> Pad Bottom
     const paddingOptions = isMobile
         ? { paddingBottomRight: [0, window.innerHeight * 0.45], paddingTopLeft: [0, 0] }
-        : { paddingBottomRight: [500, 0], paddingTopLeft: [0, 0] };
+        : { paddingBottomRight: [500, 0], paddingTopLeft: [100, 0] }; // Added left padding for better centering
 
     const polygon = L.polygon(country.coords);
 
@@ -191,8 +189,8 @@ function showCountryInfo(id, layer) {
         paddingTopLeft: paddingOptions.paddingTopLeft,
         paddingBottomRight: paddingOptions.paddingBottomRight,
         maxZoom: 0.5, // Don't zoom in *too* close, keep context
-        duration: 1.2,
-        easeLinearity: 0.2
+        duration: 1.6, // Slower for elegance
+        easeLinearity: 0.1 // More curve
     });
 }
 
@@ -200,6 +198,9 @@ function hidePanel() {
     if (!infoPanel.classList.contains('visible')) return;
     infoPanel.classList.remove('visible');
     infoPanel.setAttribute('aria-hidden', 'true');
+
+    // Reset tilt transform on close
+    infoPanel.style.transform = '';
 
     // Reset selection state
     selectedFeatureId = null;
@@ -212,7 +213,7 @@ function hidePanel() {
 
     // Return to full view with matching elegant ease
     map.flyToBounds(bounds, {
-        duration: 1.5,
+        duration: 1.8,
         easeLinearity: 0.1
     });
 }
@@ -243,4 +244,21 @@ infoPanel.addEventListener('keydown', e => {
             }
         }
     }
+});
+
+// --- DESKTOP PARALLAX TILT EFFECT ---
+// Adds a subtle 3D tilt to the panel based on mouse position
+document.addEventListener('mousemove', (e) => {
+    if (window.innerWidth <= 768) return; // Desktop only
+    if (!infoPanel.classList.contains('visible')) return;
+
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+
+    // Calculate rotation (range: -3deg to 3deg for subtlety)
+    const rotateY = (x - 0.5) * 6;
+    const rotateX = (0.5 - y) * 6;
+
+    // Apply transform while maintaining the scale
+    infoPanel.style.transform = `translate3d(0, 0, 0) scale(1) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
 });
