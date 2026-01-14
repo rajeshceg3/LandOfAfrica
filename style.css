@@ -5,45 +5,45 @@
        ========================================= */
 
     /* Glassmorphism & Surface Colors */
-    /* Deep blue/slate base for that "night mode" tech feel */
-    --glass-bg: rgba(10, 15, 30, 0.75); /* Slightly more opaque for better legibility */
+    /* Deep blue/slate base for that "night mode" tech feel.
+       Stripe often uses very deep slate blues, not pure black. */
+    --bg-deep: #02040a;
+    --glass-bg: rgba(10, 15, 30, 0.65); /* Increased transparency for more glass feel */
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-highlight: rgba(255, 255, 255, 0.12);
-    --glass-inner-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
 
     /* Sophisticated Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-
-    /* Deep, rich shadows for floating elements */
+    /* Multi-layered shadows for depth */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.02), 0 1px 0 rgba(255,255,255,0.05) inset;
     --glass-shadow:
-        0 0 0 1px var(--glass-border),
-        0 24px 48px -12px rgba(0, 0, 0, 0.7),
-        0 12px 24px -12px rgba(0, 0, 0, 0.5);
+        0 0 0 1px var(--glass-border), /* Crisp border */
+        0 1px 0 0 rgba(255, 255, 255, 0.05) inset, /* Inner top highlight */
+        0 20px 40px -10px rgba(0, 0, 0, 0.6), /* Ambient shadow */
+        0 0 100px -20px rgba(56, 189, 248, 0.15); /* Subtle glow of accent color */
 
     --mobile-shadow:
         0 -1px 0 0 var(--glass-border),
-        0 -24px 48px -12px rgba(0, 0, 0, 0.6);
+        0 -10px 30px -10px rgba(0, 0, 0, 0.5);
 
     /* Accents - "Electric Cyan" & "Purple Haze" influences */
     --accent-color: #38bdf8; /* Sky 400 */
-    --accent-glow: rgba(56, 189, 248, 0.4);
+    --accent-glow: rgba(56, 189, 248, 0.5);
     --accent-secondary: #818cf8; /* Indigo 400 */
 
     /* Text Colors */
-    --text-primary: #ffffff;
-    --text-secondary: #cbd5e1; /* Slate 300 - lighter for better readability on dark */
-    --text-tertiary: #94a3b8; /* Slate 400 */
+    --text-primary: #f8fafc; /* Slate 50 */
+    --text-secondary: #94a3b8; /* Slate 400 */
 
     /* Animation - "Apple-esque" Physics */
     --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 body {
@@ -52,7 +52,7 @@ body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #010204; /* Almost pure black */
+    background-color: var(--bg-deep);
     color: var(--text-primary);
     overflow: hidden;
     font-feature-settings: "cv11", "ss01"; /* Inter font features */
@@ -62,9 +62,19 @@ body {
     height: 100vh;
     width: 100vw;
     z-index: 0;
-    background-color: #010204;
+    background-color: var(--bg-deep);
     position: relative;
-    transition: background-color 0.5s ease;
+    overflow: hidden;
+}
+
+/* Vignette Overlay for Focus and Depth */
+#map-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 30%, rgba(2, 4, 10, 0.6) 100%);
+    z-index: 1;
 }
 
 /*
@@ -79,10 +89,9 @@ body {
        Brightness: adjusts overall light
        Contrast: makes lines pop
     */
-    filter: invert(1) hue-rotate(180deg) saturate(0.8) brightness(0.9) contrast(1.4) grayscale(0.1);
+    filter: invert(1) hue-rotate(190deg) saturate(0.9) brightness(0.85) contrast(1.3) grayscale(0.2);
     transition: filter 1.5s var(--ease-smooth);
     mix-blend-mode: normal;
-    opacity: 0.85; /* Let the black background bleed through slightly */
 }
 
 /* =========================================
@@ -94,11 +103,10 @@ body {
     background: var(--glass-bg);
 
     /* Premium Blur Effect */
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
 
     box-shadow: var(--glass-shadow);
-    box-sizing: border-box;
     color: var(--text-primary);
 
     /* Base State (Hidden) */
@@ -108,35 +116,18 @@ body {
 
     /* Hardware acceleration */
     will-change: transform, opacity;
-    overflow: hidden;
 }
 
-/* Noise Texture Overlay */
+/* Noise Texture Overlay for "frosted" realism */
 .info-panel::before {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 0;
-    opacity: 0.35;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 100px 100px;
+    z-index: -1;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
     pointer-events: none;
-    mix-blend-mode: overlay;
-}
-
-/* Inner highlight border (Gradient) */
-.info-panel::after {
-    content: "";
-    position: absolute;
-    inset: 0;
     border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 1;
 }
 
 /* Visible State */
@@ -150,7 +141,7 @@ body {
 .panel-content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     position: relative;
     z-index: 2;
 }
@@ -158,14 +149,18 @@ body {
 .info-panel h2 {
     margin: 0;
     font-size: 28px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.1;
     color: white;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+
+    /* Subtle text gradient for sheen */
+    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 
     /* Animation setup */
-    transform: translateY(8px);
+    transform: translateY(10px);
     opacity: 0;
     transition: transform 0.6s var(--ease-smooth) 0.1s, opacity 0.4s ease 0.1s;
 }
@@ -173,13 +168,13 @@ body {
 .info-panel p {
     margin: 0;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--text-secondary);
     font-weight: 400;
     letter-spacing: -0.01em;
 
     /* Animation setup */
-    transform: translateY(8px);
+    transform: translateY(10px);
     opacity: 0;
     transition: transform 0.6s var(--ease-smooth) 0.2s, opacity 0.4s ease 0.2s;
 }
@@ -193,8 +188,8 @@ body {
 /* Close Button - Minimalist & Slick */
 .close-btn {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: none;
     background: rgba(255, 255, 255, 0.05);
     cursor: pointer;
@@ -206,12 +201,12 @@ body {
     padding: 0;
     z-index: 10;
     transition: all 0.3s var(--ease-smooth);
-    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .close-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     stroke-width: 2;
     transition: transform 0.4s var(--ease-spring);
 }
@@ -219,17 +214,12 @@ body {
 .close-btn:hover {
     background: rgba(255, 255, 255, 0.15);
     color: var(--text-primary);
-    transform: scale(1.1);
-    box-shadow: 0 0 12px rgba(255,255,255,0.1);
+    transform: scale(1.05);
+    border-color: rgba(255,255,255,0.2);
 }
 
 .close-btn:hover svg {
     transform: rotate(90deg);
-}
-
-.close-btn:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.1);
 }
 
 .close-btn:focus-visible {
@@ -244,32 +234,36 @@ body {
     .info-panel {
         top: 64px;
         right: 64px;
-        width: 360px;
-        padding: 40px 32px;
-        border-radius: 20px;
+        width: 380px;
+        padding: 48px 40px;
+        border-radius: 24px;
 
         /* 3D Tilt Setup */
         transform-style: preserve-3d;
-        perspective: 1200px;
+        perspective: 1500px;
 
         /* Initial State */
-        transform: translate3d(40px, 0, 0) scale(0.95) rotateY(-8deg);
+        transform: translate3d(30px, 0, 0) scale(0.98) rotateY(-5deg);
+        /* Note: transition for transform is handled in JS when active to avoid jitter,
+           or we keep it here for entrance/exit only */
         transition:
             transform 0.6s var(--ease-out-back),
             opacity 0.4s ease,
             visibility 0.4s;
     }
 
+    /* When actively tilting via JS, we remove the transition to make it instant */
+    .info-panel.is-tilting {
+        transition: none;
+    }
+
     .info-panel.visible {
         transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
-        box-shadow:
-            var(--glass-shadow),
-            0 0 80px -20px var(--accent-glow); /* Ambient glow on open */
     }
 
     .close-btn {
-        top: 16px;
-        right: 16px;
+        top: 24px;
+        right: 24px;
         opacity: 0;
         transform: scale(0.5);
     }
@@ -277,7 +271,7 @@ body {
     .info-panel.visible .close-btn {
         opacity: 1;
         transform: scale(1);
-        transition-delay: 0.2s;
+        transition-delay: 0.3s;
     }
 
     .mobile-handle {
@@ -294,20 +288,19 @@ body {
         left: 0;
         right: 0;
         width: 100%;
-        border-radius: 24px 24px 0 0;
+        border-radius: 28px 28px 0 0;
         padding: 24px;
-        padding-top: 40px;
+        padding-top: 48px; /* Space for handle */
         padding-bottom: max(32px, env(safe-area-inset-bottom));
 
-        /* Mobile specific glass bg */
-        background: rgba(10, 15, 30, 0.9); /* More opaque for mobile */
+        /* Mobile specific glass bg - slightly darker */
+        background: rgba(5, 10, 20, 0.9);
         box-shadow: var(--mobile-shadow);
+        border: 1px solid var(--glass-border);
         border-bottom: none;
-        border-left: none;
-        border-right: none;
 
         /* Entrance from bottom */
-        transform: translate3d(0, 102%, 0);
+        transform: translate3d(0, 100%, 0);
         transition:
             transform 0.5s var(--ease-spring),
             opacity 0.4s ease,
@@ -318,39 +311,29 @@ body {
         transform: translate3d(0, 0, 0);
     }
 
-    /* Native Handle */
+    /* Native Pill Handle */
     .mobile-handle {
         position: absolute;
-        top: 10px;
+        top: 12px;
         left: 50%;
         transform: translateX(-50%);
-        width: 36px;
-        height: 4px;
-        background-color: rgba(255, 255, 255, 0.15);
+        width: 40px;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
         border-radius: 100px;
         pointer-events: none;
     }
 
     .close-btn {
-        top: 16px;
-        right: 16px;
+        top: 20px;
+        right: 20px;
         width: 32px;
         height: 32px;
         background: rgba(255, 255, 255, 0.05);
     }
 
-    .close-btn svg {
-        width: 18px;
-        height: 18px;
-    }
-
     .info-panel h2 {
-        font-size: 22px;
-    }
-
-    .info-panel p {
-        font-size: 15px;
-        line-height: 1.5;
+        font-size: 24px;
     }
 }
 
@@ -372,7 +355,7 @@ noscript .noscript-fallback img {
 path.leaflet-interactive:focus {
     outline: none;
     stroke: var(--accent-color);
-    stroke-width: 3px;
-    stroke-opacity: 1;
-    filter: drop-shadow(0 0 4px var(--accent-color));
+    stroke-width: 2px;
+    stroke-opacity: 0.8;
+    filter: drop-shadow(0 0 6px var(--accent-glow));
 }
