@@ -1,38 +1,36 @@
 document.body.classList.add('js-enabled');
 
 // --- DATA and ASSETS ---
-const imageUrl = 'https://images.unsplash.com/photo-1649299313612-48cc3493f62e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFwJTIwb2YlMjBhZnJpY2F8ZW58MHx8MHx8fDA=';
-const imageWidth = 800;
-const imageHeight = 938;
-
-
 const countryData = {
-    "egypt": { "name": "Egypt", "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World.", "coords": [[162, 694], [162, 856], [320, 856], [320, 694]] },
-    "libya": { "name": "Libya", "description": "Showcasing the majestic ruins of Leptis Magna, a prominent city of the Roman Empire.", "coords": [[217, 497], [217, 678], [372, 678], [372, 497]] },
-    "algeria": { "name": "Algeria", "description": "The Martyrs' Memorial (Maqam Echahid) stands tall, commemorating the Algerian war for independence.", "coords": [[167, 260], [167, 452], [350, 452], [350, 260]] },
-    "nigeria": { "name": "Nigeria", "description": "A grand mosque is depicted, representing the rich architectural heritage and cultural diversity of West Africa.", "coords": [[446, 314], [446, 477], [568, 477], [568, 314]] },
-    "kenya": { "name": "Kenya", "description": "A sanctuary for wildlife, represented here by a rhinoceros. Kenya's national parks are crucial for conservation.", "coords": [[620, 810], [620, 915], [740, 915], [740, 810]] },
-    "tanzania": { "name": "Tanzania", "description": "The 'King of the Savanna', the lion, is illustrated before Mount Kilimanjaro, capturing iconic Serengeti scenery.", "coords": [[716, 780], [716, 912], [840, 912], [840, 780]] },
-    "south_africa": { "name": "South Africa", "description": "The African elephant stands near the King Protea, the national flower, symbolizing the nation's rich biodiversity.", "coords": [[1020, 560], [1020, 760], [1180, 760], [1180, 560]] },
-    "namibia": { "name": "Namibia", "description": "A giraffe, the tallest land animal, roams the plains, evoking the vast landscapes of Etosha National Park.", "coords": [[910, 510], [910, 610], [1050, 610], [1050, 510]] },
-    "madagascar": { "name": "Madagascar", "description": "The unique Avenue of the Baobabs showcases the island's extraordinary and distinct flora.", "coords": [[800, 955], [800, 1025], [1050, 1025], [1050, 955]] }
+    "Egypt": { "id": "egypt", "name": "Egypt", "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World." },
+    "Libya": { "id": "libya", "name": "Libya", "description": "Showcasing the majestic ruins of Leptis Magna, a prominent city of the Roman Empire." },
+    "Algeria": { "id": "algeria", "name": "Algeria", "description": "The Martyrs' Memorial (Maqam Echahid) stands tall, commemorating the Algerian war for independence." },
+    "Nigeria": { "id": "nigeria", "name": "Nigeria", "description": "A grand mosque is depicted, representing the rich architectural heritage and cultural diversity of West Africa." },
+    "Kenya": { "id": "kenya", "name": "Kenya", "description": "A sanctuary for wildlife, represented here by a rhinoceros. Kenya's national parks are crucial for conservation." },
+    "Tanzania": { "id": "tanzania", "name": "Tanzania", "description": "The 'King of the Savanna', the lion, is illustrated before Mount Kilimanjaro, capturing iconic Serengeti scenery." },
+    "South Africa": { "id": "south_africa", "name": "South Africa", "description": "The African elephant stands near the King Protea, the national flower, symbolizing the nation's rich biodiversity." },
+    "Namibia": { "id": "namibia", "name": "Namibia", "description": "A giraffe, the tallest land animal, roams the plains, evoking the vast landscapes of Etosha National Park." },
+    "Madagascar": { "id": "madagascar", "name": "Madagascar", "description": "The unique Avenue of the Baobabs showcases the island's extraordinary and distinct flora." }
 };
 
 // --- MAP INITIALIZATION ---
+// Center on Africa
 const map = L.map('map-container', {
-    crs: L.CRS.Simple,
     zoomControl: false,
     attributionControl: false,
-    minZoom: -1.5,
-    maxZoom: 2,
-    zoomSnap: 0.05, // Ultra-smooth zooming
+    minZoom: 2,
+    maxZoom: 6,
+    zoomSnap: 0.1,
     zoomDelta: 0.5,
-    wheelPxPerZoomLevel: 120 // Slower scroll zoom
-});
+    wheelPxPerZoomLevel: 120
+}).setView([1.5, 17], 3.2);
 
-const bounds = [[0, 0], [imageHeight, imageWidth]];
-L.imageOverlay(imageUrl, bounds).addTo(map);
-map.fitBounds(bounds);
+// CartoDB Dark Matter Tiles
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 20
+}).addTo(map);
 
 // --- INTERACTION LOGIC & STATE ---
 const infoPanel = document.getElementById('info-panel');
@@ -41,28 +39,28 @@ const countryDescEl = document.getElementById('country-description');
 const closePanelBtn = document.getElementById('close-panel');
 
 let lastFocusedElement = null;
-let polygonLayer;
-let selectedFeatureId = null;
+let geoJsonLayer;
+let selectedFeatureName = null;
 
 // Styles matching CSS variables
 const defaultStyle = {
     fillColor: '#38bdf8', /* Sky 400 */
-    weight: 0, // Invisible until interacted
+    weight: 0.5,
     color: '#38bdf8',
-    opacity: 0,
-    fillOpacity: 0,
+    opacity: 0.3,
+    fillOpacity: 0.1, // Visible but subtle
     className: 'country-poly'
 };
 
 const hoverStyle = {
-    fillOpacity: 0.1,
+    fillOpacity: 0.2,
     opacity: 0.8,
     weight: 1.5,
     color: '#38bdf8'
 };
 
 const activeStyle = {
-    fillOpacity: 0.2,
+    fillOpacity: 0.3,
     opacity: 1,
     weight: 2.5,
     color: '#818cf8' /* Indigo 400 accent */
@@ -71,70 +69,80 @@ const activeStyle = {
 initializeMap();
 
 function initializeMap() {
-    polygonLayer = L.geoJSON(null, {
-        style: () => defaultStyle,
-        onEachFeature: (feature, layer) => {
-            // Accessibility Setup
-            if (layer.getElement()) {
-                 const element = layer.getElement();
-                 setupA11y(element, feature);
-            } else {
-                layer.on('add', () => {
-                    const element = layer.getElement();
-                    if (element) setupA11y(element, feature);
-                });
-            }
+    fetch('africa.geojson')
+        .then(response => response.json())
+        .then(data => {
+            // Filter features to only those in countryData
+            const relevantFeatures = data.features.filter(feature =>
+                countryData.hasOwnProperty(feature.properties.name)
+            );
 
-            const openFeature = () => {
-                lastFocusedElement = document.activeElement;
-                showCountryInfo(feature.properties.id, layer);
-            };
+            geoJsonLayer = L.geoJSON(relevantFeatures, {
+                style: () => defaultStyle,
+                onEachFeature: (feature, layer) => {
+                    const countryName = feature.properties.name;
 
-            layer.on({
-                mouseover: e => {
-                    if (selectedFeatureId !== feature.properties.id) {
-                        e.target.setStyle(hoverStyle);
-                        document.getElementById('map-container').style.cursor = 'pointer';
+                    // Accessibility Setup
+                    const applyA11y = (l) => {
+                        if (l.getElement) {
+                             const element = l.getElement();
+                             if (element) setupA11y(element, countryName);
+                             else l.on('add', () => {
+                                const el = l.getElement();
+                                if (el) setupA11y(el, countryName);
+                             });
+                        }
+                    };
+
+                    if (layer.eachLayer) {
+                        layer.eachLayer(applyA11y);
+                    } else {
+                        applyA11y(layer);
                     }
-                },
-                mouseout: e => {
-                    if (selectedFeatureId !== feature.properties.id) {
-                        polygonLayer.resetStyle(e.target);
-                        document.getElementById('map-container').style.cursor = '';
-                    }
-                },
-                click: e => {
-                    L.DomEvent.stopPropagation(e);
-                    openFeature();
-                },
-                keydown: e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openFeature();
-                    }
+
+                    const openFeature = () => {
+                        lastFocusedElement = document.activeElement;
+                        showCountryInfo(countryName, layer);
+                    };
+
+                    layer.on({
+                        mouseover: e => {
+                            if (selectedFeatureName !== countryName) {
+                                e.target.setStyle(hoverStyle);
+                                document.getElementById('map-container').style.cursor = 'pointer';
+                            }
+                        },
+                        mouseout: e => {
+                            if (selectedFeatureName !== countryName) {
+                                geoJsonLayer.resetStyle(e.target);
+                                document.getElementById('map-container').style.cursor = '';
+                            }
+                        },
+                        click: e => {
+                            L.DomEvent.stopPropagation(e);
+                            openFeature();
+                        },
+                        keydown: e => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                openFeature();
+                            }
+                        }
+                    });
                 }
-            });
-        }
-    }).addTo(map);
-
-    // Load Data
-    polygonLayer.addData(Object.keys(countryData).map(id => {
-        const country = countryData[id];
-        // Swap coordinates for Leaflet [lat, lng] -> [y, x]
-        const geoJsonCoords = [country.coords.map(p => [p[1], p[0]])];
-        geoJsonCoords[0].push(geoJsonCoords[0][0]); // Close polygon
-        return {
-            type: "Feature",
-            properties: { id, name: country.name },
-            geometry: { type: "Polygon", coordinates: geoJsonCoords }
-        };
-    }));
+            }).addTo(map);
+        })
+        .catch(error => {
+            console.error('Error loading GeoJSON:', error);
+            document.getElementById('error-message').textContent = 'Failed to load map data.';
+            document.getElementById('error-message').classList.remove('hidden');
+        });
 }
 
-function setupA11y(element, feature) {
+function setupA11y(element, name) {
     element.setAttribute('tabindex', '0');
     element.setAttribute('role', 'button');
-    element.setAttribute('aria-label', `View info about ${feature.properties.name}`);
+    element.setAttribute('aria-label', `View info about ${name}`);
     element.classList.add('map-feature');
 }
 
@@ -144,18 +152,18 @@ function encodeHTML(str) {
     return temp.innerHTML;
 }
 
-function showCountryInfo(id, layer) {
-    const country = countryData[id];
+function showCountryInfo(name, layer) {
+    const country = countryData[name];
     if (!country) return;
 
     // Reset previous selection
-    if (selectedFeatureId && selectedFeatureId !== id) {
-        polygonLayer.eachLayer(l => {
-            polygonLayer.resetStyle(l);
+    if (selectedFeatureName && selectedFeatureName !== name) {
+        geoJsonLayer.eachLayer(l => {
+            geoJsonLayer.resetStyle(l);
         });
     }
 
-    selectedFeatureId = id;
+    selectedFeatureName = name;
 
     // Highlight current
     if (layer) {
@@ -180,15 +188,13 @@ function showCountryInfo(id, layer) {
     // Mobile: Panel is on bottom (height ~40-50%) -> Pad Bottom
     const paddingOptions = isMobile
         ? { paddingBottomRight: [0, window.innerHeight * 0.45], paddingTopLeft: [0, 0] }
-        : { paddingBottomRight: [500, 0], paddingTopLeft: [100, 0] }; // Added left padding for better centering
-
-    const polygon = L.polygon(country.coords);
+        : { paddingBottomRight: [500, 0], paddingTopLeft: [100, 0] };
 
     // Cinematography: Slower, smoother camera movement
-    map.flyToBounds(polygon.getBounds(), {
+    map.flyToBounds(layer.getBounds(), {
         paddingTopLeft: paddingOptions.paddingTopLeft,
         paddingBottomRight: paddingOptions.paddingBottomRight,
-        maxZoom: 0.5, // Don't zoom in *too* close, keep context
+        maxZoom: 6, // Don't zoom in *too* close, keep context
         duration: 1.6, // Slower for elegance
         easeLinearity: 0.1 // More curve
     });
@@ -203,8 +209,8 @@ function hidePanel() {
     infoPanel.style.transform = '';
 
     // Reset selection state
-    selectedFeatureId = null;
-    polygonLayer.eachLayer(l => polygonLayer.resetStyle(l));
+    selectedFeatureName = null;
+    geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
 
     if (lastFocusedElement) {
         lastFocusedElement.focus();
@@ -212,7 +218,8 @@ function hidePanel() {
     }
 
     // Return to full view with matching elegant ease
-    map.flyToBounds(bounds, {
+    // Center on Africa roughly
+    map.flyTo([1.5, 17], 3.2, {
         duration: 1.8,
         easeLinearity: 0.1
     });
