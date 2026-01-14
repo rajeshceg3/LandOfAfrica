@@ -25,9 +25,9 @@ const map = L.map('map-container', {
     attributionControl: false,
     minZoom: -1.5,
     maxZoom: 2,
-    zoomSnap: 0.05, // Ultra-smooth zooming
-    zoomDelta: 0.5,
-    wheelPxPerZoomLevel: 120 // Slower scroll zoom
+    zoomSnap: 0.01, // Hyper-granular zoom for buttery smooth feel
+    zoomDelta: 0.1,
+    wheelPxPerZoomLevel: 200 // Slower scroll zoom for control
 });
 
 const bounds = [[0, 0], [imageHeight, imageWidth]];
@@ -43,6 +43,8 @@ const closePanelBtn = document.getElementById('close-panel');
 let lastFocusedElement = null;
 let polygonLayer;
 let selectedFeatureId = null;
+let canTilt = false;
+let tiltTimeout = null;
 
 // Styles matching CSS variables
 const defaultStyle = {
@@ -168,8 +170,17 @@ function showCountryInfo(id, layer) {
     countryNameEl.textContent = encodeHTML(country.name);
     countryDescEl.textContent = encodeHTML(country.description);
 
+    // Prepare interaction state
+    infoPanel.classList.remove('is-tilting');
     infoPanel.classList.add('visible');
     infoPanel.setAttribute('aria-hidden', 'false');
+
+    // Manage Tilt Enablement (wait for entrance animation 0.6s)
+    canTilt = false;
+    if (tiltTimeout) clearTimeout(tiltTimeout);
+    tiltTimeout = setTimeout(() => {
+        canTilt = true;
+    }, 650);
 
     closePanelBtn.focus();
 
@@ -189,13 +200,18 @@ function showCountryInfo(id, layer) {
         paddingTopLeft: paddingOptions.paddingTopLeft,
         paddingBottomRight: paddingOptions.paddingBottomRight,
         maxZoom: 0.5, // Don't zoom in *too* close, keep context
-        duration: 1.6, // Slower for elegance
-        easeLinearity: 0.1 // More curve
+        duration: 1.8, // Slower for elegance
+        easeLinearity: 0.2 // More curve
     });
 }
 
 function hidePanel() {
     if (!infoPanel.classList.contains('visible')) return;
+
+    // Disable tilt immediately so exit animation plays smoothly
+    canTilt = false;
+    infoPanel.classList.remove('is-tilting');
+
     infoPanel.classList.remove('visible');
     infoPanel.setAttribute('aria-hidden', 'true');
 
@@ -213,8 +229,8 @@ function hidePanel() {
 
     // Return to full view with matching elegant ease
     map.flyToBounds(bounds, {
-        duration: 1.8,
-        easeLinearity: 0.1
+        duration: 2.0,
+        easeLinearity: 0.2
     });
 }
 
@@ -251,13 +267,19 @@ infoPanel.addEventListener('keydown', e => {
 document.addEventListener('mousemove', (e) => {
     if (window.innerWidth <= 768) return; // Desktop only
     if (!infoPanel.classList.contains('visible')) return;
+    if (!canTilt) return; // Wait for entrance animation
+
+    // Enable instant transform updates (disable CSS transition)
+    if (!infoPanel.classList.contains('is-tilting')) {
+        infoPanel.classList.add('is-tilting');
+    }
 
     const x = e.clientX / window.innerWidth;
     const y = e.clientY / window.innerHeight;
 
-    // Calculate rotation (range: -3deg to 3deg for subtlety)
-    const rotateY = (x - 0.5) * 6;
-    const rotateX = (0.5 - y) * 6;
+    // Calculate rotation (range: -5deg to 5deg for subtlety)
+    const rotateY = (x - 0.5) * 10;
+    const rotateX = (0.5 - y) * 10;
 
     // Apply transform while maintaining the scale
     infoPanel.style.transform = `translate3d(0, 0, 0) scale(1) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
