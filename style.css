@@ -72,17 +72,8 @@ body {
    Deep dark mode blueprint style.
 */
 .leaflet-layer {
-    /*
-       Invert: turns light map to dark
-       Hue-rotate: shifts colors to cool blues/cyans
-       Saturate: tones down the intensity
-       Brightness: adjusts overall light
-       Contrast: makes lines pop
-    */
-    filter: invert(1) hue-rotate(180deg) saturate(0.8) brightness(0.9) contrast(1.4) grayscale(0.1);
     transition: filter 1.5s var(--ease-smooth);
     mix-blend-mode: normal;
-    opacity: 0.85; /* Let the black background bleed through slightly */
 }
 
 /* =========================================
