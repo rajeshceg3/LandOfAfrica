@@ -5,43 +5,44 @@
        ========================================= */
 
     /* Glassmorphism & Surface Colors */
-    /* Deep blue/slate base for that "night mode" tech feel */
-    --glass-bg: rgba(10, 15, 30, 0.75); /* Slightly more opaque for better legibility */
+    --glass-bg: rgba(10, 15, 30, 0.65); /* More transparency for blur to shine */
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-highlight: rgba(255, 255, 255, 0.12);
-    --glass-inner-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
 
-    /* Sophisticated Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    /* Gradients */
+    --surface-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    --border-gradient: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0));
 
-    /* Deep, rich shadows for floating elements */
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 8px 16px -4px rgba(0,0,0,0.2);
+    --shadow-lg: 0 24px 48px -12px rgba(0,0,0,0.4);
+
+    /* Deep ambient shadow for floating feel */
     --glass-shadow:
-        0 0 0 1px var(--glass-border),
-        0 24px 48px -12px rgba(0, 0, 0, 0.7),
-        0 12px 24px -12px rgba(0, 0, 0, 0.5);
+        0 40px 80px -20px rgba(0, 0, 0, 0.7),
+        0 16px 32px -16px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
     --mobile-shadow:
-        0 -1px 0 0 var(--glass-border),
-        0 -24px 48px -12px rgba(0, 0, 0, 0.6);
+        0 -20px 60px -10px rgba(0, 0, 0, 0.7),
+        0 -10px 20px -5px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
-    /* Accents - "Electric Cyan" & "Purple Haze" influences */
+    /* Accents */
     --accent-color: #38bdf8; /* Sky 400 */
-    --accent-glow: rgba(56, 189, 248, 0.4);
+    --accent-glow: rgba(56, 189, 248, 0.5);
     --accent-secondary: #818cf8; /* Indigo 400 */
 
     /* Text Colors */
-    --text-primary: #ffffff;
-    --text-secondary: #cbd5e1; /* Slate 300 - lighter for better readability on dark */
-    --text-tertiary: #94a3b8; /* Slate 400 */
+    --text-primary: #f8fafc; /* Slate 50 */
+    --text-secondary: #94a3b8; /* Slate 400 */
+    --text-tertiary: #64748b; /* Slate 500 */
 
-    /* Animation - "Apple-esque" Physics */
+    /* Animation */
     --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -52,10 +53,12 @@ body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #010204; /* Almost pure black */
+    background-color: #010204;
     color: var(--text-primary);
     overflow: hidden;
-    font-feature-settings: "cv11", "ss01"; /* Inter font features */
+    /* Optimize text rendering */
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv11", "ss01";
 }
 
 #map-container {
@@ -67,62 +70,63 @@ body {
     transition: background-color 0.5s ease;
 }
 
-/*
-   ULTRATHINK MAP TRANSFORMATION
-   Deep dark mode blueprint style.
-*/
+/* Map Tiles Darkening */
 .leaflet-layer {
+    filter: invert(100%) hue-rotate(180deg) brightness(0.6) contrast(1.2);
     transition: filter 1.5s var(--ease-smooth);
-    mix-blend-mode: normal;
 }
 
-/* =========================================
-   Glass Panel - Core Styles
-   ========================================= */
+/*
+   =========================================
+   INFO PANEL - GLASSMORPHISM CORE
+   =========================================
+*/
 .info-panel {
     position: fixed;
     z-index: 1000;
     background: var(--glass-bg);
 
-    /* Premium Blur Effect */
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    /* Blur */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
 
     box-shadow: var(--glass-shadow);
-    box-sizing: border-box;
     color: var(--text-primary);
 
-    /* Base State (Hidden) */
+    /* Hidden State */
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
 
-    /* Hardware acceleration */
     will-change: transform, opacity;
-    overflow: hidden;
+
+    /* Layout */
+    display: flex;
+    flex-direction: column;
 }
 
-/* Noise Texture Overlay */
+/* Noise Texture */
 .info-panel::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.35;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 100px 100px;
+    opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
     pointer-events: none;
     mix-blend-mode: overlay;
+    border-radius: inherit;
 }
 
-/* Inner highlight border (Gradient) */
+/* Border Gradient (Simulated via pseudo-element) */
 .info-panel::after {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 100%);
+    border-radius: inherit;
+    background: var(--border-gradient);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -130,49 +134,69 @@ body {
     z-index: 1;
 }
 
-/* Visible State */
+/* Glare Effect */
+.panel-glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        125deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.03) 40%,
+        rgba(255,255,255,0.1) 50%,
+        rgba(255,255,255,0.03) 60%,
+        rgba(255,255,255,0) 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.1s linear; /* Controlled by JS mousemove */
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+}
+
 .info-panel.visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
 
-/* Typography & Content */
+/* Typography */
 .panel-content {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     position: relative;
     z-index: 2;
+    padding-top: 8px;
 }
 
 .info-panel h2 {
-    margin: 0;
-    font-size: 28px;
+    margin: 0 0 12px 0;
+    font-size: 32px;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     line-height: 1.1;
     color: white;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 
-    /* Animation setup */
-    transform: translateY(8px);
+    /* Animation */
+    transform: translateY(10px);
     opacity: 0;
-    transition: transform 0.6s var(--ease-smooth) 0.1s, opacity 0.4s ease 0.1s;
+    transition: transform 0.6s var(--ease-smooth) 0.1s, opacity 0.5s ease 0.1s;
 }
 
 .info-panel p {
     margin: 0;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.6;
     color: var(--text-secondary);
     font-weight: 400;
     letter-spacing: -0.01em;
 
-    /* Animation setup */
-    transform: translateY(8px);
+    /* Animation */
+    transform: translateY(10px);
     opacity: 0;
-    transition: transform 0.6s var(--ease-smooth) 0.2s, opacity 0.4s ease 0.2s;
+    transition: transform 0.6s var(--ease-smooth) 0.2s, opacity 0.5s ease 0.2s;
 }
 
 .info-panel.visible h2,
@@ -181,13 +205,14 @@ body {
     opacity: 1;
 }
 
-/* Close Button - Minimalist & Slick */
+/* Close Button */
 .close-btn {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: none;
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.1);
     cursor: pointer;
     border-radius: 50%;
     display: flex;
@@ -197,70 +222,56 @@ body {
     padding: 0;
     z-index: 10;
     transition: all 0.3s var(--ease-smooth);
-    backdrop-filter: blur(4px);
 }
 
 .close-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     stroke-width: 2;
-    transition: transform 0.4s var(--ease-spring);
 }
 
 .close-btn:hover {
     background: rgba(255, 255, 255, 0.15);
-    color: var(--text-primary);
-    transform: scale(1.1);
-    box-shadow: 0 0 12px rgba(255,255,255,0.1);
-}
-
-.close-btn:hover svg {
-    transform: rotate(90deg);
+    color: white;
+    border-color: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
 }
 
 .close-btn:active {
     transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.1);
 }
 
-.close-btn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--accent-color);
-}
-
-/* =========================================
-   Desktop UI/UX Optimization
-   ========================================= */
+/*
+   =========================================
+   DESKTOP OPTIMIZATIONS
+   =========================================
+*/
 @media (min-width: 769px) {
     .info-panel {
-        top: 64px;
-        right: 64px;
-        width: 360px;
-        padding: 40px 32px;
-        border-radius: 20px;
+        top: 80px;
+        right: 80px;
+        width: 380px;
+        padding: 48px 40px;
+        border-radius: 24px;
 
-        /* 3D Tilt Setup */
+        /* 3D Transform Defaults */
         transform-style: preserve-3d;
-        perspective: 1200px;
-
-        /* Initial State */
-        transform: translate3d(40px, 0, 0) scale(0.95) rotateY(-8deg);
+        perspective: 1500px;
+        transform: translate3d(60px, 0, 0) scale(0.9) rotateY(-10deg);
         transition:
-            transform 0.6s var(--ease-out-back),
-            opacity 0.4s ease,
-            visibility 0.4s;
+            transform 0.8s var(--ease-out-back),
+            opacity 0.6s ease,
+            visibility 0.6s;
     }
 
     .info-panel.visible {
         transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
-        box-shadow:
-            var(--glass-shadow),
-            0 0 80px -20px var(--accent-glow); /* Ambient glow on open */
     }
 
     .close-btn {
-        top: 16px;
-        right: 16px;
+        top: 24px;
+        right: 24px;
         opacity: 0;
         transform: scale(0.5);
     }
@@ -268,39 +279,35 @@ body {
     .info-panel.visible .close-btn {
         opacity: 1;
         transform: scale(1);
-        transition-delay: 0.2s;
+        transition-delay: 0.3s;
     }
 
-    .mobile-handle {
-        display: none;
-    }
+    .mobile-handle { display: none; }
 }
 
-/* =========================================
-   Mobile UI/UX Optimization
-   ========================================= */
+/*
+   =========================================
+   MOBILE OPTIMIZATIONS
+   =========================================
+*/
 @media (max-width: 768px) {
     .info-panel {
         bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
-        border-radius: 24px 24px 0 0;
-        padding: 24px;
-        padding-top: 40px;
+        border-radius: 32px 32px 0 0;
+        padding: 32px 24px;
+        padding-top: 48px;
         padding-bottom: max(32px, env(safe-area-inset-bottom));
 
-        /* Mobile specific glass bg */
-        background: rgba(10, 15, 30, 0.9); /* More opaque for mobile */
+        background: rgba(15, 20, 35, 0.9); /* Opaque for legibility over map */
         box-shadow: var(--mobile-shadow);
-        border-bottom: none;
-        border-left: none;
-        border-right: none;
 
-        /* Entrance from bottom */
-        transform: translate3d(0, 102%, 0);
+        /* Entrance */
+        transform: translate3d(0, 100%, 0);
         transition:
-            transform 0.5s var(--ease-spring),
+            transform 0.6s var(--ease-spring),
             opacity 0.4s ease,
             visibility 0.4s;
     }
@@ -309,40 +316,30 @@ body {
         transform: translate3d(0, 0, 0);
     }
 
-    /* Native Handle */
     .mobile-handle {
         position: absolute;
-        top: 10px;
+        top: 12px;
         left: 50%;
         transform: translateX(-50%);
-        width: 36px;
-        height: 4px;
-        background-color: rgba(255, 255, 255, 0.15);
-        border-radius: 100px;
-        pointer-events: none;
+        width: 40px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
     }
 
     .close-btn {
-        top: 16px;
-        right: 16px;
-        width: 32px;
-        height: 32px;
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .close-btn svg {
-        width: 18px;
-        height: 18px;
+        top: 24px;
+        right: 24px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.08);
     }
 
     .info-panel h2 {
-        font-size: 22px;
+        font-size: 26px;
     }
 
-    .info-panel p {
-        font-size: 15px;
-        line-height: 1.5;
-    }
+    .panel-glare { display: none; } /* Disable glare on mobile for performance */
 }
 
 /* Utilities */
@@ -359,11 +356,11 @@ noscript .noscript-fallback img {
     max-width: 100%; border-radius: 8px; margin-top: 20px;
 }
 
-/* Accessibility: Map Focus */
+/* Map Interactions */
 path.leaflet-interactive:focus {
     outline: none;
     stroke: var(--accent-color);
     stroke-width: 3px;
     stroke-opacity: 1;
-    filter: drop-shadow(0 0 4px var(--accent-color));
+    filter: drop-shadow(0 0 8px var(--accent-glow));
 }
