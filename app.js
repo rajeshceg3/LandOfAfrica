@@ -255,6 +255,8 @@ infoPanel.addEventListener('keydown', e => {
 
 // --- DESKTOP PARALLAX TILT EFFECT ---
 // Adds a subtle 3D tilt to the panel based on mouse position
+const panelGlare = document.querySelector('.panel-glare');
+
 document.addEventListener('mousemove', (e) => {
     if (window.innerWidth <= 768) return; // Desktop only
     if (!infoPanel.classList.contains('visible')) return;
@@ -262,10 +264,21 @@ document.addEventListener('mousemove', (e) => {
     const x = e.clientX / window.innerWidth;
     const y = e.clientY / window.innerHeight;
 
-    // Calculate rotation (range: -3deg to 3deg for subtlety)
-    const rotateY = (x - 0.5) * 6;
-    const rotateX = (0.5 - y) * 6;
+    // Calculate rotation (range: -4deg to 4deg for subtlety)
+    const rotateY = (x - 0.5) * 8;
+    const rotateX = (0.5 - y) * 8;
 
     // Apply transform while maintaining the scale
     infoPanel.style.transform = `translate3d(0, 0, 0) scale(1) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+
+    // Glare effect logic
+    if (panelGlare) {
+        // Calculate glare movement
+        // We move the gradient background to simulate light reflection
+        // The gradient is large, so we shift it across the panel
+        const glareX = (x - 0.5) * 150;
+        const glareY = (y - 0.5) * 150;
+
+        panelGlare.style.transform = `translate(${glareX}%, ${glareY}%)`;
+    }
 });
