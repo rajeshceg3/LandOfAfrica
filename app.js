@@ -2,15 +2,286 @@ document.body.classList.add('js-enabled');
 
 // --- DATA and ASSETS ---
 const countryData = {
-    "Egypt": { "id": "egypt", "name": "Egypt", "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World." },
-    "Libya": { "id": "libya", "name": "Libya", "description": "Showcasing the majestic ruins of Leptis Magna, a prominent city of the Roman Empire." },
-    "Algeria": { "id": "algeria", "name": "Algeria", "description": "The Martyrs' Memorial (Maqam Echahid) stands tall, commemorating the Algerian war for independence." },
-    "Nigeria": { "id": "nigeria", "name": "Nigeria", "description": "A grand mosque is depicted, representing the rich architectural heritage and cultural diversity of West Africa." },
-    "Kenya": { "id": "kenya", "name": "Kenya", "description": "A sanctuary for wildlife, represented here by a rhinoceros. Kenya's national parks are crucial for conservation." },
-    "Tanzania": { "id": "tanzania", "name": "Tanzania", "description": "The 'King of the Savanna', the lion, is illustrated before Mount Kilimanjaro, capturing iconic Serengeti scenery." },
-    "South Africa": { "id": "south_africa", "name": "South Africa", "description": "The African elephant stands near the King Protea, the national flower, symbolizing the nation's rich biodiversity." },
-    "Namibia": { "id": "namibia", "name": "Namibia", "description": "A giraffe, the tallest land animal, roams the plains, evoking the vast landscapes of Etosha National Park." },
-    "Madagascar": { "id": "madagascar", "name": "Madagascar", "description": "The unique Avenue of the Baobabs showcases the island's extraordinary and distinct flora." }
+    "Algeria": {
+        "id": "algeria",
+        "name": "Algeria",
+        "description": "The largest country in Africa, featuring the Sahara Desert and ancient Roman ruins like Timgad."
+    },
+    "Angola": {
+        "id": "angola",
+        "name": "Angola",
+        "description": "Known for its vast oil reserves and the spectacular Kalandula Falls."
+    },
+    "Benin": {
+        "id": "benin",
+        "name": "Benin",
+        "description": "The birthplace of the Vodun (Voodoo) religion and home to the Royal Palaces of Abomey."
+    },
+    "Botswana": {
+        "id": "botswana",
+        "name": "Botswana",
+        "description": "A premier safari destination, home to the Okavango Delta and large elephant populations."
+    },
+    "Burkina Faso": {
+        "id": "burkina_faso",
+        "name": "Burkina Faso",
+        "description": "Known for its rich musical traditions and the annual FESPACO film festival."
+    },
+    "Burundi": {
+        "id": "burundi",
+        "name": "Burundi",
+        "description": "A small nation with a big heart, known for its drumming traditions and Lake Tanganyika."
+    },
+    "Cameroon": {
+        "id": "cameroon",
+        "name": "Cameroon",
+        "description": "Often called 'Africa in miniature' for its geological and cultural diversity."
+    },
+    "Cape Verde": {
+        "id": "cape_verde",
+        "name": "Cape Verde",
+        "description": "An island nation known for its Creole Portuguese-African culture and Morna music."
+    },
+    "Central African Republic": {
+        "id": "central_african_republic",
+        "name": "Central African Republic",
+        "description": "Rich in biodiversity, with vast rainforests and wildlife populations."
+    },
+    "Chad": {
+        "id": "chad",
+        "name": "Chad",
+        "description": "Home to the Tibesti Mountains and Lake Chad, a vital water source for the region."
+    },
+    "Comoros": {
+        "id": "comoros",
+        "name": "Comoros",
+        "description": "A volcanic archipelago known as the 'Perfume Islands' for its fragrant plant life."
+    },
+    "Congo": {
+        "id": "congo",
+        "name": "Congo",
+        "description": "Home to the Odzala-Kokoua National Park and western lowland gorillas."
+    },
+    "Djibouti": {
+        "id": "djibouti",
+        "name": "Djibouti",
+        "description": "Located at the Horn of Africa, known for its unique geological landscapes like Lake Assal."
+    },
+    "Egypt": {
+        "id": "egypt",
+        "name": "Egypt",
+        "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World, and the Nile River."
+    },
+    "Equatorial Guinea": {
+        "id": "equatorial_guinea",
+        "name": "Equatorial Guinea",
+        "description": "The only Spanish-speaking country in Africa, consisting of a mainland and islands."
+    },
+    "Eritrea": {
+        "id": "eritrea",
+        "name": "Eritrea",
+        "description": "Known for its Italian colonial architecture in Asmara and Red Sea coastline."
+    },
+    "Ethiopia": {
+        "id": "ethiopia",
+        "name": "Ethiopia",
+        "description": "The cradle of humanity, home to Lalibela's rock-hewn churches and the Simien Mountains."
+    },
+    "Gabon": {
+        "id": "gabon",
+        "name": "Gabon",
+        "description": "A haven for nature lovers, with over 10% of its land protected as national parks."
+    },
+    "Gambia": {
+        "id": "gambia",
+        "name": "Gambia",
+        "description": "The smallest country on mainland Africa, known for its diverse birdlife along the Gambia River."
+    },
+    "Ghana": {
+        "id": "ghana",
+        "name": "Ghana",
+        "description": "Famous for its friendly people, historic slave castles, and vibrant Kente cloth."
+    },
+    "Guinea": {
+        "id": "guinea",
+        "name": "Guinea",
+        "description": "Rich in minerals and the source of the Niger, Gambia, and Senegal rivers."
+    },
+    "Guinea-Bissau": {
+        "id": "guinea_bissau",
+        "name": "Guinea-Bissau",
+        "description": "Known for the Bijag\u00f3s Archipelago, a UNESCO Biosphere Reserve."
+    },
+    "Ivory Coast": {
+        "id": "ivory_coast",
+        "name": "Ivory Coast",
+        "description": "The world's largest producer of cocoa and home to the Basilica of Our Lady of Peace."
+    },
+    "Kenya": {
+        "id": "kenya",
+        "name": "Kenya",
+        "description": "A top safari destination with the Maasai Mara and diverse landscapes from savannahs to mountains."
+    },
+    "Lesotho": {
+        "id": "lesotho",
+        "name": "Lesotho",
+        "description": "The 'Kingdom in the Sky', the only country in the world entirely above 1,000m elevation."
+    },
+    "Liberia": {
+        "id": "liberia",
+        "name": "Liberia",
+        "description": "Africa's oldest republic, founded by freed slaves from the United States."
+    },
+    "Libya": {
+        "id": "libya",
+        "name": "Libya",
+        "description": "Home to the Sahara Desert and the spectacular Roman ruins of Leptis Magna."
+    },
+    "Madagascar": {
+        "id": "madagascar",
+        "name": "Madagascar",
+        "description": "An island continent with unique wildlife like lemurs and the Avenue of the Baobabs."
+    },
+    "Malawi": {
+        "id": "malawi",
+        "name": "Malawi",
+        "description": "Known as the 'Warm Heart of Africa', dominated by the massive Lake Malawi."
+    },
+    "Mali": {
+        "id": "mali",
+        "name": "Mali",
+        "description": "Home to the historic city of Timbuktu and the Great Mosque of Djenne."
+    },
+    "Mauritania": {
+        "id": "mauritania",
+        "name": "Mauritania",
+        "description": "Where the desert meets the ocean, home to the Banc d'Arguin National Park."
+    },
+    "Mauritius": {
+        "id": "mauritius",
+        "name": "Mauritius",
+        "description": "A tropical paradise known for its beaches, lagoons, and reefs."
+    },
+    "Morocco": {
+        "id": "morocco",
+        "name": "Morocco",
+        "description": "A land of medinas, souks, and the Atlas Mountains, blending Arab, Berber, and European influences."
+    },
+    "Mozambique": {
+        "id": "mozambique",
+        "name": "Mozambique",
+        "description": "Known for its stunning coastline, coral reefs, and the Bazaruto Archipelago."
+    },
+    "Namibia": {
+        "id": "namibia",
+        "name": "Namibia",
+        "description": "Home to the Namib Desert, the oldest in the world, and the wildlife of Etosha National Park."
+    },
+    "Niger": {
+        "id": "niger",
+        "name": "Niger",
+        "description": "Named after the Niger River, featuring the Air Mountains and Tenere Desert."
+    },
+    "Nigeria": {
+        "id": "nigeria",
+        "name": "Nigeria",
+        "description": "The most populous country in Africa, a cultural powerhouse known for Nollywood and Afrobeats."
+    },
+    "La Reunion": {
+        "id": "la_reunion",
+        "name": "La Reunion",
+        "description": "A French overseas department known for its volcanic landscape and hiking trails."
+    },
+    "Rwanda": {
+        "id": "rwanda",
+        "name": "Rwanda",
+        "description": "The 'Land of a Thousand Hills', famous for its mountain gorillas and clean capital, Kigali."
+    },
+    "Sao Tome and Principe": {
+        "id": "sao_tome_and_principe",
+        "name": "Sao Tome and Principe",
+        "description": "An island nation known for its cocoa production and dramatic volcanic spires."
+    },
+    "Senegal": {
+        "id": "senegal",
+        "name": "Senegal",
+        "description": "Known for its musical heritage, hospitality (Teranga), and the pink Lake Retba."
+    },
+    "Seychelles": {
+        "id": "seychelles",
+        "name": "Seychelles",
+        "description": "An archipelago of 115 islands, home to giant tortoises and pristine beaches."
+    },
+    "Sierra Leone": {
+        "id": "sierra_leone",
+        "name": "Sierra Leone",
+        "description": "Known for its white-sand beaches and the chimpanzee sanctuary at Tacugama."
+    },
+    "Somalia": {
+        "id": "somalia",
+        "name": "Somalia",
+        "description": "Has the longest coastline on Africa's mainland and a rich oral poetic tradition."
+    },
+    "South Africa": {
+        "id": "south_africa",
+        "name": "South Africa",
+        "description": "A 'Rainbow Nation' with diverse cultures, Table Mountain, and Kruger National Park."
+    },
+    "Sudan": {
+        "id": "sudan",
+        "name": "Sudan",
+        "description": "Home to more pyramids than Egypt, remnants of the ancient Kingdom of Kush."
+    },
+    "South Sudan": {
+        "id": "south_sudan",
+        "name": "South Sudan",
+        "description": "The world's youngest nation, home to the Sudd wetland and vast wildlife migrations."
+    },
+    "Swaziland": {
+        "id": "swaziland",
+        "name": "Swaziland",
+        "description": "Now known as Eswatini, a kingdom known for its wilderness reserves and festivals."
+    },
+    "Tanzania": {
+        "id": "tanzania",
+        "name": "Tanzania",
+        "description": "Home to Mount Kilimanjaro, the Serengeti migration, and the spice island of Zanzibar."
+    },
+    "Togo": {
+        "id": "togo",
+        "name": "Togo",
+        "description": "Known for its palm-lined beaches and hilltop villages."
+    },
+    "Tunisia": {
+        "id": "tunisia",
+        "name": "Tunisia",
+        "description": "Features the ruins of Carthage and the white-and-blue village of Sidi Bou Said."
+    },
+    "Uganda": {
+        "id": "uganda",
+        "name": "Uganda",
+        "description": "Winston Churchill's 'Pearl of Africa', home to the source of the Nile and mountain gorillas."
+    },
+    "Western Sahara": {
+        "id": "western_sahara",
+        "name": "Western Sahara",
+        "description": "A disputed territory with vast desert landscapes and a coastline on the Atlantic."
+    },
+    "DR Congo": {
+        "id": "dr_congo",
+        "name": "DR Congo",
+        "description": "A vast country with immense biodiversity, including the Okapi Wildlife Reserve."
+    },
+    "Zambia": {
+        "id": "zambia",
+        "name": "Zambia",
+        "description": "Home to the thundering Victoria Falls and walking safaris in South Luangwa."
+    },
+    "Zimbabwe": {
+        "id": "zimbabwe",
+        "name": "Zimbabwe",
+        "description": "Known for Victoria Falls, Hwange National Park, and the Great Zimbabwe ruins."
+    }
 };
 
 // --- MAP INITIALIZATION ---
