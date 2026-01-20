@@ -305,6 +305,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 
 // --- INTERACTION LOGIC & STATE ---
 const infoPanel = document.getElementById('info-panel');
+const attractionModal = infoPanel.querySelector('.attraction-modal');
 const countryNameEl = document.getElementById('country-name');
 const countryDescEl = document.getElementById('country-description');
 const closePanelBtn = document.getElementById('close-panel');
@@ -449,6 +450,7 @@ function showCountryInfo(name, layer) {
 
     infoPanel.classList.add('visible');
     infoPanel.setAttribute('aria-hidden', 'false');
+    attractionModal.classList.add('visible');
 
     closePanelBtn.focus();
 
@@ -473,11 +475,15 @@ function showCountryInfo(name, layer) {
 
 function hidePanel() {
     if (!infoPanel.classList.contains('visible')) return;
-    infoPanel.classList.remove('visible');
-    infoPanel.setAttribute('aria-hidden', 'true');
 
-    // Reset tilt transform on close
-    infoPanel.style.transform = '';
+    attractionModal.classList.remove('visible');
+
+    // Wait for the pop-out animation to finish before hiding the container
+    setTimeout(() => {
+        infoPanel.classList.remove('visible');
+        infoPanel.setAttribute('aria-hidden', 'true');
+        infoPanel.style.transform = ''; // Reset tilt
+    }, 300); // Matches animation duration
 
     // Reset selection state
     selectedFeatureName = null;
