@@ -45,6 +45,33 @@
     --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    /* New Animation Keyframes */
+    @keyframes modal-pop-in {
+        0% {
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        80% {
+            transform: scale(1.02);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes modal-pop-out {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(0.95);
+            opacity: 0;
+        }
+    }
 }
 
 body {
@@ -84,13 +111,6 @@ body {
 .info-panel {
     position: fixed;
     z-index: 1000;
-    background: var(--glass-bg);
-
-    /* Blur */
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-
-    box-shadow: var(--glass-shadow);
     color: var(--text-primary);
 
     /* Hidden State */
@@ -103,6 +123,19 @@ body {
     /* Layout */
     display: flex;
     flex-direction: column;
+}
+
+.attraction-modal {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: var(--glass-shadow);
+    border-radius: inherit;
+    animation: modal-pop-out 0.3s var(--ease-smooth) forwards;
+}
+
+.attraction-modal.visible {
+    animation: modal-pop-in 0.4s var(--ease-out-back) forwards;
 }
 
 /* Noise Texture */
