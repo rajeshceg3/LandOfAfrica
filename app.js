@@ -10,7 +10,10 @@ const countryData = {
         "languages": "Arabic, Tamazight",
         "currency": "Algerian Dinar",
         "description": "The largest country in Africa, featuring the Sahara Desert and ancient Roman ruins like Timgad.",
-        "fact": "Algeria has seven UNESCO World Heritage Sites."
+        "fact": "Algeria has seven UNESCO World Heritage Sites.",
+        "iso": "dz",
+        "gdp": "$193B",
+        "area": "2.38M km²"
     },
     "Angola": {
         "id": "angola",
@@ -20,7 +23,10 @@ const countryData = {
         "languages": "Portuguese",
         "currency": "Kwanza",
         "description": "Known for its vast oil reserves and the spectacular Kalandula Falls.",
-        "fact": "The giant sable antelope, thought to be extinct, was rediscovered here."
+        "fact": "The giant sable antelope, thought to be extinct, was rediscovered here.",
+        "iso": "ao",
+        "gdp": "$106B",
+        "area": "1.25M km²"
     },
     "Benin": {
         "id": "benin",
@@ -30,7 +36,10 @@ const countryData = {
         "languages": "French",
         "currency": "West African CFA franc",
         "description": "The birthplace of the Vodun (Voodoo) religion and home to the Royal Palaces of Abomey.",
-        "fact": "Benin was the seat of one of the oldest and most powerful African kingdoms, Dahomey."
+        "fact": "Benin was the seat of one of the oldest and most powerful African kingdoms, Dahomey.",
+        "iso": "bj",
+        "gdp": "$19B",
+        "area": "114K km²"
     },
     "Botswana": {
         "id": "botswana",
@@ -40,7 +49,10 @@ const countryData = {
         "languages": "English, Setswana",
         "currency": "Pula",
         "description": "A premier safari destination, home to the Okavango Delta and large elephant populations.",
-        "fact": "Botswana is home to the world’s largest concentration of African elephants."
+        "fact": "Botswana is home to the world’s largest concentration of African elephants.",
+        "iso": "bw",
+        "gdp": "$20B",
+        "area": "582K km²"
     },
     "Burkina Faso": {
         "id": "burkina_faso",
@@ -50,7 +62,10 @@ const countryData = {
         "languages": "French",
         "currency": "West African CFA franc",
         "description": "Known for its rich musical traditions and the annual FESPACO film festival.",
-        "fact": "The country’s name means 'Land of Incorruptible People'."
+        "fact": "The country’s name means 'Land of Incorruptible People'.",
+        "iso": "bf",
+        "gdp": "$20B",
+        "area": "274K km²"
     },
     "Burundi": {
         "id": "burundi",
@@ -60,7 +75,10 @@ const countryData = {
         "languages": "Kirundi, French, English",
         "currency": "Burundian Franc",
         "description": "A small nation with a big heart, known for its drumming traditions and Lake Tanganyika.",
-        "fact": "The Royal Drummers of Burundi are world-famous for their synchronized drumming."
+        "fact": "The Royal Drummers of Burundi are world-famous for their synchronized drumming.",
+        "iso": "bi",
+        "gdp": "$4B",
+        "area": "27K km²"
     },
     "Cameroon": {
         "id": "cameroon",
@@ -70,7 +88,10 @@ const countryData = {
         "languages": "French, English",
         "currency": "Central African CFA franc",
         "description": "Often called 'Africa in miniature' for its geological and cultural diversity.",
-        "fact": "It is home to over 200 different linguistic groups."
+        "fact": "It is home to over 200 different linguistic groups.",
+        "iso": "cm",
+        "gdp": "$49B",
+        "area": "475K km²"
     },
     "Cape Verde": {
         "id": "cape_verde",
@@ -80,7 +101,10 @@ const countryData = {
         "languages": "Portuguese",
         "currency": "Cape Verdean Escudo",
         "description": "An island nation known for its Creole Portuguese-African culture and Morna music.",
-        "fact": "Charles Darwin visited Cape Verde on his voyage with the HMS Beagle."
+        "fact": "Charles Darwin visited Cape Verde on his voyage with the HMS Beagle.",
+        "iso": "cv",
+        "gdp": "$2B",
+        "area": "4K km²"
     },
     "Central African Republic": {
         "id": "central_african_republic",
@@ -90,7 +114,10 @@ const countryData = {
         "languages": "Sango, French",
         "currency": "Central African CFA franc",
         "description": "Rich in biodiversity, with vast rainforests and wildlife populations.",
-        "fact": "It is one of the best places to see forest elephants and western lowland gorillas."
+        "fact": "It is one of the best places to see forest elephants and western lowland gorillas.",
+        "iso": "cf",
+        "gdp": "$2.7B",
+        "area": "622K km²"
     },
     "Chad": {
         "id": "chad",
@@ -100,7 +127,10 @@ const countryData = {
         "languages": "French, Arabic",
         "currency": "Central African CFA franc",
         "description": "Home to the Tibesti Mountains and Lake Chad, a vital water source for the region.",
-        "fact": "Lake Chad has shrunk by 95% since the 1960s but remains a critical ecosystem."
+        "fact": "Lake Chad has shrunk by 95% since the 1960s but remains a critical ecosystem.",
+        "iso": "td",
+        "gdp": "$12B",
+        "area": "1.28M km²"
     },
     "Comoros": {
         "id": "comoros",
@@ -110,7 +140,10 @@ const countryData = {
         "languages": "Comorian, French, Arabic",
         "currency": "Comorian Franc",
         "description": "A volcanic archipelago known as the 'Perfume Islands' for its fragrant plant life.",
-        "fact": "It is the world’s largest producer of ylang-ylang essence."
+        "fact": "It is the world’s largest producer of ylang-ylang essence.",
+        "iso": "km",
+        "gdp": "$1.3B",
+        "area": "2.2K km²"
     },
     "Congo": {
         "id": "congo",
@@ -120,7 +153,10 @@ const countryData = {
         "languages": "French",
         "currency": "Central African CFA franc",
         "description": "Home to the Odzala-Kokoua National Park and western lowland gorillas.",
-        "fact": "The Congo River is the deepest river in the world."
+        "fact": "The Congo River is the deepest river in the world.",
+        "iso": "cg",
+        "gdp": "$15B",
+        "area": "342K km²"
     },
     "Djibouti": {
         "id": "djibouti",
@@ -130,7 +166,10 @@ const countryData = {
         "languages": "French, Arabic",
         "currency": "Djiboutian Franc",
         "description": "Located at the Horn of Africa, known for its unique geological landscapes like Lake Assal.",
-        "fact": "Lake Assal is the lowest point on land in Africa and the third lowest on Earth."
+        "fact": "Lake Assal is the lowest point on land in Africa and the third lowest on Earth.",
+        "iso": "dj",
+        "gdp": "$3.8B",
+        "area": "23K km²"
     },
     "Egypt": {
         "id": "egypt",
@@ -140,7 +179,10 @@ const countryData = {
         "languages": "Arabic",
         "currency": "Egyptian Pound",
         "description": "Home to the Pyramids of Giza, one of the Seven Wonders of the Ancient World, and the Nile River.",
-        "fact": "The Great Pyramid of Giza was the tallest man-made structure for over 3,800 years."
+        "fact": "The Great Pyramid of Giza was the tallest man-made structure for over 3,800 years.",
+        "iso": "eg",
+        "gdp": "$476B",
+        "area": "1M km²"
     },
     "Equatorial Guinea": {
         "id": "equatorial_guinea",
@@ -150,7 +192,10 @@ const countryData = {
         "languages": "Spanish, French, Portuguese",
         "currency": "Central African CFA franc",
         "description": "The only Spanish-speaking country in Africa, consisting of a mainland and islands.",
-        "fact": "Its capital city, Malabo, is located on an island, not on the mainland."
+        "fact": "Its capital city, Malabo, is located on an island, not on the mainland.",
+        "iso": "gq",
+        "gdp": "$16B",
+        "area": "28K km²"
     },
     "Eritrea": {
         "id": "eritrea",
@@ -160,7 +205,10 @@ const countryData = {
         "languages": "Tigrinya, Arabic, English",
         "currency": "Nakfa",
         "description": "Known for its Italian colonial architecture in Asmara and Red Sea coastline.",
-        "fact": "Asmara is a UNESCO World Heritage site for its Modernist architecture."
+        "fact": "Asmara is a UNESCO World Heritage site for its Modernist architecture.",
+        "iso": "er",
+        "gdp": "$2.6B",
+        "area": "117K km²"
     },
     "Ethiopia": {
         "id": "ethiopia",
@@ -170,7 +218,10 @@ const countryData = {
         "languages": "Amharic",
         "currency": "Birr",
         "description": "The cradle of humanity, home to Lalibela's rock-hewn churches and the Simien Mountains.",
-        "fact": "Ethiopia is the only African nation never to be colonized."
+        "fact": "Ethiopia is the only African nation never to be colonized.",
+        "iso": "et",
+        "gdp": "$156B",
+        "area": "1.1M km²"
     },
     "Gabon": {
         "id": "gabon",
@@ -180,7 +231,10 @@ const countryData = {
         "languages": "French",
         "currency": "Central African CFA franc",
         "description": "A haven for nature lovers, with over 10% of its land protected as national parks.",
-        "fact": "Gabon is home to the 'surfing hippos' found on its beaches."
+        "fact": "Gabon is home to the 'surfing hippos' found on its beaches.",
+        "iso": "ga",
+        "gdp": "$22B",
+        "area": "267K km²"
     },
     "Gambia": {
         "id": "gambia",
@@ -190,7 +244,10 @@ const countryData = {
         "languages": "English",
         "currency": "Dalasi",
         "description": "The smallest country on mainland Africa, known for its diverse birdlife along the Gambia River.",
-        "fact": "It is completely surrounded by Senegal, except for its coastline."
+        "fact": "It is completely surrounded by Senegal, except for its coastline.",
+        "iso": "gm",
+        "gdp": "$2.2B",
+        "area": "10.6K km²"
     },
     "Ghana": {
         "id": "ghana",
@@ -200,7 +257,10 @@ const countryData = {
         "languages": "English",
         "currency": "Cedi",
         "description": "Famous for its friendly people, historic slave castles, and vibrant Kente cloth.",
-        "fact": "Lake Volta is the largest man-made lake in the world by surface area."
+        "fact": "Lake Volta is the largest man-made lake in the world by surface area.",
+        "iso": "gh",
+        "gdp": "$77B",
+        "area": "238K km²"
     },
     "Guinea": {
         "id": "guinea",
@@ -210,7 +270,10 @@ const countryData = {
         "languages": "French",
         "currency": "Guinean Franc",
         "description": "Rich in minerals and the source of the Niger, Gambia, and Senegal rivers.",
-        "fact": "Guinea possesses over a quarter of the world's bauxite reserves."
+        "fact": "Guinea possesses over a quarter of the world's bauxite reserves.",
+        "iso": "gn",
+        "gdp": "$21B",
+        "area": "245K km²"
     },
     "Guinea-Bissau": {
         "id": "guinea_bissau",
@@ -220,7 +283,10 @@ const countryData = {
         "languages": "Portuguese",
         "currency": "West African CFA franc",
         "description": "Known for the Bijagós Archipelago, a UNESCO Biosphere Reserve.",
-        "fact": "The Bijagós islands are home to rare saltwater hippos."
+        "fact": "The Bijagós islands are home to rare saltwater hippos.",
+        "iso": "gw",
+        "gdp": "$1.9B",
+        "area": "36K km²"
     },
     "Ivory Coast": {
         "id": "ivory_coast",
@@ -230,7 +296,10 @@ const countryData = {
         "languages": "French",
         "currency": "West African CFA franc",
         "description": "The world's largest producer of cocoa and home to the Basilica of Our Lady of Peace.",
-        "fact": "The Basilica in Yamoussoukro is the largest church in the world."
+        "fact": "The Basilica in Yamoussoukro is the largest church in the world.",
+        "iso": "ci",
+        "gdp": "$79B",
+        "area": "322K km²"
     },
     "Kenya": {
         "id": "kenya",
@@ -240,7 +309,10 @@ const countryData = {
         "languages": "Swahili, English",
         "currency": "Kenyan Shilling",
         "description": "A top safari destination with the Maasai Mara and diverse landscapes from savannahs to mountains.",
-        "fact": "Kenya is home to the 'Big Five' game animals."
+        "fact": "Kenya is home to the 'Big Five' game animals.",
+        "iso": "ke",
+        "gdp": "$116B",
+        "area": "580K km²"
     },
     "Lesotho": {
         "id": "lesotho",
@@ -250,7 +322,10 @@ const countryData = {
         "languages": "Sesotho, English",
         "currency": "Loti",
         "description": "The 'Kingdom in the Sky', the only country in the world entirely above 1,000m elevation.",
-        "fact": "It is one of only three enclaved countries in the world."
+        "fact": "It is one of only three enclaved countries in the world.",
+        "iso": "ls",
+        "gdp": "$2.5B",
+        "area": "30K km²"
     },
     "Liberia": {
         "id": "liberia",
@@ -260,7 +335,10 @@ const countryData = {
         "languages": "English",
         "currency": "Liberian Dollar",
         "description": "Africa's oldest republic, founded by freed slaves from the United States.",
-        "fact": "Its capital, Monrovia, is named after U.S. President James Monroe."
+        "fact": "Its capital, Monrovia, is named after U.S. President James Monroe.",
+        "iso": "lr",
+        "gdp": "$4.3B",
+        "area": "111K km²"
     },
     "Libya": {
         "id": "libya",
@@ -270,7 +348,10 @@ const countryData = {
         "languages": "Arabic",
         "currency": "Libyan Dinar",
         "description": "Home to the Sahara Desert and the spectacular Roman ruins of Leptis Magna.",
-        "fact": "Libya has the longest Mediterranean coastline of any African nation."
+        "fact": "Libya has the longest Mediterranean coastline of any African nation.",
+        "iso": "ly",
+        "gdp": "$40B",
+        "area": "1.76M km²"
     },
     "Madagascar": {
         "id": "madagascar",
@@ -280,7 +361,10 @@ const countryData = {
         "languages": "Malagasy, French",
         "currency": "Ariary",
         "description": "An island continent with unique wildlife like lemurs and the Avenue of the Baobabs.",
-        "fact": "Over 90% of its wildlife is found nowhere else on Earth."
+        "fact": "Over 90% of its wildlife is found nowhere else on Earth.",
+        "iso": "mg",
+        "gdp": "$16B",
+        "area": "587K km²"
     },
     "Malawi": {
         "id": "malawi",
@@ -290,7 +374,10 @@ const countryData = {
         "languages": "English, Chichewa",
         "currency": "Malawian Kwacha",
         "description": "Known as the 'Warm Heart of Africa', dominated by the massive Lake Malawi.",
-        "fact": "Lake Malawi contains more fish species than any other lake in the world."
+        "fact": "Lake Malawi contains more fish species than any other lake in the world.",
+        "iso": "mw",
+        "gdp": "$13B",
+        "area": "118K km²"
     },
     "Mali": {
         "id": "mali",
@@ -300,7 +387,10 @@ const countryData = {
         "languages": "Bambara, French",
         "currency": "West African CFA franc",
         "description": "Home to the historic city of Timbuktu and the Great Mosque of Djenne.",
-        "fact": "Mansa Musa, ruler of the Mali Empire, is considered the richest person in history."
+        "fact": "Mansa Musa, ruler of the Mali Empire, is considered the richest person in history.",
+        "iso": "ml",
+        "gdp": "$19B",
+        "area": "1.24M km²"
     },
     "Mauritania": {
         "id": "mauritania",
@@ -310,7 +400,10 @@ const countryData = {
         "languages": "Arabic",
         "currency": "Ouguiya",
         "description": "Where the desert meets the ocean, home to the Banc d'Arguin National Park.",
-        "fact": "The rich coastal waters make fishing a primary industry."
+        "fact": "The rich coastal waters make fishing a primary industry.",
+        "iso": "mr",
+        "gdp": "$10B",
+        "area": "1.03M km²"
     },
     "Mauritius": {
         "id": "mauritius",
@@ -320,7 +413,10 @@ const countryData = {
         "languages": "English, French",
         "currency": "Mauritian Rupee",
         "description": "A tropical paradise known for its beaches, lagoons, and reefs.",
-        "fact": "It was the only known home of the dodo bird before its extinction."
+        "fact": "It was the only known home of the dodo bird before its extinction.",
+        "iso": "mu",
+        "gdp": "$11.5B",
+        "area": "2K km²"
     },
     "Morocco": {
         "id": "morocco",
@@ -330,7 +426,10 @@ const countryData = {
         "languages": "Arabic, Tamazight",
         "currency": "Moroccan Dirham",
         "description": "A land of medinas, souks, and the Atlas Mountains, blending Arab, Berber, and European influences.",
-        "fact": "The University of Al Quaraouiyine is the oldest existing, continually operating educational institution in the world."
+        "fact": "The University of Al Quaraouiyine is the oldest existing, continually operating educational institution in the world.",
+        "iso": "ma",
+        "gdp": "$142B",
+        "area": "446K km²"
     },
     "Mozambique": {
         "id": "mozambique",
@@ -340,7 +439,10 @@ const countryData = {
         "languages": "Portuguese",
         "currency": "Metical",
         "description": "Known for its stunning coastline, coral reefs, and the Bazaruto Archipelago.",
-        "fact": "The Chapel of Nossa Senhora de Baluarte is considered the oldest European building in the Southern Hemisphere."
+        "fact": "The Chapel of Nossa Senhora de Baluarte is considered the oldest European building in the Southern Hemisphere.",
+        "iso": "mz",
+        "gdp": "$20B",
+        "area": "801K km²"
     },
     "Namibia": {
         "id": "namibia",
@@ -350,7 +452,10 @@ const countryData = {
         "languages": "English",
         "currency": "Namibian Dollar",
         "description": "Home to the Namib Desert, the oldest in the world, and the wildlife of Etosha National Park.",
-        "fact": "It has the highest sand dunes in the world at Sossusvlei."
+        "fact": "It has the highest sand dunes in the world at Sossusvlei.",
+        "iso": "na",
+        "gdp": "$13B",
+        "area": "825K km²"
     },
     "Niger": {
         "id": "niger",
@@ -360,7 +465,10 @@ const countryData = {
         "languages": "French",
         "currency": "West African CFA franc",
         "description": "Named after the Niger River, featuring the Air Mountains and Tenere Desert.",
-        "fact": "It is home to the 'Tree of Ténéré', once considered the most isolated tree on Earth."
+        "fact": "It is home to the 'Tree of Ténéré', once considered the most isolated tree on Earth.",
+        "iso": "ne",
+        "gdp": "$15B",
+        "area": "1.27M km²"
     },
     "Nigeria": {
         "id": "nigeria",
@@ -370,7 +478,10 @@ const countryData = {
         "languages": "English",
         "currency": "Naira",
         "description": "The most populous country in Africa, a cultural powerhouse known for Nollywood and Afrobeats.",
-        "fact": "Over 500 indigenous languages are spoken in Nigeria."
+        "fact": "Over 500 indigenous languages are spoken in Nigeria.",
+        "iso": "ng",
+        "gdp": "$477B",
+        "area": "923K km²"
     },
     "La Reunion": {
         "id": "la_reunion",
@@ -380,7 +491,10 @@ const countryData = {
         "languages": "French",
         "currency": "Euro",
         "description": "A French overseas department known for its volcanic landscape and hiking trails.",
-        "fact": "Piton de la Fournaise is one of the most active volcanoes in the world."
+        "fact": "Piton de la Fournaise is one of the most active volcanoes in the world.",
+        "iso": "re",
+        "gdp": "$20B",
+        "area": "2.5K km²"
     },
     "Rwanda": {
         "id": "rwanda",
@@ -390,7 +504,10 @@ const countryData = {
         "languages": "Kinyarwanda, English, French",
         "currency": "Rwandan Franc",
         "description": "The 'Land of a Thousand Hills', famous for its mountain gorillas and clean capital, Kigali.",
-        "fact": "Rwanda has the highest percentage of women in parliament in the world."
+        "fact": "Rwanda has the highest percentage of women in parliament in the world.",
+        "iso": "rw",
+        "gdp": "$13B",
+        "area": "26K km²"
     },
     "Sao Tome and Principe": {
         "id": "sao_tome_and_principe",
@@ -400,7 +517,10 @@ const countryData = {
         "languages": "Portuguese",
         "currency": "Dobra",
         "description": "An island nation known for its cocoa production and dramatic volcanic spires.",
-        "fact": "It was one of the first countries in Africa to grow cocoa."
+        "fact": "It was one of the first countries in Africa to grow cocoa.",
+        "iso": "st",
+        "gdp": "$0.5B",
+        "area": "964 km²"
     },
     "Senegal": {
         "id": "senegal",
@@ -410,7 +530,10 @@ const countryData = {
         "languages": "French, Wolof",
         "currency": "West African CFA franc",
         "description": "Known for its musical heritage, hospitality (Teranga), and the pink Lake Retba.",
-        "fact": "Dakar is the westernmost city on the African mainland."
+        "fact": "Dakar is the westernmost city on the African mainland.",
+        "iso": "sn",
+        "gdp": "$31B",
+        "area": "196K km²"
     },
     "Seychelles": {
         "id": "seychelles",
@@ -420,7 +543,10 @@ const countryData = {
         "languages": "Seychellois Creole, English, French",
         "currency": "Seychellois Rupee",
         "description": "An archipelago of 115 islands, home to giant tortoises and pristine beaches.",
-        "fact": "It has the smallest population of any sovereign African country."
+        "fact": "It has the smallest population of any sovereign African country.",
+        "iso": "sc",
+        "gdp": "$1.7B",
+        "area": "459 km²"
     },
     "Sierra Leone": {
         "id": "sierra_leone",
@@ -430,7 +556,10 @@ const countryData = {
         "languages": "English",
         "currency": "Leone",
         "description": "Known for its white-sand beaches and the chimpanzee sanctuary at Tacugama.",
-        "fact": "Freetown is home to the Cotton Tree, a historic symbol of freedom for former slaves."
+        "fact": "Freetown is home to the Cotton Tree, a historic symbol of freedom for former slaves.",
+        "iso": "sl",
+        "gdp": "$4B",
+        "area": "71K km²"
     },
     "Somalia": {
         "id": "somalia",
@@ -440,7 +569,10 @@ const countryData = {
         "languages": "Somali, Arabic",
         "currency": "Somali Shilling",
         "description": "Has the longest coastline on Africa's mainland and a rich oral poetic tradition.",
-        "fact": "Laas Geel contains some of the earliest known cave paintings in the Horn of Africa."
+        "fact": "Laas Geel contains some of the earliest known cave paintings in the Horn of Africa.",
+        "iso": "so",
+        "gdp": "$8B",
+        "area": "637K km²"
     },
     "South Africa": {
         "id": "south_africa",
@@ -450,7 +582,10 @@ const countryData = {
         "languages": "11 Official Languages",
         "currency": "Rand",
         "description": "A 'Rainbow Nation' with diverse cultures, Table Mountain, and Kruger National Park.",
-        "fact": "It is the only country in the world with three capital cities."
+        "fact": "It is the only country in the world with three capital cities.",
+        "iso": "za",
+        "gdp": "$405B",
+        "area": "1.22M km²"
     },
     "Sudan": {
         "id": "sudan",
@@ -460,7 +595,10 @@ const countryData = {
         "languages": "Arabic, English",
         "currency": "Sudanese Pound",
         "description": "Home to more pyramids than Egypt, remnants of the ancient Kingdom of Kush.",
-        "fact": "The Meroë pyramids are smaller and steeper than their Egyptian counterparts."
+        "fact": "The Meroë pyramids are smaller and steeper than their Egyptian counterparts.",
+        "iso": "sd",
+        "gdp": "$30B",
+        "area": "1.86M km²"
     },
     "South Sudan": {
         "id": "south_sudan",
@@ -470,7 +608,10 @@ const countryData = {
         "languages": "English",
         "currency": "South Sudanese Pound",
         "description": "The world's youngest nation, home to the Sudd wetland and vast wildlife migrations.",
-        "fact": "The Sudd is one of the world's largest wetlands."
+        "fact": "The Sudd is one of the world's largest wetlands.",
+        "iso": "ss",
+        "gdp": "$5B",
+        "area": "644K km²"
     },
     "Swaziland": {
         "id": "swaziland",
@@ -480,7 +621,10 @@ const countryData = {
         "languages": "Swazi, English",
         "currency": "Lilangeni",
         "description": "Now known as Eswatini, a kingdom known for its wilderness reserves and festivals.",
-        "fact": "It is one of the world's last remaining absolute monarchies."
+        "fact": "It is one of the world's last remaining absolute monarchies.",
+        "iso": "sz",
+        "gdp": "$4.8B",
+        "area": "17K km²"
     },
     "Tanzania": {
         "id": "tanzania",
@@ -490,7 +634,10 @@ const countryData = {
         "languages": "Swahili, English",
         "currency": "Tanzanian Shilling",
         "description": "Home to Mount Kilimanjaro, the Serengeti migration, and the spice island of Zanzibar.",
-        "fact": "Mount Kilimanjaro is the tallest free-standing mountain in the world."
+        "fact": "Mount Kilimanjaro is the tallest free-standing mountain in the world.",
+        "iso": "tz",
+        "gdp": "$76B",
+        "area": "945K km²"
     },
     "Togo": {
         "id": "togo",
@@ -500,7 +647,10 @@ const countryData = {
         "languages": "French",
         "currency": "West African CFA franc",
         "description": "Known for its palm-lined beaches and hilltop villages.",
-        "fact": "Lomé's Grand Marché is famous for its Nana Benz, wealthy female textile merchants."
+        "fact": "Lomé's Grand Marché is famous for its Nana Benz, wealthy female textile merchants.",
+        "iso": "tg",
+        "gdp": "$8B",
+        "area": "56K km²"
     },
     "Tunisia": {
         "id": "tunisia",
@@ -510,7 +660,10 @@ const countryData = {
         "languages": "Arabic",
         "currency": "Tunisian Dinar",
         "description": "Features the ruins of Carthage and the white-and-blue village of Sidi Bou Said.",
-        "fact": "The ancient city of Carthage was once the capital of the Punic empire which dominated the Mediterranean."
+        "fact": "The ancient city of Carthage was once the capital of the Punic empire which dominated the Mediterranean.",
+        "iso": "tn",
+        "gdp": "$46B",
+        "area": "163K km²"
     },
     "Uganda": {
         "id": "uganda",
@@ -520,7 +673,10 @@ const countryData = {
         "languages": "English, Swahili",
         "currency": "Ugandan Shilling",
         "description": "Winston Churchill's 'Pearl of Africa', home to the source of the Nile and mountain gorillas.",
-        "fact": "Uganda is home to about half of the world's remaining mountain gorilla population."
+        "fact": "Uganda is home to about half of the world's remaining mountain gorilla population.",
+        "iso": "ug",
+        "gdp": "$45B",
+        "area": "241K km²"
     },
     "Western Sahara": {
         "id": "western_sahara",
@@ -530,7 +686,10 @@ const countryData = {
         "languages": "Arabic",
         "currency": "Moroccan Dirham",
         "description": "A disputed territory with vast desert landscapes and a coastline on the Atlantic.",
-        "fact": "It has one of the lowest population densities in the world."
+        "fact": "It has one of the lowest population densities in the world.",
+        "iso": "eh",
+        "gdp": "N/A",
+        "area": "266K km²"
     },
     "DR Congo": {
         "id": "dr_congo",
@@ -540,7 +699,10 @@ const countryData = {
         "languages": "French",
         "currency": "Congolese Franc",
         "description": "A vast country with immense biodiversity, including the Okapi Wildlife Reserve.",
-        "fact": "Kinshasa and Brazzaville are the two closest capital cities in the world (excluding Vatican City/Rome)."
+        "fact": "Kinshasa and Brazzaville are the two closest capital cities in the world (excluding Vatican City/Rome).",
+        "iso": "cd",
+        "gdp": "$58B",
+        "area": "2.34M km²"
     },
     "Zambia": {
         "id": "zambia",
@@ -550,7 +712,10 @@ const countryData = {
         "languages": "English",
         "currency": "Kwacha",
         "description": "Home to the thundering Victoria Falls and walking safaris in South Luangwa.",
-        "fact": "The Victoria Falls are locally known as Mosi-oa-Tunya, 'The Smoke That Thunders'."
+        "fact": "The Victoria Falls are locally known as Mosi-oa-Tunya, 'The Smoke That Thunders'.",
+        "iso": "zm",
+        "gdp": "$27B",
+        "area": "752K km²"
     },
     "Zimbabwe": {
         "id": "zimbabwe",
@@ -560,7 +725,10 @@ const countryData = {
         "languages": "16 Official Languages",
         "currency": "USD, ZIG",
         "description": "Known for Victoria Falls, Hwange National Park, and the Great Zimbabwe ruins.",
-        "fact": "Great Zimbabwe is the largest collection of medieval ruins in sub-Saharan Africa."
+        "fact": "Great Zimbabwe is the largest collection of medieval ruins in sub-Saharan Africa.",
+        "iso": "zw",
+        "gdp": "$26B",
+        "area": "390K km²"
     }
 };
 
@@ -726,7 +894,10 @@ function showCountryInfo(name, layer) {
     const panelContent = infoPanel.querySelector('.panel-content');
 
     const html = `
-        <h2>${encodeHTML(country.name)}</h2>
+        <h2>
+            <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag">
+            ${encodeHTML(country.name)}
+        </h2>
 
         <div class="country-stats">
             <div class="stat-item">
@@ -741,9 +912,17 @@ function showCountryInfo(name, layer) {
                 <span class="stat-label">Currency</span>
                 <span class="stat-value">${encodeHTML(country.currency)}</span>
             </div>
-            <div class="stat-item full-width">
+            <div class="stat-item">
                 <span class="stat-label">Languages</span>
                 <span class="stat-value">${encodeHTML(country.languages)}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">GDP</span>
+                <span class="stat-value">${encodeHTML(country.gdp)}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Area</span>
+                <span class="stat-value">${encodeHTML(country.area)}</span>
             </div>
         </div>
 
@@ -930,3 +1109,33 @@ resetViewBtn.addEventListener('click', () => {
         easeLinearity: 0.1
     });
 });
+
+// --- RANDOM DISCOVERY ---
+const randomBtn = document.getElementById('random-country');
+
+if (randomBtn) {
+    randomBtn.addEventListener('click', () => {
+        const keys = Object.keys(countryData);
+        if (keys.length === 0) return;
+
+        // Simple random selection
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+
+        // Find the layer associated with this country
+        let targetLayer;
+        if (geoJsonLayer) {
+            geoJsonLayer.eachLayer(layer => {
+                if (layer.feature.properties.name === randomKey) {
+                    targetLayer = layer;
+                }
+            });
+        }
+
+        if (targetLayer) {
+            showCountryInfo(randomKey, targetLayer);
+            // Optional: clear search if it was used
+            searchInput.value = '';
+            searchResults.classList.add('hidden');
+        }
+    });
+}
