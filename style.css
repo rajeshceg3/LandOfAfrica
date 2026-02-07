@@ -397,3 +397,213 @@ path.leaflet-interactive:focus {
     stroke-opacity: 1;
     filter: drop-shadow(0 0 8px var(--accent-glow));
 }
+
+/*
+   =========================================
+   SEARCH INTERFACE
+   =========================================
+*/
+.search-container {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 1000;
+    width: 320px;
+    font-family: var(--font-sans);
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 8px 12px;
+    box-shadow: var(--shadow-md);
+    transition: box-shadow 0.3s var(--ease-smooth), border-color 0.3s ease;
+}
+
+.search-wrapper:focus-within {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-tertiary);
+    margin-right: 12px;
+}
+
+#country-search {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+    font-family: inherit;
+}
+
+#country-search::placeholder {
+    color: var(--text-tertiary);
+}
+
+.reset-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.reset-btn:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.reset-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    background: #0f1423; /* Solid dark background for readability */
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    z-index: 1001;
+}
+
+.search-results li {
+    padding: 10px 16px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.search-results li:last-child {
+    border-bottom: none;
+}
+
+.search-results li:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+/* Scrollbar for search results */
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+.search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+.search-results::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+/*
+   =========================================
+   ENRICHED INFO PANEL
+   =========================================
+*/
+.country-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+    margin-top: 8px;
+    animation: fadeIn 0.6s var(--ease-smooth) 0.2s backwards;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item.full-width {
+    grid-column: span 2;
+}
+
+.stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.country-description {
+    margin-bottom: 24px;
+}
+
+.fun-fact {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    animation: slideUp 0.6s var(--ease-smooth) 0.3s backwards;
+}
+
+.fact-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.fun-fact p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--text-secondary);
+    opacity: 1; /* Override default p opacity animation */
+    transform: none; /* Override default p transform */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile adjustments for search */
+@media (max-width: 768px) {
+    .search-container {
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+    }
+}
