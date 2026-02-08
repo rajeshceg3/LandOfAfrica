@@ -13,7 +13,10 @@ const countryData = {
         "fact": "Algeria has seven UNESCO World Heritage Sites.",
         "iso": "dz",
         "gdp": "$193B",
-        "area": "2.38M km²"
+        "area": "2.38M km²",
+        "greeting": "As-salamu alaykum",
+        "dish": "Couscous",
+        "landmark": "Maqam Echahid"
     },
     "Angola": {
         "id": "angola",
@@ -26,7 +29,10 @@ const countryData = {
         "fact": "The giant sable antelope, thought to be extinct, was rediscovered here.",
         "iso": "ao",
         "gdp": "$106B",
-        "area": "1.25M km²"
+        "area": "1.25M km²",
+        "greeting": "Olá",
+        "dish": "Moamba de Galinha",
+        "landmark": "Kalandula Falls"
     },
     "Benin": {
         "id": "benin",
@@ -39,7 +45,10 @@ const countryData = {
         "fact": "Benin was the seat of one of the oldest and most powerful African kingdoms, Dahomey.",
         "iso": "bj",
         "gdp": "$19B",
-        "area": "114K km²"
+        "area": "114K km²",
+        "greeting": "Boni",
+        "dish": "Kuli Kuli",
+        "landmark": "Royal Palaces of Abomey"
     },
     "Botswana": {
         "id": "botswana",
@@ -52,7 +61,10 @@ const countryData = {
         "fact": "Botswana is home to the world’s largest concentration of African elephants.",
         "iso": "bw",
         "gdp": "$20B",
-        "area": "582K km²"
+        "area": "582K km²",
+        "greeting": "Dumela",
+        "dish": "Seswaa",
+        "landmark": "Okavango Delta"
     },
     "Burkina Faso": {
         "id": "burkina_faso",
@@ -65,7 +77,10 @@ const countryData = {
         "fact": "The country’s name means 'Land of Incorruptible People'.",
         "iso": "bf",
         "gdp": "$20B",
-        "area": "274K km²"
+        "area": "274K km²",
+        "greeting": "Bonjour",
+        "dish": "Riz Gras",
+        "landmark": "Sindou Peaks"
     },
     "Burundi": {
         "id": "burundi",
@@ -78,7 +93,10 @@ const countryData = {
         "fact": "The Royal Drummers of Burundi are world-famous for their synchronized drumming.",
         "iso": "bi",
         "gdp": "$4B",
-        "area": "27K km²"
+        "area": "27K km²",
+        "greeting": "Bwakeye",
+        "dish": "Boko Boko",
+        "landmark": "Karera Waterfalls"
     },
     "Cameroon": {
         "id": "cameroon",
@@ -91,7 +109,10 @@ const countryData = {
         "fact": "It is home to over 200 different linguistic groups.",
         "iso": "cm",
         "gdp": "$49B",
-        "area": "475K km²"
+        "area": "475K km²",
+        "greeting": "Bonjour",
+        "dish": "Ndole",
+        "landmark": "Mount Cameroon"
     },
     "Cape Verde": {
         "id": "cape_verde",
@@ -104,7 +125,10 @@ const countryData = {
         "fact": "Charles Darwin visited Cape Verde on his voyage with the HMS Beagle.",
         "iso": "cv",
         "gdp": "$2B",
-        "area": "4K km²"
+        "area": "4K km²",
+        "greeting": "Olá",
+        "dish": "Cachupa",
+        "landmark": "Pico do Fogo"
     },
     "Central African Republic": {
         "id": "central_african_republic",
@@ -117,7 +141,10 @@ const countryData = {
         "fact": "It is one of the best places to see forest elephants and western lowland gorillas.",
         "iso": "cf",
         "gdp": "$2.7B",
-        "area": "622K km²"
+        "area": "622K km²",
+        "greeting": "Barra",
+        "dish": "Kanda",
+        "landmark": "Manovo-Gounda St. Floris"
     },
     "Chad": {
         "id": "chad",
@@ -130,7 +157,10 @@ const countryData = {
         "fact": "Lake Chad has shrunk by 95% since the 1960s but remains a critical ecosystem.",
         "iso": "td",
         "gdp": "$12B",
-        "area": "1.28M km²"
+        "area": "1.28M km²",
+        "greeting": "Lalékou",
+        "dish": "Daraba",
+        "landmark": "Zakouma National Park"
     },
     "Comoros": {
         "id": "comoros",
@@ -143,7 +173,10 @@ const countryData = {
         "fact": "It is the world’s largest producer of ylang-ylang essence.",
         "iso": "km",
         "gdp": "$1.3B",
-        "area": "2.2K km²"
+        "area": "2.2K km²",
+        "greeting": "Barza",
+        "dish": "Langouste a la Vanille",
+        "landmark": "Mount Karthala"
     },
     "Congo": {
         "id": "congo",
@@ -156,7 +189,10 @@ const countryData = {
         "fact": "The Congo River is the deepest river in the world.",
         "iso": "cg",
         "gdp": "$15B",
-        "area": "342K km²"
+        "area": "342K km²",
+        "greeting": "Mbote",
+        "dish": "Saka Saka",
+        "landmark": "Odzala-Kokoua National Park"
     },
     "Djibouti": {
         "id": "djibouti",
@@ -169,7 +205,10 @@ const countryData = {
         "fact": "Lake Assal is the lowest point on land in Africa and the third lowest on Earth.",
         "iso": "dj",
         "gdp": "$3.8B",
-        "area": "23K km²"
+        "area": "23K km²",
+        "greeting": "Salam",
+        "dish": "Skoudehkaris",
+        "landmark": "Lake Assal"
     },
     "Egypt": {
         "id": "egypt",
@@ -182,7 +221,10 @@ const countryData = {
         "fact": "The Great Pyramid of Giza was the tallest man-made structure for over 3,800 years.",
         "iso": "eg",
         "gdp": "$476B",
-        "area": "1M km²"
+        "area": "1M km²",
+        "greeting": "As-salamu alaykum",
+        "dish": "Koshary",
+        "landmark": "Pyramids of Giza"
     },
     "Equatorial Guinea": {
         "id": "equatorial_guinea",
@@ -195,7 +237,10 @@ const countryData = {
         "fact": "Its capital city, Malabo, is located on an island, not on the mainland.",
         "iso": "gq",
         "gdp": "$16B",
-        "area": "28K km²"
+        "area": "28K km²",
+        "greeting": "Hola",
+        "dish": "Succotash",
+        "landmark": "Malabo Cathedral"
     },
     "Eritrea": {
         "id": "eritrea",
@@ -208,7 +253,10 @@ const countryData = {
         "fact": "Asmara is a UNESCO World Heritage site for its Modernist architecture.",
         "iso": "er",
         "gdp": "$2.6B",
-        "area": "117K km²"
+        "area": "117K km²",
+        "greeting": "Selam",
+        "dish": "Zigni",
+        "landmark": "Fiat Tagliero Building"
     },
     "Ethiopia": {
         "id": "ethiopia",
@@ -221,7 +269,10 @@ const countryData = {
         "fact": "Ethiopia is the only African nation never to be colonized.",
         "iso": "et",
         "gdp": "$156B",
-        "area": "1.1M km²"
+        "area": "1.1M km²",
+        "greeting": "Tena Yistilign",
+        "dish": "Doro Wat",
+        "landmark": "Lalibela Churches"
     },
     "Gabon": {
         "id": "gabon",
@@ -234,7 +285,10 @@ const countryData = {
         "fact": "Gabon is home to the 'surfing hippos' found on its beaches.",
         "iso": "ga",
         "gdp": "$22B",
-        "area": "267K km²"
+        "area": "267K km²",
+        "greeting": "Mbolo",
+        "dish": "Nyembwe Chicken",
+        "landmark": "Loango National Park"
     },
     "Gambia": {
         "id": "gambia",
@@ -247,7 +301,10 @@ const countryData = {
         "fact": "It is completely surrounded by Senegal, except for its coastline.",
         "iso": "gm",
         "gdp": "$2.2B",
-        "area": "10.6K km²"
+        "area": "10.6K km²",
+        "greeting": "Salaam Aleekum",
+        "dish": "Domoda",
+        "landmark": "Kunta Kinteh Island"
     },
     "Ghana": {
         "id": "ghana",
@@ -260,7 +317,10 @@ const countryData = {
         "fact": "Lake Volta is the largest man-made lake in the world by surface area.",
         "iso": "gh",
         "gdp": "$77B",
-        "area": "238K km²"
+        "area": "238K km²",
+        "greeting": "Akwaaba",
+        "dish": "Jollof Rice",
+        "landmark": "Cape Coast Castle"
     },
     "Guinea": {
         "id": "guinea",
@@ -273,7 +333,10 @@ const countryData = {
         "fact": "Guinea possesses over a quarter of the world's bauxite reserves.",
         "iso": "gn",
         "gdp": "$21B",
-        "area": "245K km²"
+        "area": "245K km²",
+        "greeting": "Bonjour",
+        "dish": "Poulet Yassa",
+        "landmark": "Mount Nimba"
     },
     "Guinea-Bissau": {
         "id": "guinea_bissau",
@@ -286,7 +349,10 @@ const countryData = {
         "fact": "The Bijagós islands are home to rare saltwater hippos.",
         "iso": "gw",
         "gdp": "$1.9B",
-        "area": "36K km²"
+        "area": "36K km²",
+        "greeting": "Bom dia",
+        "dish": "Jollof Rice",
+        "landmark": "Bijagós Islands"
     },
     "Ivory Coast": {
         "id": "ivory_coast",
@@ -299,7 +365,10 @@ const countryData = {
         "fact": "The Basilica in Yamoussoukro is the largest church in the world.",
         "iso": "ci",
         "gdp": "$79B",
-        "area": "322K km²"
+        "area": "322K km²",
+        "greeting": "Ayoka",
+        "dish": "Garba",
+        "landmark": "Basilica of Our Lady of Peace"
     },
     "Kenya": {
         "id": "kenya",
@@ -312,7 +381,10 @@ const countryData = {
         "fact": "Kenya is home to the 'Big Five' game animals.",
         "iso": "ke",
         "gdp": "$116B",
-        "area": "580K km²"
+        "area": "580K km²",
+        "greeting": "Jambo",
+        "dish": "Nyama Choma",
+        "landmark": "Maasai Mara"
     },
     "Lesotho": {
         "id": "lesotho",
@@ -325,7 +397,10 @@ const countryData = {
         "fact": "It is one of only three enclaved countries in the world.",
         "iso": "ls",
         "gdp": "$2.5B",
-        "area": "30K km²"
+        "area": "30K km²",
+        "greeting": "Lumela",
+        "dish": "Papa",
+        "landmark": "Maletsunyane Falls"
     },
     "Liberia": {
         "id": "liberia",
@@ -338,7 +413,10 @@ const countryData = {
         "fact": "Its capital, Monrovia, is named after U.S. President James Monroe.",
         "iso": "lr",
         "gdp": "$4.3B",
-        "area": "111K km²"
+        "area": "111K km²",
+        "greeting": "Hello",
+        "dish": "Dumboy",
+        "landmark": "Sapo National Park"
     },
     "Libya": {
         "id": "libya",
@@ -351,7 +429,10 @@ const countryData = {
         "fact": "Libya has the longest Mediterranean coastline of any African nation.",
         "iso": "ly",
         "gdp": "$40B",
-        "area": "1.76M km²"
+        "area": "1.76M km²",
+        "greeting": "Marhaban",
+        "dish": "Bazeen",
+        "landmark": "Leptis Magna"
     },
     "Madagascar": {
         "id": "madagascar",
@@ -364,7 +445,10 @@ const countryData = {
         "fact": "Over 90% of its wildlife is found nowhere else on Earth.",
         "iso": "mg",
         "gdp": "$16B",
-        "area": "587K km²"
+        "area": "587K km²",
+        "greeting": "Manao ahoana",
+        "dish": "Romazava",
+        "landmark": "Avenue of the Baobabs"
     },
     "Malawi": {
         "id": "malawi",
@@ -377,7 +461,10 @@ const countryData = {
         "fact": "Lake Malawi contains more fish species than any other lake in the world.",
         "iso": "mw",
         "gdp": "$13B",
-        "area": "118K km²"
+        "area": "118K km²",
+        "greeting": "Muli bwanji",
+        "dish": "Chambo",
+        "landmark": "Lake Malawi"
     },
     "Mali": {
         "id": "mali",
@@ -390,7 +477,10 @@ const countryData = {
         "fact": "Mansa Musa, ruler of the Mali Empire, is considered the richest person in history.",
         "iso": "ml",
         "gdp": "$19B",
-        "area": "1.24M km²"
+        "area": "1.24M km²",
+        "greeting": "Aw ni sogoma",
+        "dish": "Tiguadege Na",
+        "landmark": "Great Mosque of Djenne"
     },
     "Mauritania": {
         "id": "mauritania",
@@ -403,7 +493,10 @@ const countryData = {
         "fact": "The rich coastal waters make fishing a primary industry.",
         "iso": "mr",
         "gdp": "$10B",
-        "area": "1.03M km²"
+        "area": "1.03M km²",
+        "greeting": "Salaam Aleikum",
+        "dish": "Thieboudienne",
+        "landmark": "Banc d'Arguin"
     },
     "Mauritius": {
         "id": "mauritius",
@@ -416,7 +509,10 @@ const countryData = {
         "fact": "It was the only known home of the dodo bird before its extinction.",
         "iso": "mu",
         "gdp": "$11.5B",
-        "area": "2K km²"
+        "area": "2K km²",
+        "greeting": "Bonzour",
+        "dish": "Dholl Puri",
+        "landmark": "Le Morne Brabant"
     },
     "Morocco": {
         "id": "morocco",
@@ -429,7 +525,10 @@ const countryData = {
         "fact": "The University of Al Quaraouiyine is the oldest existing, continually operating educational institution in the world.",
         "iso": "ma",
         "gdp": "$142B",
-        "area": "446K km²"
+        "area": "446K km²",
+        "greeting": "Salam",
+        "dish": "Tagine",
+        "landmark": "Hassan II Mosque"
     },
     "Mozambique": {
         "id": "mozambique",
@@ -442,7 +541,10 @@ const countryData = {
         "fact": "The Chapel of Nossa Senhora de Baluarte is considered the oldest European building in the Southern Hemisphere.",
         "iso": "mz",
         "gdp": "$20B",
-        "area": "801K km²"
+        "area": "801K km²",
+        "greeting": "Bom dia",
+        "dish": "Xima",
+        "landmark": "Island of Mozambique"
     },
     "Namibia": {
         "id": "namibia",
@@ -455,7 +557,10 @@ const countryData = {
         "fact": "It has the highest sand dunes in the world at Sossusvlei.",
         "iso": "na",
         "gdp": "$13B",
-        "area": "825K km²"
+        "area": "825K km²",
+        "greeting": "Hello",
+        "dish": "Kapana",
+        "landmark": "Sossusvlei Dunes"
     },
     "Niger": {
         "id": "niger",
@@ -468,7 +573,10 @@ const countryData = {
         "fact": "It is home to the 'Tree of Ténéré', once considered the most isolated tree on Earth.",
         "iso": "ne",
         "gdp": "$15B",
-        "area": "1.27M km²"
+        "area": "1.27M km²",
+        "greeting": "Fofo",
+        "dish": "Djerma Stew",
+        "landmark": "Agadez Mosque"
     },
     "Nigeria": {
         "id": "nigeria",
@@ -481,7 +589,10 @@ const countryData = {
         "fact": "Over 500 indigenous languages are spoken in Nigeria.",
         "iso": "ng",
         "gdp": "$477B",
-        "area": "923K km²"
+        "area": "923K km²",
+        "greeting": "Sannu / Nno / E kaaro",
+        "dish": "Jollof Rice",
+        "landmark": "Zuma Rock"
     },
     "La Reunion": {
         "id": "la_reunion",
@@ -494,7 +605,10 @@ const countryData = {
         "fact": "Piton de la Fournaise is one of the most active volcanoes in the world.",
         "iso": "re",
         "gdp": "$20B",
-        "area": "2.5K km²"
+        "area": "2.5K km²",
+        "greeting": "Oté",
+        "dish": "Rougail Saucisse",
+        "landmark": "Piton de la Fournaise"
     },
     "Rwanda": {
         "id": "rwanda",
@@ -507,7 +621,10 @@ const countryData = {
         "fact": "Rwanda has the highest percentage of women in parliament in the world.",
         "iso": "rw",
         "gdp": "$13B",
-        "area": "26K km²"
+        "area": "26K km²",
+        "greeting": "Muraho",
+        "dish": "Isombe",
+        "landmark": "Volcanoes National Park"
     },
     "Sao Tome and Principe": {
         "id": "sao_tome_and_principe",
@@ -520,7 +637,10 @@ const countryData = {
         "fact": "It was one of the first countries in Africa to grow cocoa.",
         "iso": "st",
         "gdp": "$0.5B",
-        "area": "964 km²"
+        "area": "964 km²",
+        "greeting": "Olá",
+        "dish": "Calulu",
+        "landmark": "Pico Cão Grande"
     },
     "Senegal": {
         "id": "senegal",
@@ -533,7 +653,10 @@ const countryData = {
         "fact": "Dakar is the westernmost city on the African mainland.",
         "iso": "sn",
         "gdp": "$31B",
-        "area": "196K km²"
+        "area": "196K km²",
+        "greeting": "Salaam Aleekum",
+        "dish": "Thieboudienne",
+        "landmark": "Lake Retba (Pink Lake)"
     },
     "Seychelles": {
         "id": "seychelles",
@@ -546,7 +669,10 @@ const countryData = {
         "fact": "It has the smallest population of any sovereign African country.",
         "iso": "sc",
         "gdp": "$1.7B",
-        "area": "459 km²"
+        "area": "459 km²",
+        "greeting": "Bonzour",
+        "dish": "Grilled Fish",
+        "landmark": "Anse Source d'Argent"
     },
     "Sierra Leone": {
         "id": "sierra_leone",
@@ -559,7 +685,10 @@ const countryData = {
         "fact": "Freetown is home to the Cotton Tree, a historic symbol of freedom for former slaves.",
         "iso": "sl",
         "gdp": "$4B",
-        "area": "71K km²"
+        "area": "71K km²",
+        "greeting": "Kushe",
+        "dish": "Cassava Leaf Stew",
+        "landmark": "Cotton Tree"
     },
     "Somalia": {
         "id": "somalia",
@@ -572,7 +701,10 @@ const countryData = {
         "fact": "Laas Geel contains some of the earliest known cave paintings in the Horn of Africa.",
         "iso": "so",
         "gdp": "$8B",
-        "area": "637K km²"
+        "area": "637K km²",
+        "greeting": "Assalamu Alaikum",
+        "dish": "Bariis Iskukaris",
+        "landmark": "Laas Geel"
     },
     "South Africa": {
         "id": "south_africa",
@@ -585,7 +717,10 @@ const countryData = {
         "fact": "It is the only country in the world with three capital cities.",
         "iso": "za",
         "gdp": "$405B",
-        "area": "1.22M km²"
+        "area": "1.22M km²",
+        "greeting": "Sawubona",
+        "dish": "Bobotie",
+        "landmark": "Table Mountain"
     },
     "Sudan": {
         "id": "sudan",
@@ -598,7 +733,10 @@ const countryData = {
         "fact": "The Meroë pyramids are smaller and steeper than their Egyptian counterparts.",
         "iso": "sd",
         "gdp": "$30B",
-        "area": "1.86M km²"
+        "area": "1.86M km²",
+        "greeting": "Salam",
+        "dish": "Ful Medames",
+        "landmark": "Meroë Pyramids"
     },
     "South Sudan": {
         "id": "south_sudan",
@@ -611,7 +749,10 @@ const countryData = {
         "fact": "The Sudd is one of the world's largest wetlands.",
         "iso": "ss",
         "gdp": "$5B",
-        "area": "644K km²"
+        "area": "644K km²",
+        "greeting": "Salam",
+        "dish": "Kisra",
+        "landmark": "Sudd Wetland"
     },
     "Swaziland": {
         "id": "swaziland",
@@ -624,7 +765,10 @@ const countryData = {
         "fact": "It is one of the world's last remaining absolute monarchies.",
         "iso": "sz",
         "gdp": "$4.8B",
-        "area": "17K km²"
+        "area": "17K km²",
+        "greeting": "Sawubona",
+        "dish": "Karoo Roast",
+        "landmark": "Hlane Royal National Park"
     },
     "Tanzania": {
         "id": "tanzania",
@@ -637,7 +781,10 @@ const countryData = {
         "fact": "Mount Kilimanjaro is the tallest free-standing mountain in the world.",
         "iso": "tz",
         "gdp": "$76B",
-        "area": "945K km²"
+        "area": "945K km²",
+        "greeting": "Jambo",
+        "dish": "Ugali",
+        "landmark": "Mount Kilimanjaro"
     },
     "Togo": {
         "id": "togo",
@@ -650,7 +797,10 @@ const countryData = {
         "fact": "Lomé's Grand Marché is famous for its Nana Benz, wealthy female textile merchants.",
         "iso": "tg",
         "gdp": "$8B",
-        "area": "56K km²"
+        "area": "56K km²",
+        "greeting": "Woezor",
+        "dish": "Fufu",
+        "landmark": "Koutammakou"
     },
     "Tunisia": {
         "id": "tunisia",
@@ -663,7 +813,10 @@ const countryData = {
         "fact": "The ancient city of Carthage was once the capital of the Punic empire which dominated the Mediterranean.",
         "iso": "tn",
         "gdp": "$46B",
-        "area": "163K km²"
+        "area": "163K km²",
+        "greeting": "Aslemah",
+        "dish": "Couscous",
+        "landmark": "Amphitheatre of El Jem"
     },
     "Uganda": {
         "id": "uganda",
@@ -676,7 +829,10 @@ const countryData = {
         "fact": "Uganda is home to about half of the world's remaining mountain gorilla population.",
         "iso": "ug",
         "gdp": "$45B",
-        "area": "241K km²"
+        "area": "241K km²",
+        "greeting": "Olyotya",
+        "dish": "Matoke",
+        "landmark": "Murchison Falls"
     },
     "Western Sahara": {
         "id": "western_sahara",
@@ -689,7 +845,10 @@ const countryData = {
         "fact": "It has one of the lowest population densities in the world.",
         "iso": "eh",
         "gdp": "N/A",
-        "area": "266K km²"
+        "area": "266K km²",
+        "greeting": "Salam",
+        "dish": "Couscous",
+        "landmark": "Spanish Cathedral"
     },
     "DR Congo": {
         "id": "dr_congo",
@@ -702,7 +861,10 @@ const countryData = {
         "fact": "Kinshasa and Brazzaville are the two closest capital cities in the world (excluding Vatican City/Rome).",
         "iso": "cd",
         "gdp": "$58B",
-        "area": "2.34M km²"
+        "area": "2.34M km²",
+        "greeting": "Mbote",
+        "dish": "Moambe Chicken",
+        "landmark": "Virunga National Park"
     },
     "Zambia": {
         "id": "zambia",
@@ -715,7 +877,10 @@ const countryData = {
         "fact": "The Victoria Falls are locally known as Mosi-oa-Tunya, 'The Smoke That Thunders'.",
         "iso": "zm",
         "gdp": "$27B",
-        "area": "752K km²"
+        "area": "752K km²",
+        "greeting": "Muli shani",
+        "dish": "Nshima",
+        "landmark": "Victoria Falls"
     },
     "Zimbabwe": {
         "id": "zimbabwe",
@@ -728,7 +893,10 @@ const countryData = {
         "fact": "Great Zimbabwe is the largest collection of medieval ruins in sub-Saharan Africa.",
         "iso": "zw",
         "gdp": "$26B",
-        "area": "390K km²"
+        "area": "390K km²",
+        "greeting": "Mhoro",
+        "dish": "Sadza",
+        "landmark": "Great Zimbabwe Ruins"
     }
 };
 
@@ -785,6 +953,44 @@ const activeStyle = {
     color: '#f43f5e', // Rose 500
     fillColor: '#f43f5e'
 };
+
+function showOnboarding() {
+    if (!geoJsonLayer) return;
+
+    // Pick a random country to pulse
+    const layers = [];
+    geoJsonLayer.eachLayer(layer => layers.push(layer));
+    if (layers.length > 0) {
+        const randomLayer = layers[Math.floor(Math.random() * layers.length)];
+        const path = randomLayer.getElement();
+        if (path) {
+            path.classList.add('pulse-animation');
+
+            // Create Toast
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.innerHTML = '<span>👆</span> Tap a country to explore!';
+            document.body.appendChild(toast);
+
+            // Dismiss on interaction
+            const dismiss = () => {
+                path.classList.remove('pulse-animation');
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 600);
+                map.off('click', dismiss);
+                map.off('movestart', dismiss);
+                if (document.getElementById('country-search')) {
+                    document.getElementById('country-search').removeEventListener('focus', dismiss);
+                }
+            };
+
+            map.on('click', dismiss);
+            map.on('movestart', dismiss);
+            const searchInput = document.getElementById('country-search');
+            if (searchInput) searchInput.addEventListener('focus', dismiss);
+        }
+    }
+}
 
 initializeMap();
 
@@ -856,6 +1062,8 @@ function initializeMap() {
             document.getElementById('country-search').removeAttribute('disabled');
             const randomBtn = document.getElementById('random-country');
             if (randomBtn) randomBtn.removeAttribute('disabled');
+
+            showOnboarding();
         })
         .catch(error => {
             console.error('Error loading GeoJSON:', error);
@@ -902,10 +1110,18 @@ function showCountryInfo(name, layer) {
     const panelContent = infoPanel.querySelector('.panel-content');
 
     const html = `
+        <h2 class="greeting-text">"${encodeHTML(country.greeting || 'Hello')}"</h2>
         <h2>
             <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag">
             ${encodeHTML(country.name)}
         </h2>
+
+        <div class="cultural-highlights">
+             <div class="cultural-badges">
+                <span class="culture-badge" title="National Dish">🍲 ${encodeHTML(country.dish || 'Local Cuisine')}</span>
+                <span class="culture-badge" title="Famous Landmark">🏛️ ${encodeHTML(country.landmark || 'Historic Sites')}</span>
+            </div>
+        </div>
 
         <div class="country-stats">
             <div class="stat-item">
