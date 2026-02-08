@@ -744,8 +744,8 @@ const map = L.map('map-container', {
     wheelPxPerZoomLevel: 120
 }).setView([1.5, 17], 3.2);
 
-// CartoDB Dark Matter Tiles
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+// CartoDB Positron (Light) Tiles
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 20
@@ -760,28 +760,30 @@ let lastFocusedElement = null;
 let geoJsonLayer;
 let selectedFeatureName = null;
 
-// Styles matching CSS variables
+// Styles matching CSS variables (Pastel Theme)
 const defaultStyle = {
-    fillColor: '#38bdf8', /* Sky 400 */
-    weight: 0.5,
-    color: '#38bdf8',
-    opacity: 0.3,
-    fillOpacity: 0.1, // Visible but subtle
+    fillColor: '#94a3b8', // Slate 400 - Neutral default
+    weight: 0.8,
+    color: '#cbd5e1', // Slate 300
+    opacity: 0.6,
+    fillOpacity: 0.2, // Light but visible
     className: 'country-poly'
 };
 
 const hoverStyle = {
-    fillOpacity: 0.2,
-    opacity: 0.8,
+    fillOpacity: 0.3,
+    opacity: 0.9,
     weight: 1.5,
-    color: '#38bdf8'
+    color: '#f43f5e', // Rose 500
+    fillColor: '#f43f5e'
 };
 
 const activeStyle = {
-    fillOpacity: 0.3,
+    fillOpacity: 0.4,
     opacity: 1,
     weight: 2.5,
-    color: '#818cf8' /* Indigo 400 accent */
+    color: '#f43f5e', // Rose 500
+    fillColor: '#f43f5e'
 };
 
 initializeMap();
@@ -889,7 +891,8 @@ function showCountryInfo(name, layer) {
         layer.bringToFront();
     }
 
-    map.stop();
+    // Trigger Confetti
+    fireConfetti();
 
     const panelContent = infoPanel.querySelector('.panel-content');
 
@@ -944,20 +947,16 @@ function showCountryInfo(name, layer) {
 
     // Smart Padding for Mobile vs Desktop
     const isMobile = window.innerWidth <= 768;
-
-    // Desktop: Panel is on right (width ~400px incl margins) -> Pad Right
-    // Mobile: Panel is on bottom (height ~40-50%) -> Pad Bottom
     const paddingOptions = isMobile
         ? { paddingBottomRight: [0, window.innerHeight * 0.45], paddingTopLeft: [0, 0] }
         : { paddingBottomRight: [500, 0], paddingTopLeft: [100, 0] };
 
-    // Cinematography: Slower, smoother camera movement
     map.flyToBounds(layer.getBounds(), {
         paddingTopLeft: paddingOptions.paddingTopLeft,
         paddingBottomRight: paddingOptions.paddingBottomRight,
-        maxZoom: 6, // Don't zoom in *too* close, keep context
-        duration: 1.6, // Slower for elegance
-        easeLinearity: 0.1 // More curve
+        maxZoom: 6,
+        duration: 1.6,
+        easeLinearity: 0.1
     });
 }
 
@@ -966,14 +965,12 @@ function hidePanel() {
 
     attractionModal.classList.remove('visible');
 
-    // Wait for the pop-out animation to finish before hiding the container
     setTimeout(() => {
         infoPanel.classList.remove('visible');
         infoPanel.setAttribute('aria-hidden', 'true');
         infoPanel.style.transform = ''; // Reset tilt
-    }, 300); // Matches animation duration
+    }, 300);
 
-    // Reset selection state
     selectedFeatureName = null;
     geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
 
@@ -982,8 +979,6 @@ function hidePanel() {
         lastFocusedElement = null;
     }
 
-    // Return to full view with matching elegant ease
-    // Center on Africa roughly
     map.flyTo([1.5, 17], 3.2, {
         duration: 1.8,
         easeLinearity: 0.1
@@ -993,7 +988,7 @@ function hidePanel() {
 closePanelBtn.addEventListener('click', hidePanel);
 map.on('click', hidePanel);
 
-// Keyboard Trap for Accessibility
+// Keyboard Trap
 infoPanel.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         hidePanel();
@@ -1019,31 +1014,23 @@ infoPanel.addEventListener('keydown', e => {
 });
 
 // --- DESKTOP PARALLAX TILT EFFECT ---
-// Adds a subtle 3D tilt to the panel based on mouse position
 const panelGlare = document.querySelector('.panel-glare');
 
 document.addEventListener('mousemove', (e) => {
-    if (window.innerWidth <= 768) return; // Desktop only
+    if (window.innerWidth <= 768) return;
     if (!infoPanel.classList.contains('visible')) return;
 
     const x = e.clientX / window.innerWidth;
     const y = e.clientY / window.innerHeight;
 
-    // Calculate rotation (range: -4deg to 4deg for subtlety)
     const rotateY = (x - 0.5) * 8;
     const rotateX = (0.5 - y) * 8;
 
-    // Apply transform while maintaining the scale
     infoPanel.style.transform = `translate3d(0, 0, 0) scale(1) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
 
-    // Glare effect logic
     if (panelGlare) {
-        // Calculate glare movement
-        // We move the gradient background to simulate light reflection
-        // The gradient is large, so we shift it across the panel
         const glareX = (x - 0.5) * 150;
         const glareY = (y - 0.5) * 150;
-
         panelGlare.style.transform = `translate(${glareX}%, ${glareY}%)`;
     }
 });
@@ -1072,7 +1059,6 @@ searchInput.addEventListener('input', (e) => {
             li.textContent = country.name;
             li.setAttribute('role', 'option');
             li.addEventListener('click', () => {
-                // Find the layer associated with this country
                 let targetLayer;
                 geoJsonLayer.eachLayer(layer => {
                     if (layer.feature.properties.name === country.name) {
@@ -1094,7 +1080,6 @@ searchInput.addEventListener('input', (e) => {
     }
 });
 
-// Hide results when clicking outside
 document.addEventListener('click', (e) => {
     if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
         searchResults.classList.add('hidden');
@@ -1117,11 +1102,7 @@ if (randomBtn) {
     randomBtn.addEventListener('click', () => {
         const keys = Object.keys(countryData);
         if (keys.length === 0) return;
-
-        // Simple random selection
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
-
-        // Find the layer associated with this country
         let targetLayer;
         if (geoJsonLayer) {
             geoJsonLayer.eachLayer(layer => {
@@ -1130,12 +1111,83 @@ if (randomBtn) {
                 }
             });
         }
-
         if (targetLayer) {
             showCountryInfo(randomKey, targetLayer);
-            // Optional: clear search if it was used
             searchInput.value = '';
             searchResults.classList.add('hidden');
         }
     });
+}
+
+// --- CONFETTI EFFECT ---
+// Simple Canvas Confetti
+const canvas = document.getElementById('confetti-canvas');
+let ctx = canvas ? canvas.getContext('2d') : null;
+
+function resizeCanvas() {
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+let particles = [];
+let animationFrameId = null;
+
+function fireConfetti() {
+    if (!canvas) return;
+
+    const count = 100;
+    const colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#ffffff'];
+
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            vx: (Math.random() - 0.5) * 12,
+            vy: (Math.random() - 0.5) * 12 - 5, // Slight upward bias
+            size: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            life: 1,
+            decay: 0.01 + Math.random() * 0.02,
+            gravity: 0.2
+        });
+    }
+
+    if (!animationFrameId) {
+        updateConfetti();
+    }
+}
+
+function updateConfetti() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Iterate backwards to safely splice
+    for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.life -= p.decay;
+
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (p.life <= 0) {
+            particles.splice(i, 1);
+        }
+    }
+
+    if (particles.length > 0) {
+        animationFrameId = requestAnimationFrame(updateConfetti);
+    } else {
+        animationFrameId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 }
