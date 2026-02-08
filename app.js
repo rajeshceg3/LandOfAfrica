@@ -851,6 +851,11 @@ function initializeMap() {
                     });
                 }
             }).addTo(map);
+
+            // Enable interactions now that data is ready
+            document.getElementById('country-search').removeAttribute('disabled');
+            const randomBtn = document.getElementById('random-country');
+            if (randomBtn) randomBtn.removeAttribute('disabled');
         })
         .catch(error => {
             console.error('Error loading GeoJSON:', error);
@@ -1059,6 +1064,7 @@ searchInput.addEventListener('input', (e) => {
             li.textContent = country.name;
             li.setAttribute('role', 'option');
             li.addEventListener('click', () => {
+                if (!geoJsonLayer) return;
                 let targetLayer;
                 geoJsonLayer.eachLayer(layer => {
                     if (layer.feature.properties.name === country.name) {
@@ -1075,14 +1081,17 @@ searchInput.addEventListener('input', (e) => {
             searchResults.appendChild(li);
         });
         searchResults.classList.remove('hidden');
+        searchInput.setAttribute('aria-expanded', 'true');
     } else {
         searchResults.classList.add('hidden');
+        searchInput.setAttribute('aria-expanded', 'false');
     }
 });
 
 document.addEventListener('click', (e) => {
     if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
         searchResults.classList.add('hidden');
+        searchInput.setAttribute('aria-expanded', 'false');
     }
 });
 
