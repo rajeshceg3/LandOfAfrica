@@ -5,54 +5,59 @@
        ========================================= */
 
     /* Glassmorphism & Surface Colors */
-    --glass-bg: rgba(255, 255, 255, 0.75); /* High opacity white for freshness */
-    --glass-border: rgba(255, 255, 255, 0.6);
-    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --glass-bg: rgba(255, 255, 255, 0.85); /* Increased opacity for cleaner look */
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-highlight: rgba(255, 255, 255, 0.95);
 
     /* Gradients */
-    --surface-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 240, 245, 0.4) 100%);
-    --border-gradient: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0));
-    --bg-gradient: linear-gradient(135deg, #fdfbf7 0%, #e2e8f0 100%); /* Warm off-white to cool slate */
+    --surface-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 245, 248, 0.6) 100%);
+    --bg-gradient-mesh: linear-gradient(125deg, #fff1f2, #fffbeb, #f0f9ff, #f5f3ff); /* Pastel Mesh */
 
     /* Shadows - Soft & Airy */
-    --shadow-sm: 0 4px 12px rgba(148, 163, 184, 0.1);
-    --shadow-md: 0 12px 24px -6px rgba(148, 163, 184, 0.15);
-    --shadow-lg: 0 32px 64px -12px rgba(148, 163, 184, 0.25);
+    --shadow-sm: 0 4px 12px rgba(148, 163, 184, 0.08);
+    --shadow-md: 0 12px 24px -6px rgba(148, 163, 184, 0.12);
+    --shadow-lg: 0 32px 64px -12px rgba(148, 163, 184, 0.18);
+    --shadow-float: 0 20px 40px -10px rgba(50, 50, 93, 0.15), 0 10px 20px -10px rgba(0, 0, 0, 0.1);
 
-    /* Deep ambient shadow for floating feel (Light Mode Version) */
+    /* Deep ambient shadow */
     --glass-shadow:
         0 40px 80px -20px rgba(50, 50, 93, 0.15),
         0 16px 32px -16px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
     --mobile-shadow:
         0 -20px 60px -10px rgba(50, 50, 93, 0.1),
         0 -10px 20px -5px rgba(0, 0, 0, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
-    /* Accents - Pastel & Vibrant */
-    --primary: #f43f5e; /* Rose 500 - Warm, energetic */
-    --primary-light: #fda4af; /* Rose 300 */
+    /* Accents - Refined Pastel & Vibrant */
+    --primary: #f43f5e; /* Rose 500 */
+    --primary-hover: #e11d48; /* Rose 600 */
     --primary-bg: #fff1f2; /* Rose 50 */
+    --primary-glow: rgba(244, 63, 94, 0.4);
 
     --secondary: #8b5cf6; /* Violet 500 */
-    --secondary-light: #c4b5fd; /* Violet 300 */
+    --secondary-light: #ddd6fe; /* Violet 200 */
+    --secondary-bg: #f5f3ff; /* Violet 50 */
 
-    --accent-glow: rgba(244, 63, 94, 0.4);
+    --accent-teal: #2dd4bf; /* Teal 400 */
+    --accent-amber: #fbbf24; /* Amber 400 */
 
     /* Text Colors - High Contrast Slate */
     --text-primary: #1e293b; /* Slate 800 */
     --text-secondary: #475569; /* Slate 600 */
-    --text-tertiary: #64748b; /* Slate 500 - Improved Contrast */
+    --text-tertiary: #64748b; /* Slate 500 */
 
     /* Animation */
     --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
     --ease-spring: cubic-bezier(0.25, 0.8, 0.25, 1);
     --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-    /* New Animation Keyframes */
+    /* Keyframes */
     @keyframes modal-pop-in {
         0% { transform: scale(0.95) translateY(10px); opacity: 0; }
         100% { transform: scale(1) translateY(0); opacity: 1; }
@@ -68,6 +73,24 @@
         60% { transform: scale(1.1); opacity: 1; }
         100% { transform: scale(1); }
     }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-6px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes pulse-soft {
+        0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(244, 63, 94, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
 }
 
 body {
@@ -76,23 +99,35 @@ body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: var(--bg-gradient);
+    background: var(--bg-gradient-mesh);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
     color: var(--text-primary);
     overflow: hidden;
     text-rendering: optimizeLegibility;
+}
+
+/* Grainy Texture Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: multiply;
 }
 
 #map-container {
     height: 100vh;
     width: 100vw;
     z-index: 0;
-    background: transparent; /* Let body gradient show through if needed */
+    background: transparent;
     position: relative;
 }
 
-/* Map Tiles Adjustment for Light Theme */
+/* Map Tiles Adjustment */
 .leaflet-layer {
-    /* Slight saturation boost for CartoDB Positron */
     filter: saturate(1.1) contrast(1.02);
     transition: filter 1.5s var(--ease-smooth);
 }
@@ -106,40 +141,34 @@ body {
     position: fixed;
     z-index: 1000;
     color: var(--text-primary);
-
-    /* Hidden State */
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
-
     will-change: transform, opacity;
-
-    /* Layout */
     display: flex;
     flex-direction: column;
 }
 
 .attraction-modal {
     background: var(--glass-bg);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
     box-shadow: var(--glass-shadow);
     border-radius: inherit;
-    border: 1px solid rgba(255,255,255,0.4);
+    border: 1px solid var(--glass-border);
     animation: modal-pop-out 0.3s var(--ease-smooth) forwards;
 }
 
 .attraction-modal.visible {
-    animation: modal-pop-in 0.5s var(--ease-out-back) forwards;
+    animation: modal-pop-in 0.6s var(--ease-out-back) forwards;
 }
 
-/* Subtle texture for paper-like feel */
 .info-panel::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.4;
+    opacity: 0.3;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
     background-size: 150px 150px;
     pointer-events: none;
@@ -147,13 +176,9 @@ body {
     border-radius: inherit;
 }
 
-/* Glare Effect - White Shine */
 .panel-glare {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(
         125deg,
         rgba(255,255,255,0) 0%,
@@ -176,7 +201,6 @@ body {
     pointer-events: auto;
 }
 
-/* Typography */
 .panel-content {
     position: relative;
     z-index: 2;
@@ -186,15 +210,10 @@ body {
 .info-panel h2 {
     margin: 0 0 12px 0;
     font-size: 32px;
-    font-weight: 700; /* Bolder in light mode */
+    font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.1;
     color: var(--text-primary);
-
-    /* Animation */
-    transform: translateY(10px);
-    opacity: 0;
-    transition: transform 0.6s var(--ease-smooth) 0.1s, opacity 0.5s ease 0.1s;
 }
 
 .info-panel p {
@@ -204,17 +223,6 @@ body {
     color: var(--text-secondary);
     font-weight: 450;
     letter-spacing: -0.01em;
-
-    /* Animation */
-    transform: translateY(10px);
-    opacity: 0;
-    transition: transform 0.6s var(--ease-smooth) 0.2s, opacity 0.5s ease 0.2s;
-}
-
-.info-panel.visible h2,
-.info-panel.visible p {
-    transform: translateY(0);
-    opacity: 1;
 }
 
 /* Close Button */
@@ -223,8 +231,8 @@ body {
     width: 36px;
     height: 36px;
     border: none;
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255,255,255,0.5);
     cursor: pointer;
     border-radius: 50%;
     display: flex;
@@ -244,11 +252,7 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/*
-   =========================================
-   DESKTOP OPTIMIZATIONS
-   =========================================
-*/
+/* Desktop */
 @media (min-width: 769px) {
     .info-panel {
         top: 80px;
@@ -256,109 +260,83 @@ body {
         width: 380px;
         padding: 40px;
         border-radius: 24px;
-
-        /* 3D Transform Defaults */
         transform-style: preserve-3d;
         perspective: 1500px;
         transform: translate3d(60px, 0, 0) scale(0.9) rotateY(-10deg);
-        transition:
-            transform 0.8s var(--ease-out-back),
-            opacity 0.6s ease,
-            visibility 0.6s;
+        transition: transform 0.8s var(--ease-out-back), opacity 0.6s ease, visibility 0.6s;
     }
-
     .info-panel.visible {
         transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
     }
-
     .close-btn {
         top: 20px;
         right: 20px;
         opacity: 0;
         transform: scale(0.5);
     }
-
     .info-panel.visible .close-btn {
         opacity: 1;
         transform: scale(1);
         transition-delay: 0.3s;
     }
-
     .mobile-handle { display: none; }
 }
 
-/*
-   =========================================
-   MOBILE OPTIMIZATIONS
-   =========================================
-*/
+/* Mobile */
 @media (max-width: 768px) {
     .info-panel {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
+        bottom: 0; left: 0; right: 0; width: 100%;
         border-radius: 32px 32px 0 0;
         padding: 32px 24px;
         padding-top: 48px;
         padding-bottom: max(32px, env(safe-area-inset-bottom));
-
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.98);
         box-shadow: var(--mobile-shadow);
-
-        /* Entrance */
         transform: translate3d(0, 100%, 0);
-        transition:
-            transform 0.6s var(--ease-spring),
-            opacity 0.4s ease,
-            visibility 0.4s;
+        transition: transform 0.6s var(--ease-spring), opacity 0.4s ease, visibility 0.4s;
     }
-
     .info-panel.visible {
         transform: translate3d(0, 0, 0);
     }
-
     .mobile-handle {
-        position: absolute;
-        top: 12px;
-        left: 50%;
+        position: absolute; top: 12px; left: 50%;
         transform: translateX(-50%);
-        width: 40px;
-        height: 5px;
+        width: 40px; height: 5px;
         background: rgba(0, 0, 0, 0.1);
         border-radius: 10px;
     }
-
     .close-btn {
-        top: 24px;
-        right: 24px;
-        width: 40px;
-        height: 40px;
+        top: 24px; right: 24px;
+        width: 40px; height: 40px;
         background: rgba(0,0,0,0.05);
     }
 }
 
-/* Utilities */
 .hidden { display: none !important; }
 
 /* Map Interactions */
+.leaflet-overlay-pane svg {
+    /* Gives countries a floating 3D effect above the map tiles */
+    filter: drop-shadow(0 8px 24px rgba(30, 41, 59, 0.25));
+}
+
+path.leaflet-interactive {
+    transition: stroke-width 0.4s var(--ease-elastic), fill 0.3s ease, fill-opacity 0.3s ease;
+    cursor: pointer;
+}
+
 path.leaflet-interactive:focus {
     outline: none;
     stroke: var(--primary);
     stroke-width: 3px;
     stroke-opacity: 1;
-    filter: drop-shadow(0 0 12px var(--accent-glow));
+    filter: drop-shadow(0 0 16px var(--primary-glow));
 }
 
-/*
-   =========================================
-   SEARCH INTERFACE
-   =========================================
-*/
+/* Search Interface */
 .search-container {
     position: fixed;
-    top: 24px;
-    left: 24px;
+    top: 24px; left: 24px;
     z-index: 1000;
     width: 340px;
     font-family: var(--font-sans);
@@ -372,8 +350,8 @@ path.leaflet-interactive:focus {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid rgba(255,255,255,0.8);
-    border-radius: 16px;
-    padding: 10px 16px;
+    border-radius: 99px; /* Pill shape */
+    padding: 12px 20px;
     box-shadow: var(--shadow-md);
     transition: all 0.3s var(--ease-smooth);
 }
@@ -381,11 +359,6 @@ path.leaflet-interactive:focus {
 .search-wrapper:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
-}
-
-.search-wrapper:focus-within {
-    border-color: var(--primary-light);
-    box-shadow: var(--shadow-lg), 0 0 0 3px rgba(244, 63, 94, 0.15);
 }
 
 .search-icon {
@@ -416,7 +389,7 @@ path.leaflet-interactive:focus {
     cursor: pointer;
     color: var(--text-tertiary);
     padding: 6px;
-    border-radius: 8px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -430,9 +403,7 @@ path.leaflet-interactive:focus {
 
 .search-results {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    top: 100%; left: 0; right: 0;
     margin-top: 12px;
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(255,255,255,0.8);
@@ -451,7 +422,7 @@ path.leaflet-interactive:focus {
     cursor: pointer;
     color: var(--text-secondary);
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 12px;
     font-weight: 500;
     transition: all 0.2s ease;
 }
@@ -462,11 +433,7 @@ path.leaflet-interactive:focus {
     transform: translateX(4px);
 }
 
-/*
-   =========================================
-   ENRICHED INFO PANEL
-   =========================================
-*/
+/* Enriched Info Panel Components */
 .country-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -490,11 +457,6 @@ path.leaflet-interactive:focus {
     animation: bounce-in 0.6s var(--ease-spring) backwards;
 }
 
-.info-panel h2 {
-    display: flex;
-    align-items: center;
-}
-
 .stat-label {
     font-size: 11px;
     text-transform: uppercase;
@@ -511,7 +473,7 @@ path.leaflet-interactive:focus {
 }
 
 .fun-fact {
-    background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+    background: linear-gradient(135deg, #fff 0%, #fff1f2 100%);
     border: 1px solid rgba(244, 63, 94, 0.1);
     border-radius: 16px;
     padding: 20px;
@@ -541,22 +503,13 @@ path.leaflet-interactive:focus {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Confetti Canvas */
 #confetti-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     pointer-events: none;
-    z-index: 2000; /* Above everything */
+    z-index: 2000;
 }
 
-/*
-   =========================================
-   CULTURAL HIGHLIGHTS
-   =========================================
-*/
 .cultural-highlights {
     margin-top: 16px;
     margin-bottom: 24px;
@@ -601,39 +554,21 @@ path.leaflet-interactive:focus {
     font-size: 16px;
 }
 
-/*
-   =========================================
-   ONBOARDING
-   =========================================
-*/
-@keyframes pulse {
-    0% {
-        stroke-width: 1;
-        stroke-opacity: 0.6;
-        fill-opacity: 0.2;
-    }
-    50% {
-        stroke-width: 3;
-        stroke-opacity: 1;
-        fill-opacity: 0.4;
-    }
-    100% {
-        stroke-width: 1;
-        stroke-opacity: 0.6;
-        fill-opacity: 0.2;
-    }
-}
-
 .pulse-animation {
     animation: pulse 2s infinite var(--ease-smooth);
     fill: var(--primary) !important;
     stroke: var(--primary) !important;
 }
 
+@keyframes pulse {
+    0% { stroke-width: 1; stroke-opacity: 0.6; fill-opacity: 0.2; }
+    50% { stroke-width: 3; stroke-opacity: 1; fill-opacity: 0.4; }
+    100% { stroke-width: 1; stroke-opacity: 0.6; fill-opacity: 0.2; }
+}
+
 .toast-notification {
     position: fixed;
-    bottom: 40px;
-    left: 50%;
+    bottom: 40px; left: 50%;
     transform: translateX(-50%) translateY(20px);
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
@@ -666,7 +601,41 @@ path.leaflet-interactive:focus {
 }
 
 @media (max-width: 768px) {
-    .toast-notification {
-        bottom: 120px;
+    .toast-notification { bottom: 120px; }
+}
+
+/* Staggered Animations */
+[class^="anim-stagger-"] {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFade 0.8s var(--ease-out-expo) forwards;
+}
+
+.anim-stagger-1 { animation-delay: 0.1s; }
+.anim-stagger-2 { animation-delay: 0.2s; }
+.anim-stagger-3 { animation-delay: 0.3s; }
+.anim-stagger-4 { animation-delay: 0.4s; }
+.anim-stagger-5 { animation-delay: 0.5s; }
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
     }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Button Active State */
+button:active, .reset-btn:active, .close-btn:active {
+    transform: scale(0.92);
+}
+
+/* Search Wrapper Polish override */
+.search-wrapper:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-lg), 0 0 0 4px var(--primary-glow);
+    transform: scale(1.02);
 }

@@ -931,7 +931,7 @@ let selectedFeatureName = null;
 // Styles matching CSS variables (Pastel Theme)
 const defaultStyle = {
     fillColor: '#94a3b8', // Slate 400 - Neutral default
-    weight: 0.8,
+    weight: 1,
     color: '#cbd5e1', // Slate 300
     opacity: 0.6,
     fillOpacity: 0.2, // Light but visible
@@ -939,19 +939,28 @@ const defaultStyle = {
 };
 
 const hoverStyle = {
-    fillOpacity: 0.3,
-    opacity: 0.9,
-    weight: 1.5,
+    fillOpacity: 0.4,
+    opacity: 1,
+    weight: 2,
+    color: '#f43f5e', // Rose 500
+    fillColor: '#fda4af' // Rose 300
+};
+
+const activeStyle = {
+    fillOpacity: 0.7,
+    opacity: 1,
+    weight: 3,
     color: '#f43f5e', // Rose 500
     fillColor: '#f43f5e'
 };
 
-const activeStyle = {
-    fillOpacity: 0.4,
-    opacity: 1,
-    weight: 2.5,
-    color: '#f43f5e', // Rose 500
-    fillColor: '#f43f5e'
+const dimmedStyle = {
+    fillColor: '#cbd5e1',
+    weight: 0.5,
+    color: '#e2e8f0',
+    opacity: 0.4,
+    fillOpacity: 0.05, // Ghostly
+    className: 'country-poly dimmed'
 };
 
 function showOnboarding() {
@@ -1089,19 +1098,18 @@ function showCountryInfo(name, layer) {
     const country = countryData[name];
     if (!country) return;
 
-    // Reset previous selection
-    if (selectedFeatureName && selectedFeatureName !== name) {
-        geoJsonLayer.eachLayer(l => {
-            geoJsonLayer.resetStyle(l);
-        });
-    }
-
     selectedFeatureName = name;
 
-    // Highlight current
-    if (layer) {
-        layer.setStyle(activeStyle);
-        layer.bringToFront();
+    // Spotlight Effect: Dim others, highlight current
+    if (geoJsonLayer) {
+        geoJsonLayer.eachLayer(l => {
+            if (l.feature.properties.name === name) {
+                l.setStyle(activeStyle);
+                l.bringToFront();
+            } else {
+                l.setStyle(dimmedStyle);
+            }
+        });
     }
 
     // Trigger Confetti
@@ -1110,20 +1118,22 @@ function showCountryInfo(name, layer) {
     const panelContent = infoPanel.querySelector('.panel-content');
 
     const html = `
-        <h2 class="greeting-text">"${encodeHTML(country.greeting || 'Hello')}"</h2>
-        <h2>
-            <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag">
-            ${encodeHTML(country.name)}
-        </h2>
+        <div class="anim-stagger-1">
+            <h2 class="greeting-text">"${encodeHTML(country.greeting || 'Hello')}"</h2>
+            <h2>
+                <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag">
+                ${encodeHTML(country.name)}
+            </h2>
+        </div>
 
-        <div class="cultural-highlights">
+        <div class="anim-stagger-2 cultural-highlights">
              <div class="cultural-badges">
                 <span class="culture-badge" title="National Dish">🍲 ${encodeHTML(country.dish || 'Local Cuisine')}</span>
                 <span class="culture-badge" title="Famous Landmark">🏛️ ${encodeHTML(country.landmark || 'Historic Sites')}</span>
             </div>
         </div>
 
-        <div class="country-stats">
+        <div class="anim-stagger-3 country-stats">
             <div class="stat-item">
                 <span class="stat-label">Capital</span>
                 <span class="stat-value">${encodeHTML(country.capital)}</span>
@@ -1150,9 +1160,11 @@ function showCountryInfo(name, layer) {
             </div>
         </div>
 
-        <p class="country-description">${encodeHTML(country.description)}</p>
+        <div class="anim-stagger-4">
+            <p class="country-description">${encodeHTML(country.description)}</p>
+        </div>
 
-        <div class="fun-fact">
+        <div class="anim-stagger-5 fun-fact">
             <span class="fact-icon">💡</span>
             <p>${encodeHTML(country.fact)}</p>
         </div>
@@ -1193,7 +1205,9 @@ function hidePanel() {
     }, 300);
 
     selectedFeatureName = null;
-    geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
+    if (geoJsonLayer) {
+        geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
+    }
 
     if (lastFocusedElement) {
         lastFocusedElement.focus();
@@ -1345,7 +1359,7 @@ if (randomBtn) {
 }
 
 // --- CONFETTI EFFECT ---
-// Simple Canvas Confetti
+// Physics-Based Canvas Confetti
 const canvas = document.getElementById('confetti-canvas');
 let ctx = canvas ? canvas.getContext('2d') : null;
 
@@ -1364,20 +1378,30 @@ let animationFrameId = null;
 function fireConfetti() {
     if (!canvas) return;
 
-    const count = 100;
-    const colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#ffffff'];
+    const count = 150;
+    const colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf', '#fbbf24'];
 
     for (let i = 0; i < count; i++) {
+        const x = window.innerWidth / 2;
+        const y = window.innerHeight / 2;
+
+        // Random spread angle
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 15 + 5;
+
         particles.push({
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-            vx: (Math.random() - 0.5) * 12,
-            vy: (Math.random() - 0.5) * 12 - 5, // Slight upward bias
-            size: Math.random() * 6 + 3,
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * velocity,
+            vy: Math.sin(angle) * velocity - 2, // Slight upward bias
+            size: Math.random() * 8 + 4,
             color: colors[Math.floor(Math.random() * colors.length)],
             life: 1,
-            decay: 0.01 + Math.random() * 0.02,
-            gravity: 0.2
+            decay: 0.005 + Math.random() * 0.015,
+            gravity: 0.4,
+            rotation: Math.random() * 360,
+            rotationSpeed: (Math.random() - 0.5) * 10,
+            shape: Math.random() > 0.5 ? 'circle' : 'rect' // Varied shapes
         });
     }
 
@@ -1390,19 +1414,37 @@ function updateConfetti() {
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Iterate backwards to safely splice
     for (let i = particles.length - 1; i >= 0; i--) {
         let p = particles[i];
+
+        // Physics
         p.x += p.vx;
         p.y += p.vy;
         p.vy += p.gravity;
+
+        // Friction / Drag
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+
+        p.rotation += p.rotationSpeed;
         p.life -= p.decay;
 
         ctx.fillStyle = p.color;
         ctx.globalAlpha = Math.max(0, p.life);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+
+        if (p.shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        }
+
+        ctx.restore();
 
         if (p.life <= 0) {
             particles.splice(i, 1);
@@ -1416,3 +1458,62 @@ function updateConfetti() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 }
+
+// --- MOUSE TRAIL EFFECT ---
+class MouseTrail {
+    constructor() {
+        this.colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf'];
+
+        // Throttle creation
+        this.lastX = 0;
+        this.lastY = 0;
+
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => this.createParticle(e));
+        }
+    }
+
+    createParticle(e) {
+        const x = e.clientX;
+        const y = e.clientY;
+
+        // Distance check to prevent too many particles
+        const dist = Math.hypot(x - this.lastX, y - this.lastY);
+        if (dist < 20) return;
+
+        this.lastX = x;
+        this.lastY = y;
+
+        const particle = document.createElement('div');
+        particle.style.position = 'fixed';
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.width = `${Math.random() * 6 + 2}px`;
+        particle.style.height = particle.style.width;
+        particle.style.background = this.colors[Math.floor(Math.random() * this.colors.length)];
+        particle.style.borderRadius = '50%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '9999';
+        particle.style.transform = 'translate(-50%, -50%) scale(1)';
+        particle.style.transition = 'transform 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s ease';
+        particle.style.opacity = '0.6';
+        particle.style.boxShadow = `0 0 6px ${particle.style.background}`;
+
+        document.body.appendChild(particle);
+
+        // Animate out
+        requestAnimationFrame(() => {
+            const destX = (Math.random() - 0.5) * 30;
+            const destY = (Math.random() - 0.5) * 30;
+            particle.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
+            particle.style.opacity = '0';
+        });
+
+        setTimeout(() => {
+            particle.remove();
+        }, 600);
+    }
+}
+
+// Initialize Trail
+new MouseTrail();
