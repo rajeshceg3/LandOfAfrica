@@ -1172,6 +1172,15 @@ class MouseTrail {
 // Initialize Trail
 new MouseTrail();
 
+// --- CURSOR TOOLTIP LOGIC ---
+const cursorTooltip = document.getElementById('cursor-tooltip');
+document.addEventListener('mousemove', (e) => {
+    if (cursorTooltip) {
+        cursorTooltip.style.left = e.clientX + 'px';
+        cursorTooltip.style.top = e.clientY + 'px';
+    }
+});
+
 // --- MAP INITIALIZATION ---
 // Center on Africa
 const map = L.map('map-container', {
@@ -1314,12 +1323,21 @@ function initializeMap() {
 
                     layer.on({
                         mouseover: e => {
+                            const tooltip = document.getElementById('cursor-tooltip');
+                            if (tooltip) {
+                                tooltip.textContent = countryName;
+                                tooltip.classList.remove('hidden');
+                            }
                             if (selectedFeatureName !== countryName) {
                                 e.target.setStyle(hoverStyle);
-                                document.getElementById('map-container').style.cursor = 'pointer';
+                                document.getElementById('map-container').style.cursor = 'none'; // Hide default cursor
                             }
                         },
                         mouseout: e => {
+                            const tooltip = document.getElementById('cursor-tooltip');
+                            if (tooltip) {
+                                tooltip.classList.add('hidden');
+                            }
                             if (selectedFeatureName !== countryName) {
                                 geoJsonLayer.resetStyle(e.target);
                                 document.getElementById('map-container').style.cursor = '';
@@ -1351,11 +1369,22 @@ function initializeMap() {
             if (startQuizBtn) startQuizBtn.removeAttribute('disabled');
 
             showOnboarding();
+
+            // Hide Loader
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('fade-out');
+                setTimeout(() => loader.remove(), 500);
+            }
         })
         .catch(error => {
             console.error('Error loading GeoJSON:', error);
             document.getElementById('error-message').textContent = 'Failed to load map data.';
             document.getElementById('error-message').classList.remove('hidden');
+
+            // Hide Loader even on error so user sees message
+            const loader = document.getElementById('loader');
+            if (loader) loader.classList.add('fade-out');
         });
 }
 
@@ -1383,9 +1412,13 @@ function showCountryInfo(name, layer) {
         geoJsonLayer.eachLayer(l => {
             if (l.feature.properties.name === name) {
                 l.setStyle(activeStyle);
+                const element = l.getElement();
+                if (element) element.classList.add('map-feature-lifted');
                 l.bringToFront();
             } else {
                 l.setStyle(dimmedStyle);
+                const element = l.getElement();
+                if (element) element.classList.remove('map-feature-lifted');
             }
         });
     }
@@ -1748,6 +1781,13 @@ function handleQuizAttempt(name, layer) {
         quizScore++;
         updateScore();
 
+        // Large Overlay Feedback
+        const overlay = document.createElement('div');
+        overlay.id = 'quiz-overlay';
+        overlay.innerHTML = '<div class="quiz-msg">CORRECT! 🎉</div>';
+        document.body.appendChild(overlay);
+        setTimeout(() => overlay.remove(), 1500);
+
         quizFeedback.textContent = "Correct! 🎉";
         quizFeedback.className = 'quiz-feedback success';
         quizFeedback.classList.remove('hidden');
@@ -1768,7 +1808,18 @@ function handleQuizAttempt(name, layer) {
         quizFeedback.className = 'quiz-feedback error';
         quizFeedback.classList.remove('hidden');
 
-        const originalStyle = layer.options.fillColor; // hacky, better to reset style
+        // Shake Map
+        const mapContainer = document.getElementById('map-container');
+        mapContainer.classList.add('shake');
+        setTimeout(() => mapContainer.classList.remove('shake'), 500);
+
+        // Overlay Feedback
+        const overlay = document.createElement('div');
+        overlay.id = 'quiz-overlay';
+        overlay.innerHTML = '<div class="quiz-msg" style="color: #ef4444;">TRY AGAIN! 😅</div>';
+        document.body.appendChild(overlay);
+        setTimeout(() => overlay.remove(), 1000);
+
         layer.setStyle({ fillColor: '#ef4444', fillOpacity: 0.6 }); // Red
         layer.bringToFront();
 
