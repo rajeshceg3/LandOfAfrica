@@ -1,52 +1,64 @@
 from playwright.sync_api import sync_playwright
 import time
-import os
 
 def run():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        # Create a context with desktop viewport
-        context = browser.new_context(viewport={'width': 1280, 'height': 800})
-        page = context.new_page()
+        page = browser.new_page()
+        page.goto("http://localhost:8000")
 
-        try:
-            print("Navigating to app...")
-            page.goto("http://localhost:8000")
+        # Wait for map to load
+        page.wait_for_timeout(3000)
 
-            # Wait for map to initialize (Leaflet adds classes)
-            print("Waiting for map...")
-            page.wait_for_selector("path.leaflet-interactive", state="visible", timeout=10000)
+        # 1. Test Quiz UI
+        print("Testing Quiz UI...")
+        # Check if button exists
+        quiz_btn = page.locator("#start-quiz")
+        if quiz_btn.is_visible():
+            quiz_btn.click()
+            page.wait_for_timeout(1000)
+            page.screenshot(path="verification/quiz_ui.png")
+            print("Quiz UI screenshot taken.")
 
-            # Allow some time for tiles and geojson to load
-            time.sleep(2)
+            # Exit Quiz
+            page.locator("#stop-quiz").click()
+            page.wait_for_timeout(500)
+        else:
+            print("Quiz button not found!")
 
-            # Test Search
-            print("Testing search...")
-            search_input = page.get_by_placeholder("Find a country...")
-            search_input.fill("Nigeria")
+        # 2. Test Info Panel Enrichment & Navigation
+        print("Testing Info Panel...")
+        # Simulate clicking a country. Since map clicks are canvas/svg, we can use search to open one.
+        search_input = page.locator("#country-search")
+        if search_input.is_disabled():
+             print("Search disabled, waiting...")
+             page.wait_for_timeout(2000)
 
-            # Wait for results
-            page.wait_for_selector("#search-results li", timeout=5000)
-            page.click("#search-results li >> text=Nigeria")
+        page.fill("#country-search", "Algeria")
+        page.wait_for_timeout(1000)
 
-            # Wait for info panel animation
-            print("Waiting for info panel...")
-            page.wait_for_selector(".info-panel.visible", timeout=5000)
+        # Click the first result
+        results = page.locator("#search-results li")
+        if results.count() > 0:
+            results.first.click()
+            page.wait_for_timeout(2000) # Wait for animation
 
-            # Wait a bit for staggering animations to complete
-            time.sleep(1.5)
+            page.screenshot(path="verification/info_panel.png")
+            print("Info Panel screenshot taken.")
 
-            # Take screenshot
-            os.makedirs("verification", exist_ok=True)
-            screenshot_path = "verification/verification_desktop.png"
-            page.screenshot(path=screenshot_path)
-            print(f"Screenshot saved to {screenshot_path}")
+            # Test Next Button
+            next_btn = page.locator(".nav-btn.next")
+            if next_btn.is_visible():
+                next_btn.click()
+                page.wait_for_timeout(1000)
+                page.screenshot(path="verification/info_panel_next.png")
+                print("Navigated to next country.")
+            else:
+                print("Next button not found!")
+        else:
+            print("Search results not found!")
 
-        except Exception as e:
-            print(f"Error: {e}")
-            page.screenshot(path="verification/error.png")
-        finally:
-            browser.close()
+        browser.close()
 
 if __name__ == "__main__":
     run()
