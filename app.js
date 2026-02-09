@@ -17,7 +17,9 @@ const countryData = {
         "greeting": "As-salamu alaykum",
         "dish": "Couscous",
         "landmark": "Maqam Echahid"
-    },
+    ,
+        "animal": "Fennec Fox",
+        "climate": "Arid / Mediterranean"},
     "Angola": {
         "id": "angola",
         "name": "Angola",
@@ -33,7 +35,9 @@ const countryData = {
         "greeting": "Olá",
         "dish": "Moamba de Galinha",
         "landmark": "Kalandula Falls"
-    },
+    ,
+        "animal": "Giant Sable Antelope",
+        "climate": "Tropical / Arid"},
     "Benin": {
         "id": "benin",
         "name": "Benin",
@@ -49,7 +53,9 @@ const countryData = {
         "greeting": "Boni",
         "dish": "Kuli Kuli",
         "landmark": "Royal Palaces of Abomey"
-    },
+    ,
+        "animal": "Leopard",
+        "climate": "Tropical"},
     "Botswana": {
         "id": "botswana",
         "name": "Botswana",
@@ -65,7 +71,9 @@ const countryData = {
         "greeting": "Dumela",
         "dish": "Seswaa",
         "landmark": "Okavango Delta"
-    },
+    ,
+        "animal": "Zebra",
+        "climate": "Semi-arid"},
     "Burkina Faso": {
         "id": "burkina_faso",
         "name": "Burkina Faso",
@@ -81,7 +89,9 @@ const countryData = {
         "greeting": "Bonjour",
         "dish": "Riz Gras",
         "landmark": "Sindou Peaks"
-    },
+    ,
+        "animal": "White Stallion",
+        "climate": "Tropical"},
     "Burundi": {
         "id": "burundi",
         "name": "Burundi",
@@ -97,7 +107,9 @@ const countryData = {
         "greeting": "Bwakeye",
         "dish": "Boko Boko",
         "landmark": "Karera Waterfalls"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Equatorial"},
     "Cameroon": {
         "id": "cameroon",
         "name": "Cameroon",
@@ -113,7 +125,9 @@ const countryData = {
         "greeting": "Bonjour",
         "dish": "Ndole",
         "landmark": "Mount Cameroon"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical"},
     "Cape Verde": {
         "id": "cape_verde",
         "name": "Cape Verde",
@@ -129,7 +143,9 @@ const countryData = {
         "greeting": "Olá",
         "dish": "Cachupa",
         "landmark": "Pico do Fogo"
-    },
+    ,
+        "animal": "Manatee",
+        "climate": "Arid"},
     "Central African Republic": {
         "id": "central_african_republic",
         "name": "Central African Republic",
@@ -145,7 +161,9 @@ const countryData = {
         "greeting": "Barra",
         "dish": "Kanda",
         "landmark": "Manovo-Gounda St. Floris"
-    },
+    ,
+        "animal": "Elephant",
+        "climate": "Tropical"},
     "Chad": {
         "id": "chad",
         "name": "Chad",
@@ -161,7 +179,9 @@ const countryData = {
         "greeting": "Lalékou",
         "dish": "Daraba",
         "landmark": "Zakouma National Park"
-    },
+    ,
+        "animal": "Goat / Lion",
+        "climate": "Desert / Tropical"},
     "Comoros": {
         "id": "comoros",
         "name": "Comoros",
@@ -177,7 +197,9 @@ const countryData = {
         "greeting": "Barza",
         "dish": "Langouste a la Vanille",
         "landmark": "Mount Karthala"
-    },
+    ,
+        "animal": "Mongoose Lemur",
+        "climate": "Tropical"},
     "Congo": {
         "id": "congo",
         "name": "Congo",
@@ -193,7 +215,9 @@ const countryData = {
         "greeting": "Mbote",
         "dish": "Saka Saka",
         "landmark": "Odzala-Kokoua National Park"
-    },
+    ,
+        "animal": "Gorilla",
+        "climate": "Tropical"},
     "Djibouti": {
         "id": "djibouti",
         "name": "Djibouti",
@@ -209,7 +233,9 @@ const countryData = {
         "greeting": "Salam",
         "dish": "Skoudehkaris",
         "landmark": "Lake Assal"
-    },
+    ,
+        "animal": "Elk",
+        "climate": "Desert"},
     "Egypt": {
         "id": "egypt",
         "name": "Egypt",
@@ -225,7 +251,9 @@ const countryData = {
         "greeting": "As-salamu alaykum",
         "dish": "Koshary",
         "landmark": "Pyramids of Giza"
-    },
+    ,
+        "animal": "Steppe Eagle",
+        "climate": "Desert"},
     "Equatorial Guinea": {
         "id": "equatorial_guinea",
         "name": "Equatorial Guinea",
@@ -241,7 +269,9 @@ const countryData = {
         "greeting": "Hola",
         "dish": "Succotash",
         "landmark": "Malabo Cathedral"
-    },
+    ,
+        "animal": "Gorilla",
+        "climate": "Tropical"},
     "Eritrea": {
         "id": "eritrea",
         "name": "Eritrea",
@@ -257,7 +287,9 @@ const countryData = {
         "greeting": "Selam",
         "dish": "Zigni",
         "landmark": "Fiat Tagliero Building"
-    },
+    ,
+        "animal": "Camel",
+        "climate": "Desert"},
     "Ethiopia": {
         "id": "ethiopia",
         "name": "Ethiopia",
@@ -273,7 +305,9 @@ const countryData = {
         "greeting": "Tena Yistilign",
         "dish": "Doro Wat",
         "landmark": "Lalibela Churches"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical / Alpine"},
     "Gabon": {
         "id": "gabon",
         "name": "Gabon",
@@ -289,7 +323,9 @@ const countryData = {
         "greeting": "Mbolo",
         "dish": "Nyembwe Chicken",
         "landmark": "Loango National Park"
-    },
+    ,
+        "animal": "Black Panther",
+        "climate": "Tropical"},
     "Gambia": {
         "id": "gambia",
         "name": "Gambia",
@@ -305,7 +341,9 @@ const countryData = {
         "greeting": "Salaam Aleekum",
         "dish": "Domoda",
         "landmark": "Kunta Kinteh Island"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical"},
     "Ghana": {
         "id": "ghana",
         "name": "Ghana",
@@ -321,7 +359,9 @@ const countryData = {
         "greeting": "Akwaaba",
         "dish": "Jollof Rice",
         "landmark": "Cape Coast Castle"
-    },
+    ,
+        "animal": "Golden Eagle",
+        "climate": "Tropical"},
     "Guinea": {
         "id": "guinea",
         "name": "Guinea",
@@ -337,7 +377,9 @@ const countryData = {
         "greeting": "Bonjour",
         "dish": "Poulet Yassa",
         "landmark": "Mount Nimba"
-    },
+    ,
+        "animal": "Elephant",
+        "climate": "Tropical"},
     "Guinea-Bissau": {
         "id": "guinea_bissau",
         "name": "Guinea-Bissau",
@@ -353,7 +395,9 @@ const countryData = {
         "greeting": "Bom dia",
         "dish": "Jollof Rice",
         "landmark": "Bijagós Islands"
-    },
+    ,
+        "animal": "Hippo",
+        "climate": "Tropical"},
     "Ivory Coast": {
         "id": "ivory_coast",
         "name": "Ivory Coast",
@@ -369,7 +413,9 @@ const countryData = {
         "greeting": "Ayoka",
         "dish": "Garba",
         "landmark": "Basilica of Our Lady of Peace"
-    },
+    ,
+        "animal": "Elephant",
+        "climate": "Tropical"},
     "Kenya": {
         "id": "kenya",
         "name": "Kenya",
@@ -384,7 +430,9 @@ const countryData = {
         "area": "580K km²",
         "greeting": "Jambo",
         "dish": "Nyama Choma",
-        "landmark": "Maasai Mara"
+        "landmark": "Maasai Mara",
+        "animal": "Lion",
+        "climate": "Tropical / Arid"
     },
     "Lesotho": {
         "id": "lesotho",
@@ -401,7 +449,9 @@ const countryData = {
         "greeting": "Lumela",
         "dish": "Papa",
         "landmark": "Maletsunyane Falls"
-    },
+    ,
+        "animal": "Black Rhino",
+        "climate": "Temperate"},
     "Liberia": {
         "id": "liberia",
         "name": "Liberia",
@@ -417,7 +467,9 @@ const countryData = {
         "greeting": "Hello",
         "dish": "Dumboy",
         "landmark": "Sapo National Park"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical"},
     "Libya": {
         "id": "libya",
         "name": "Libya",
@@ -433,7 +485,9 @@ const countryData = {
         "greeting": "Marhaban",
         "dish": "Bazeen",
         "landmark": "Leptis Magna"
-    },
+    ,
+        "animal": "Hawk",
+        "climate": "Desert"},
     "Madagascar": {
         "id": "madagascar",
         "name": "Madagascar",
@@ -449,7 +503,9 @@ const countryData = {
         "greeting": "Manao ahoana",
         "dish": "Romazava",
         "landmark": "Avenue of the Baobabs"
-    },
+    ,
+        "animal": "Ring-tailed Lemur",
+        "climate": "Tropical"},
     "Malawi": {
         "id": "malawi",
         "name": "Malawi",
@@ -465,7 +521,9 @@ const countryData = {
         "greeting": "Muli bwanji",
         "dish": "Chambo",
         "landmark": "Lake Malawi"
-    },
+    ,
+        "animal": "Fish Eagle",
+        "climate": "Subtropical"},
     "Mali": {
         "id": "mali",
         "name": "Mali",
@@ -481,7 +539,9 @@ const countryData = {
         "greeting": "Aw ni sogoma",
         "dish": "Tiguadege Na",
         "landmark": "Great Mosque of Djenne"
-    },
+    ,
+        "animal": "Vulture",
+        "climate": "Desert / Tropical"},
     "Mauritania": {
         "id": "mauritania",
         "name": "Mauritania",
@@ -497,7 +557,9 @@ const countryData = {
         "greeting": "Salaam Aleikum",
         "dish": "Thieboudienne",
         "landmark": "Banc d'Arguin"
-    },
+    ,
+        "animal": "Oryx",
+        "climate": "Desert"},
     "Mauritius": {
         "id": "mauritius",
         "name": "Mauritius",
@@ -513,7 +575,9 @@ const countryData = {
         "greeting": "Bonzour",
         "dish": "Dholl Puri",
         "landmark": "Le Morne Brabant"
-    },
+    ,
+        "animal": "Dodo (Extinct)",
+        "climate": "Tropical"},
     "Morocco": {
         "id": "morocco",
         "name": "Morocco",
@@ -529,7 +593,9 @@ const countryData = {
         "greeting": "Salam",
         "dish": "Tagine",
         "landmark": "Hassan II Mosque"
-    },
+    ,
+        "animal": "Barbary Lion",
+        "climate": "Mediterranean"},
     "Mozambique": {
         "id": "mozambique",
         "name": "Mozambique",
@@ -545,7 +611,9 @@ const countryData = {
         "greeting": "Bom dia",
         "dish": "Xima",
         "landmark": "Island of Mozambique"
-    },
+    ,
+        "animal": "Elephant",
+        "climate": "Tropical"},
     "Namibia": {
         "id": "namibia",
         "name": "Namibia",
@@ -561,7 +629,9 @@ const countryData = {
         "greeting": "Hello",
         "dish": "Kapana",
         "landmark": "Sossusvlei Dunes"
-    },
+    ,
+        "animal": "Oryx",
+        "climate": "Arid"},
     "Niger": {
         "id": "niger",
         "name": "Niger",
@@ -577,7 +647,9 @@ const countryData = {
         "greeting": "Fofo",
         "dish": "Djerma Stew",
         "landmark": "Agadez Mosque"
-    },
+    ,
+        "animal": "Dama Gazelle",
+        "climate": "Desert"},
     "Nigeria": {
         "id": "nigeria",
         "name": "Nigeria",
@@ -593,7 +665,9 @@ const countryData = {
         "greeting": "Sannu / Nno / E kaaro",
         "dish": "Jollof Rice",
         "landmark": "Zuma Rock"
-    },
+    ,
+        "animal": "Eagle",
+        "climate": "Tropical"},
     "La Reunion": {
         "id": "la_reunion",
         "name": "La Réunion",
@@ -609,7 +683,9 @@ const countryData = {
         "greeting": "Oté",
         "dish": "Rougail Saucisse",
         "landmark": "Piton de la Fournaise"
-    },
+    ,
+        "animal": "White-tailed Tropicbird",
+        "climate": "Tropical"},
     "Rwanda": {
         "id": "rwanda",
         "name": "Rwanda",
@@ -625,7 +701,9 @@ const countryData = {
         "greeting": "Muraho",
         "dish": "Isombe",
         "landmark": "Volcanoes National Park"
-    },
+    ,
+        "animal": "Gorilla",
+        "climate": "Temperate / Tropical"},
     "Sao Tome and Principe": {
         "id": "sao_tome_and_principe",
         "name": "Sao Tome and Principe",
@@ -641,7 +719,9 @@ const countryData = {
         "greeting": "Olá",
         "dish": "Calulu",
         "landmark": "Pico Cão Grande"
-    },
+    ,
+        "animal": "Parrot",
+        "climate": "Tropical"},
     "Senegal": {
         "id": "senegal",
         "name": "Senegal",
@@ -657,7 +737,9 @@ const countryData = {
         "greeting": "Salaam Aleekum",
         "dish": "Thieboudienne",
         "landmark": "Lake Retba (Pink Lake)"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical"},
     "Seychelles": {
         "id": "seychelles",
         "name": "Seychelles",
@@ -673,7 +755,9 @@ const countryData = {
         "greeting": "Bonzour",
         "dish": "Grilled Fish",
         "landmark": "Anse Source d'Argent"
-    },
+    ,
+        "animal": "Giant Tortoise",
+        "climate": "Tropical"},
     "Sierra Leone": {
         "id": "sierra_leone",
         "name": "Sierra Leone",
@@ -689,7 +773,9 @@ const countryData = {
         "greeting": "Kushe",
         "dish": "Cassava Leaf Stew",
         "landmark": "Cotton Tree"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical"},
     "Somalia": {
         "id": "somalia",
         "name": "Somalia",
@@ -705,7 +791,9 @@ const countryData = {
         "greeting": "Assalamu Alaikum",
         "dish": "Bariis Iskukaris",
         "landmark": "Laas Geel"
-    },
+    ,
+        "animal": "Leopard",
+        "climate": "Arid"},
     "South Africa": {
         "id": "south_africa",
         "name": "South Africa",
@@ -721,7 +809,9 @@ const countryData = {
         "greeting": "Sawubona",
         "dish": "Bobotie",
         "landmark": "Table Mountain"
-    },
+    ,
+        "animal": "Springbok",
+        "climate": "Temperate / Subtropical"},
     "Sudan": {
         "id": "sudan",
         "name": "Sudan",
@@ -737,7 +827,9 @@ const countryData = {
         "greeting": "Salam",
         "dish": "Ful Medames",
         "landmark": "Meroë Pyramids"
-    },
+    ,
+        "animal": "Secretary Bird",
+        "climate": "Desert"},
     "South Sudan": {
         "id": "south_sudan",
         "name": "South Sudan",
@@ -753,7 +845,9 @@ const countryData = {
         "greeting": "Salam",
         "dish": "Kisra",
         "landmark": "Sudd Wetland"
-    },
+    ,
+        "animal": "Fish Eagle",
+        "climate": "Tropical"},
     "Swaziland": {
         "id": "swaziland",
         "name": "Eswatini",
@@ -769,7 +863,9 @@ const countryData = {
         "greeting": "Sawubona",
         "dish": "Karoo Roast",
         "landmark": "Hlane Royal National Park"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Subtropical"},
     "Tanzania": {
         "id": "tanzania",
         "name": "Tanzania",
@@ -785,7 +881,9 @@ const countryData = {
         "greeting": "Jambo",
         "dish": "Ugali",
         "landmark": "Mount Kilimanjaro"
-    },
+    ,
+        "animal": "Giraffe",
+        "climate": "Tropical"},
     "Togo": {
         "id": "togo",
         "name": "Togo",
@@ -801,7 +899,9 @@ const countryData = {
         "greeting": "Woezor",
         "dish": "Fufu",
         "landmark": "Koutammakou"
-    },
+    ,
+        "animal": "Lion",
+        "climate": "Tropical"},
     "Tunisia": {
         "id": "tunisia",
         "name": "Tunisia",
@@ -817,7 +917,9 @@ const countryData = {
         "greeting": "Aslemah",
         "dish": "Couscous",
         "landmark": "Amphitheatre of El Jem"
-    },
+    ,
+        "animal": "Dromedary",
+        "climate": "Mediterranean"},
     "Uganda": {
         "id": "uganda",
         "name": "Uganda",
@@ -833,7 +935,9 @@ const countryData = {
         "greeting": "Olyotya",
         "dish": "Matoke",
         "landmark": "Murchison Falls"
-    },
+    ,
+        "animal": "Grey Crowned Crane",
+        "climate": "Tropical"},
     "Western Sahara": {
         "id": "western_sahara",
         "name": "Western Sahara",
@@ -849,7 +953,9 @@ const countryData = {
         "greeting": "Salam",
         "dish": "Couscous",
         "landmark": "Spanish Cathedral"
-    },
+    ,
+        "animal": "Fennec Fox",
+        "climate": "Desert"},
     "DR Congo": {
         "id": "dr_congo",
         "name": "DR Congo",
@@ -865,7 +971,9 @@ const countryData = {
         "greeting": "Mbote",
         "dish": "Moambe Chicken",
         "landmark": "Virunga National Park"
-    },
+    ,
+        "animal": "Okapi",
+        "climate": "Tropical"},
     "Zambia": {
         "id": "zambia",
         "name": "Zambia",
@@ -881,7 +989,9 @@ const countryData = {
         "greeting": "Muli shani",
         "dish": "Nshima",
         "landmark": "Victoria Falls"
-    },
+    ,
+        "animal": "Fish Eagle",
+        "climate": "Tropical"},
     "Zimbabwe": {
         "id": "zimbabwe",
         "name": "Zimbabwe",
@@ -897,8 +1007,170 @@ const countryData = {
         "greeting": "Mhoro",
         "dish": "Sadza",
         "landmark": "Great Zimbabwe Ruins"
-    }
+    ,
+        "animal": "Sable Antelope",
+        "climate": "Tropical"}
 };
+
+// --- CONFETTI EFFECT ---
+// Physics-Based Canvas Confetti
+const canvas = document.getElementById('confetti-canvas');
+let ctx = canvas ? canvas.getContext('2d') : null;
+
+function resizeCanvas() {
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+let particles = [];
+let animationFrameId = null;
+
+function fireConfetti() {
+    if (!canvas) return;
+
+    const count = 150;
+    const colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf', '#fbbf24'];
+
+    for (let i = 0; i < count; i++) {
+        const x = window.innerWidth / 2;
+        const y = window.innerHeight / 2;
+
+        // Random spread angle
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 15 + 5;
+
+        particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * velocity,
+            vy: Math.sin(angle) * velocity - 2, // Slight upward bias
+            size: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            life: 1,
+            decay: 0.005 + Math.random() * 0.015,
+            gravity: 0.4,
+            rotation: Math.random() * 360,
+            rotationSpeed: (Math.random() - 0.5) * 10,
+            shape: Math.random() > 0.5 ? 'circle' : 'rect' // Varied shapes
+        });
+    }
+
+    if (!animationFrameId) {
+        updateConfetti();
+    }
+}
+
+function updateConfetti() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+
+        // Physics
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+
+        // Friction / Drag
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+
+        p.rotation += p.rotationSpeed;
+        p.life -= p.decay;
+
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.life);
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+
+        if (p.shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        }
+
+        ctx.restore();
+
+        if (p.life <= 0) {
+            particles.splice(i, 1);
+        }
+    }
+
+    if (particles.length > 0) {
+        animationFrameId = requestAnimationFrame(updateConfetti);
+    } else {
+        animationFrameId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+}
+
+// --- MOUSE TRAIL EFFECT ---
+class MouseTrail {
+    constructor() {
+        this.colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf'];
+
+        // Throttle creation
+        this.lastX = 0;
+        this.lastY = 0;
+
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => this.createParticle(e));
+        }
+    }
+
+    createParticle(e) {
+        const x = e.clientX;
+        const y = e.clientY;
+
+        // Distance check to prevent too many particles
+        const dist = Math.hypot(x - this.lastX, y - this.lastY);
+        if (dist < 20) return;
+
+        this.lastX = x;
+        this.lastY = y;
+
+        const particle = document.createElement('div');
+        particle.style.position = 'fixed';
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.width = `${Math.random() * 6 + 2}px`;
+        particle.style.height = particle.style.width;
+        particle.style.background = this.colors[Math.floor(Math.random() * this.colors.length)];
+        particle.style.borderRadius = '50%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '9999';
+        particle.style.transform = 'translate(-50%, -50%) scale(1)';
+        particle.style.transition = 'transform 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s ease';
+        particle.style.opacity = '0.6';
+        particle.style.boxShadow = `0 0 6px ${particle.style.background}`;
+
+        document.body.appendChild(particle);
+
+        // Animate out
+        requestAnimationFrame(() => {
+            const destX = (Math.random() - 0.5) * 30;
+            const destY = (Math.random() - 0.5) * 30;
+            particle.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
+            particle.style.opacity = '0';
+        });
+
+        setTimeout(() => {
+            particle.remove();
+        }, 600);
+    }
+}
+
+// Initialize Trail
+new MouseTrail();
 
 // --- MAP INITIALIZATION ---
 // Center on Africa
@@ -1055,7 +1327,11 @@ function initializeMap() {
                         },
                         click: e => {
                             L.DomEvent.stopPropagation(e);
-                            openFeature();
+                            if (typeof isQuizActive !== 'undefined' && isQuizActive) {
+                                handleQuizAttempt(countryName, layer);
+                            } else {
+                                openFeature();
+                            }
                         },
                         keydown: e => {
                             if (e.key === 'Enter' || e.key === ' ') {
@@ -1071,6 +1347,8 @@ function initializeMap() {
             document.getElementById('country-search').removeAttribute('disabled');
             const randomBtn = document.getElementById('random-country');
             if (randomBtn) randomBtn.removeAttribute('disabled');
+            const startQuizBtn = document.getElementById('start-quiz');
+            if (startQuizBtn) startQuizBtn.removeAttribute('disabled');
 
             showOnboarding();
         })
@@ -1130,6 +1408,8 @@ function showCountryInfo(name, layer) {
              <div class="cultural-badges">
                 <span class="culture-badge" title="National Dish">🍲 ${encodeHTML(country.dish || 'Local Cuisine')}</span>
                 <span class="culture-badge" title="Famous Landmark">🏛️ ${encodeHTML(country.landmark || 'Historic Sites')}</span>
+                <span class="culture-badge" title="National Animal">🐾 ${encodeHTML(country.animal || 'Local Wildlife')}</span>
+                <span class="culture-badge" title="Climate">☀️ ${encodeHTML(country.climate || 'Diverse')}</span>
             </div>
         </div>
 
@@ -1168,9 +1448,24 @@ function showCountryInfo(name, layer) {
             <span class="fact-icon">💡</span>
             <p>${encodeHTML(country.fact)}</p>
         </div>
+
+        <div class="anim-stagger-5 panel-nav">
+             <button class="nav-btn prev" aria-label="Previous Country">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+             </button>
+             <button class="nav-btn next" aria-label="Next Country">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+             </button>
+        </div>
     `;
 
     panelContent.innerHTML = html;
+
+    // Bind Navigation
+    const prevBtn = panelContent.querySelector('.nav-btn.prev');
+    const nextBtn = panelContent.querySelector('.nav-btn.next');
+    if (prevBtn) prevBtn.addEventListener('click', () => navigateCountry(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => navigateCountry(1));
 
     infoPanel.classList.add('visible');
     infoPanel.setAttribute('aria-hidden', 'false');
@@ -1358,162 +1653,127 @@ if (randomBtn) {
     });
 }
 
-// --- CONFETTI EFFECT ---
-// Physics-Based Canvas Confetti
-const canvas = document.getElementById('confetti-canvas');
-let ctx = canvas ? canvas.getContext('2d') : null;
+function navigateCountry(direction) {
+    if (!selectedFeatureName) return;
 
-function resizeCanvas() {
-    if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+    const keys = Object.keys(countryData).sort(); // Ensure consistent order
+    const currentIndex = keys.indexOf(selectedFeatureName);
 
-let particles = [];
-let animationFrameId = null;
+    if (currentIndex === -1) return;
 
-function fireConfetti() {
-    if (!canvas) return;
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = keys.length - 1;
+    if (newIndex >= keys.length) newIndex = 0;
 
-    const count = 150;
-    const colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf', '#fbbf24'];
+    const newKey = keys[newIndex];
+    let targetLayer;
 
-    for (let i = 0; i < count; i++) {
-        const x = window.innerWidth / 2;
-        const y = window.innerHeight / 2;
-
-        // Random spread angle
-        const angle = Math.random() * Math.PI * 2;
-        const velocity = Math.random() * 15 + 5;
-
-        particles.push({
-            x: x,
-            y: y,
-            vx: Math.cos(angle) * velocity,
-            vy: Math.sin(angle) * velocity - 2, // Slight upward bias
-            size: Math.random() * 8 + 4,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            life: 1,
-            decay: 0.005 + Math.random() * 0.015,
-            gravity: 0.4,
-            rotation: Math.random() * 360,
-            rotationSpeed: (Math.random() - 0.5) * 10,
-            shape: Math.random() > 0.5 ? 'circle' : 'rect' // Varied shapes
+    if (geoJsonLayer) {
+        geoJsonLayer.eachLayer(layer => {
+            if (layer.feature.properties.name === newKey) {
+                targetLayer = layer;
+            }
         });
     }
 
-    if (!animationFrameId) {
-        updateConfetti();
+    if (targetLayer) {
+        showCountryInfo(newKey, targetLayer);
     }
 }
 
-function updateConfetti() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// --- QUIZ LOGIC ---
+let isQuizActive = false;
+let quizScore = 0;
+let quizTarget = null;
 
-    for (let i = particles.length - 1; i >= 0; i--) {
-        let p = particles[i];
+const quizUI = document.getElementById('quiz-ui');
+const quizScoreVal = document.getElementById('quiz-score-val');
+const quizTargetEl = document.getElementById('quiz-target');
+const quizFeedback = document.getElementById('quiz-feedback');
+const startQuizBtn = document.getElementById('start-quiz');
+const stopQuizBtn = document.getElementById('stop-quiz');
 
-        // Physics
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += p.gravity;
+if (startQuizBtn) {
+    startQuizBtn.addEventListener('click', startQuiz);
+}
 
-        // Friction / Drag
-        p.vx *= 0.96;
-        p.vy *= 0.96;
+if (stopQuizBtn) {
+    stopQuizBtn.addEventListener('click', stopQuiz);
+}
 
-        p.rotation += p.rotationSpeed;
-        p.life -= p.decay;
+function startQuiz() {
+    isQuizActive = true;
+    quizScore = 0;
+    updateScore();
 
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = Math.max(0, p.life);
+    // UI Updates
+    hidePanel(); // Close info panel if open
+    document.querySelector('.search-wrapper').classList.add('hidden'); // Hide search
+    quizUI.classList.remove('hidden');
 
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation * Math.PI / 180);
+    // Zoom out to see whole continent
+    map.flyTo([1.5, 17], 3.2, { duration: 1.5 });
 
-        if (p.shape === 'circle') {
-            ctx.beginPath();
-            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
-            ctx.fill();
-        } else {
-            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-        }
+    nextQuestion();
+}
 
-        ctx.restore();
+function stopQuiz() {
+    isQuizActive = false;
+    quizUI.classList.add('hidden');
+    document.querySelector('.search-wrapper').classList.remove('hidden');
 
-        if (p.life <= 0) {
-            particles.splice(i, 1);
-        }
-    }
-
-    if (particles.length > 0) {
-        animationFrameId = requestAnimationFrame(updateConfetti);
-    } else {
-        animationFrameId = null;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Reset Map Styles
+    if (geoJsonLayer) {
+        geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
     }
 }
 
-// --- MOUSE TRAIL EFFECT ---
-class MouseTrail {
-    constructor() {
-        this.colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf'];
+function nextQuestion() {
+    const keys = Object.keys(countryData);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    quizTarget = randomKey;
 
-        // Throttle creation
-        this.lastX = 0;
-        this.lastY = 0;
+    quizTargetEl.textContent = countryData[randomKey].name;
+    quizFeedback.classList.add('hidden');
+    quizFeedback.className = 'quiz-feedback hidden'; // Reset classes
+}
 
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => this.createParticle(e));
-        }
-    }
+function updateScore() {
+    if (quizScoreVal) quizScoreVal.textContent = quizScore;
+}
 
-    createParticle(e) {
-        const x = e.clientX;
-        const y = e.clientY;
+function handleQuizAttempt(name, layer) {
+    if (name === quizTarget) {
+        // Correct
+        quizScore++;
+        updateScore();
 
-        // Distance check to prevent too many particles
-        const dist = Math.hypot(x - this.lastX, y - this.lastY);
-        if (dist < 20) return;
+        quizFeedback.textContent = "Correct! 🎉";
+        quizFeedback.className = 'quiz-feedback success';
+        quizFeedback.classList.remove('hidden');
 
-        this.lastX = x;
-        this.lastY = y;
-
-        const particle = document.createElement('div');
-        particle.style.position = 'fixed';
-        particle.style.left = `${x}px`;
-        particle.style.top = `${y}px`;
-        particle.style.width = `${Math.random() * 6 + 2}px`;
-        particle.style.height = particle.style.width;
-        particle.style.background = this.colors[Math.floor(Math.random() * this.colors.length)];
-        particle.style.borderRadius = '50%';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '9999';
-        particle.style.transform = 'translate(-50%, -50%) scale(1)';
-        particle.style.transition = 'transform 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s ease';
-        particle.style.opacity = '0.6';
-        particle.style.boxShadow = `0 0 6px ${particle.style.background}`;
-
-        document.body.appendChild(particle);
-
-        // Animate out
-        requestAnimationFrame(() => {
-            const destX = (Math.random() - 0.5) * 30;
-            const destY = (Math.random() - 0.5) * 30;
-            particle.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
-            particle.style.opacity = '0';
-        });
+        // Visuals
+        fireConfetti();
+        layer.setStyle({ fillColor: '#10b981', fillOpacity: 0.8, color: '#059669' }); // Green
+        layer.bringToFront();
 
         setTimeout(() => {
-            particle.remove();
-        }, 600);
+            geoJsonLayer.resetStyle(layer);
+            nextQuestion();
+        }, 1500);
+
+    } else {
+        // Wrong
+        quizFeedback.textContent = "Try Again! 😅";
+        quizFeedback.className = 'quiz-feedback error';
+        quizFeedback.classList.remove('hidden');
+
+        const originalStyle = layer.options.fillColor; // hacky, better to reset style
+        layer.setStyle({ fillColor: '#ef4444', fillOpacity: 0.6 }); // Red
+        layer.bringToFront();
+
+        setTimeout(() => {
+            geoJsonLayer.resetStyle(layer);
+        }, 500);
     }
 }
-
-// Initialize Trail
-new MouseTrail();

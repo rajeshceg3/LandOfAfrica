@@ -57,6 +57,11 @@
                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                 </svg>
             </button>
+            <button id="start-quiz" class="reset-btn" aria-label="Play Quiz" title="Play Map Quiz" style="margin-left: 4px;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+            </button>
         </div>
         <ul id="search-results" class="search-results hidden" role="listbox"></ul>
     </div>
@@ -80,6 +85,20 @@
                 <h2 id="country-name"></h2>
                 <p id="country-description"></p>
             </div>
+        </div>
+    </div>
+
+    <!-- Quiz Interface -->
+    <div id="quiz-ui" class="quiz-container hidden" role="dialog" aria-modal="true">
+        <div class="quiz-card">
+            <div class="quiz-header">
+                <span class="quiz-score">Score: <span id="quiz-score-val">0</span></span>
+                <button id="stop-quiz" class="close-btn-mini" aria-label="Exit Quiz">✕</button>
+            </div>
+            <div class="quiz-question">
+                <p>Find <strong id="quiz-target">...</strong> on the map!</p>
+            </div>
+            <div id="quiz-feedback" class="quiz-feedback hidden"></div>
         </div>
     </div>
 
