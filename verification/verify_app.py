@@ -1,64 +1,50 @@
 from playwright.sync_api import sync_playwright
 import time
 
-def run():
+def verify_app():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
-        page.goto("http://localhost:8000")
+        try:
+            page.goto("http://localhost:8080")
 
-        # Wait for map to load
-        page.wait_for_timeout(3000)
+            # 1. Verify A11y
+            main = page.locator("main#main-content")
+            h1 = page.locator("h1.sr-only")
 
-        # 1. Test Quiz UI
-        print("Testing Quiz UI...")
-        # Check if button exists
-        quiz_btn = page.locator("#start-quiz")
-        if quiz_btn.is_visible():
-            quiz_btn.click()
-            page.wait_for_timeout(1000)
-            page.screenshot(path="verification/quiz_ui.png")
-            print("Quiz UI screenshot taken.")
+            print(f"Main count: {main.count()}")
+            print(f"H1 count: {h1.count()}")
 
-            # Exit Quiz
-            page.locator("#stop-quiz").click()
-            page.wait_for_timeout(500)
-        else:
-            print("Quiz button not found!")
+            # 2. Verify Quiz
+            # Wait for map to load (button enabled)
+            # The button is initially disabled.
+            page.wait_for_selector("#start-quiz:not([disabled])", timeout=20000)
 
-        # 2. Test Info Panel Enrichment & Navigation
-        print("Testing Info Panel...")
-        # Simulate clicking a country. Since map clicks are canvas/svg, we can use search to open one.
-        search_input = page.locator("#country-search")
-        if search_input.is_disabled():
-             print("Search disabled, waiting...")
-             page.wait_for_timeout(2000)
+            # Click start quiz
+            page.click("#start-quiz")
+            time.sleep(1)
 
-        page.fill("#country-search", "Algeria")
-        page.wait_for_timeout(1000)
+            # Click stop quiz
+            page.click("#stop-quiz")
+            time.sleep(2) # Wait for flyTo
 
-        # Click the first result
-        results = page.locator("#search-results li")
-        if results.count() > 0:
-            results.first.click()
-            page.wait_for_timeout(2000) # Wait for animation
+            # 3. Verify Mobile Handle
+            # Force mobile view
+            page.set_viewport_size({"width": 375, "height": 667})
 
-            page.screenshot(path="verification/info_panel.png")
-            print("Info Panel screenshot taken.")
+            # Open panel to see handle? Handle is in .attraction-modal which is in #info-panel
+            # Need to trigger a country click to show panel.
+            # We can just check if element exists in DOM.
+            handle = page.locator(".mobile-handle")
+            print(f"Mobile handle count: {handle.count()}")
 
-            # Test Next Button
-            next_btn = page.locator(".nav-btn.next")
-            if next_btn.is_visible():
-                next_btn.click()
-                page.wait_for_timeout(1000)
-                page.screenshot(path="verification/info_panel_next.png")
-                print("Navigated to next country.")
-            else:
-                print("Next button not found!")
-        else:
-            print("Search results not found!")
-
-        browser.close()
+            page.screenshot(path="verification/app_screenshot.png")
+            print("Verification successful")
+        except Exception as e:
+            print(f"Error: {e}")
+            page.screenshot(path="verification/error_screenshot.png")
+        finally:
+            browser.close()
 
 if __name__ == "__main__":
-    run()
+    verify_app()

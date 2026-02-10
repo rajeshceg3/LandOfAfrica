@@ -1117,69 +1117,77 @@ function updateConfetti() {
 class MouseTrail {
     constructor() {
         this.colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf'];
-
-        // Throttle creation
+        this.pool = [];
+        this.maxParticles = 25;
+        this.pointer = 0;
         this.lastX = 0;
         this.lastY = 0;
 
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => this.createParticle(e));
+        // Initialize Object Pool
+        for (let i = 0; i < this.maxParticles; i++) {
+            const p = document.createElement('div');
+            p.style.position = 'fixed';
+            p.style.borderRadius = '50%';
+            p.style.pointerEvents = 'none';
+            p.style.zIndex = '9999';
+            p.style.opacity = '0'; // Hidden by default
+            document.body.appendChild(p);
+            this.pool.push(p);
         }
     }
 
-    createParticle(e) {
-        const x = e.clientX;
-        const y = e.clientY;
-
-        // Distance check to prevent too many particles
+    update(x, y) {
+        // Distance check
         const dist = Math.hypot(x - this.lastX, y - this.lastY);
-        if (dist < 20) return;
+        if (dist < 25) return;
 
         this.lastX = x;
         this.lastY = y;
 
-        const particle = document.createElement('div');
-        particle.style.position = 'fixed';
+        this.activateParticle(x, y);
+    }
+
+    activateParticle(x, y) {
+        const particle = this.pool[this.pointer];
+        this.pointer = (this.pointer + 1) % this.maxParticles;
+
+        const size = Math.random() * 6 + 2;
+
+        // Reset State
+        particle.style.transition = 'none';
         particle.style.left = `${x}px`;
         particle.style.top = `${y}px`;
-        particle.style.width = `${Math.random() * 6 + 2}px`;
-        particle.style.height = particle.style.width;
-        particle.style.background = this.colors[Math.floor(Math.random() * this.colors.length)];
-        particle.style.borderRadius = '50%';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '9999';
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
         particle.style.transform = 'translate(-50%, -50%) scale(1)';
-        particle.style.transition = 'transform 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s ease';
         particle.style.opacity = '0.6';
+        particle.style.background = this.colors[Math.floor(Math.random() * this.colors.length)];
         particle.style.boxShadow = `0 0 6px ${particle.style.background}`;
 
-        document.body.appendChild(particle);
+        // Force reflow
+        void particle.offsetWidth;
 
         // Animate out
-        requestAnimationFrame(() => {
-            const destX = (Math.random() - 0.5) * 30;
-            const destY = (Math.random() - 0.5) * 30;
-            particle.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
-            particle.style.opacity = '0';
-        });
+        particle.style.transition = 'transform 0.6s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s ease';
 
-        setTimeout(() => {
-            particle.remove();
-        }, 600);
+        const destX = (Math.random() - 0.5) * 30;
+        const destY = (Math.random() - 0.5) * 30;
+
+        particle.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
+        particle.style.opacity = '0';
     }
 }
 
-// Initialize Trail
-new MouseTrail();
+const mouseTrail = new MouseTrail();
 
 // --- CURSOR TOOLTIP LOGIC ---
 const cursorTooltip = document.getElementById('cursor-tooltip');
-document.addEventListener('mousemove', (e) => {
+function updateCursorTooltip(x, y) {
     if (cursorTooltip) {
-        cursorTooltip.style.left = e.clientX + 'px';
-        cursorTooltip.style.top = e.clientY + 'px';
+        cursorTooltip.style.left = x + 'px';
+        cursorTooltip.style.top = y + 'px';
     }
-});
+}
 
 // --- MAP INITIALIZATION ---
 // Center on Africa
@@ -1204,6 +1212,11 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 const infoPanel = document.getElementById('info-panel');
 const attractionModal = infoPanel.querySelector('.attraction-modal');
 const closePanelBtn = document.getElementById('close-panel');
+const mobileHandle = infoPanel.querySelector('.mobile-handle');
+
+if (mobileHandle) {
+    mobileHandle.addEventListener('click', hidePanel);
+}
 
 let lastFocusedElement = null;
 let geoJsonLayer;
@@ -1579,22 +1592,41 @@ infoPanel.addEventListener('keydown', e => {
 // --- DESKTOP PARALLAX TILT EFFECT ---
 const panelGlare = document.querySelector('.panel-glare');
 
-document.addEventListener('mousemove', (e) => {
+function updatePanelGlare(x, y) {
     if (window.innerWidth <= 768) return;
     if (!infoPanel.classList.contains('visible')) return;
 
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight;
+    const normX = x / window.innerWidth;
+    const normY = y / window.innerHeight;
 
-    const rotateY = (x - 0.5) * 8;
-    const rotateX = (0.5 - y) * 8;
+    const rotateY = (normX - 0.5) * 8;
+    const rotateX = (0.5 - normY) * 8;
 
     infoPanel.style.transform = `translate3d(0, 0, 0) scale(1) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
 
     if (panelGlare) {
-        const glareX = (x - 0.5) * 150;
-        const glareY = (y - 0.5) * 150;
+        const glareX = (normX - 0.5) * 150;
+        const glareY = (normY - 0.5) * 150;
         panelGlare.style.transform = `translate(${glareX}%, ${glareY}%)`;
+    }
+}
+
+// --- GLOBAL EVENT CONTROLLER ---
+let isTicking = false;
+
+document.addEventListener('mousemove', (e) => {
+    if (!isTicking) {
+        window.requestAnimationFrame(() => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            if (mouseTrail) mouseTrail.update(x, y);
+            updateCursorTooltip(x, y);
+            updatePanelGlare(x, y);
+
+            isTicking = false;
+        });
+        isTicking = true;
     }
 });
 
@@ -1718,6 +1750,7 @@ function navigateCountry(direction) {
 let isQuizActive = false;
 let quizScore = 0;
 let quizTarget = null;
+let quizPreviousView = null;
 
 const quizUI = document.getElementById('quiz-ui');
 const quizScoreVal = document.getElementById('quiz-score-val');
@@ -1739,6 +1772,12 @@ function startQuiz() {
     quizScore = 0;
     updateScore();
 
+    // Store current view to restore later
+    quizPreviousView = {
+        center: map.getCenter(),
+        zoom: map.getZoom()
+    };
+
     // UI Updates
     hidePanel(); // Close info panel if open
     document.querySelector('.search-wrapper').classList.add('hidden'); // Hide search
@@ -1758,6 +1797,14 @@ function stopQuiz() {
     // Reset Map Styles
     if (geoJsonLayer) {
         geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
+    }
+
+    // Restore view
+    if (quizPreviousView) {
+        map.flyTo(quizPreviousView.center, quizPreviousView.zoom, { duration: 1.5 });
+        quizPreviousView = null;
+    } else {
+        map.flyTo([1.5, 17], 3.2, { duration: 1.5 });
     }
 }
 
