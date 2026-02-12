@@ -1423,16 +1423,26 @@ function showCountryInfo(name, layer) {
     // Spotlight Effect: Dim others, highlight current
     if (geoJsonLayer) {
         geoJsonLayer.eachLayer(l => {
-            if (l.feature.properties.name === name) {
-                l.setStyle(activeStyle);
-                const element = l.getElement();
-                if (element) element.classList.add('map-feature-lifted');
+            const isSelected = l.feature.properties.name === name;
+            l.setStyle(isSelected ? activeStyle : dimmedStyle);
+
+            if (isSelected && l.bringToFront) {
                 l.bringToFront();
-            } else {
-                l.setStyle(dimmedStyle);
-                const element = l.getElement();
-                if (element) element.classList.remove('map-feature-lifted');
             }
+
+            const applyEffect = (layer, active) => {
+                if (layer.getElement) {
+                    const el = layer.getElement();
+                    if (el) {
+                        if (active) el.classList.add('map-feature-lifted');
+                        else el.classList.remove('map-feature-lifted');
+                    }
+                } else if (layer.eachLayer) {
+                    layer.eachLayer(child => applyEffect(child, active));
+                }
+            };
+
+            applyEffect(l, isSelected);
         });
     }
 
@@ -1635,37 +1645,45 @@ const searchInput = document.getElementById('country-search');
 const searchResults = document.getElementById('search-results');
 const resetViewBtn = document.getElementById('reset-view');
 
+let currentFocus = -1;
+
 searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     searchResults.innerHTML = '';
+    currentFocus = -1;
 
     if (query.length < 2) {
         searchResults.classList.add('hidden');
+        searchInput.setAttribute('aria-expanded', 'false');
         return;
     }
 
-    const matches = Object.values(countryData).filter(country =>
+    const matches = Object.entries(countryData).filter(([key, country]) =>
         country.name.toLowerCase().includes(query)
     );
 
     if (matches.length > 0) {
-        matches.forEach(country => {
+        matches.forEach(([key, country], index) => {
             const li = document.createElement('li');
             li.textContent = country.name;
             li.setAttribute('role', 'option');
+            li.id = `search-result-${index}`;
+            li.dataset.key = key;
+
             li.addEventListener('click', () => {
                 if (!geoJsonLayer) return;
                 let targetLayer;
                 geoJsonLayer.eachLayer(layer => {
-                    if (layer.feature.properties.name === country.name) {
+                    if (layer.feature.properties.name === key) {
                         targetLayer = layer;
                     }
                 });
 
                 if (targetLayer) {
-                    showCountryInfo(country.name, targetLayer);
+                    showCountryInfo(key, targetLayer);
                     searchInput.value = '';
                     searchResults.classList.add('hidden');
+                    searchInput.setAttribute('aria-expanded', 'false');
                 }
             });
             searchResults.appendChild(li);
@@ -1673,10 +1691,62 @@ searchInput.addEventListener('input', (e) => {
         searchResults.classList.remove('hidden');
         searchInput.setAttribute('aria-expanded', 'true');
     } else {
+        const li = document.createElement('li');
+        li.textContent = "No matches found";
+        li.style.color = "var(--text-tertiary)";
+        li.style.cursor = "default";
+        li.style.pointerEvents = "none";
+        searchResults.appendChild(li);
+
+        searchResults.classList.remove('hidden');
+        searchInput.setAttribute('aria-expanded', 'true');
+    }
+});
+
+// Accessibility: Keyboard Navigation
+searchInput.addEventListener('keydown', function(e) {
+    let items = searchResults.querySelectorAll('li:not([style*="pointer-events: none"])');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+        currentFocus++;
+        addActive(items);
+        e.preventDefault();
+    } else if (e.key === 'ArrowUp') {
+        currentFocus--;
+        addActive(items);
+        e.preventDefault();
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (currentFocus > -1) {
+            if (items[currentFocus]) items[currentFocus].click();
+        }
+    } else if (e.key === 'Escape') {
         searchResults.classList.add('hidden');
         searchInput.setAttribute('aria-expanded', 'false');
     }
 });
+
+function addActive(items) {
+    if (!items) return false;
+    removeActive(items);
+    if (currentFocus >= items.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (items.length - 1);
+
+    items[currentFocus].classList.add('active');
+    items[currentFocus].setAttribute('aria-selected', 'true');
+    searchInput.setAttribute('aria-activedescendant', items[currentFocus].id);
+
+    items[currentFocus].scrollIntoView({ block: 'nearest' });
+}
+
+function removeActive(items) {
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.remove('active');
+        items[i].removeAttribute('aria-selected');
+    }
+    searchInput.removeAttribute('aria-activedescendant');
+}
 
 document.addEventListener('click', (e) => {
     if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {

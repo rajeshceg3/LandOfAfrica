@@ -189,6 +189,7 @@ body::before {
 
 #map-container {
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
     width: 100vw;
     z-index: 0;
     background: transparent;
@@ -496,7 +497,8 @@ path.leaflet-interactive:focus {
     transition: all 0.2s ease;
 }
 
-.search-results li:hover {
+.search-results li:hover,
+.search-results li.active {
     background-color: var(--primary-bg);
     color: var(--primary);
     transform: translateX(4px);
