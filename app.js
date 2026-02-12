@@ -1023,7 +1023,14 @@ function resizeCanvas() {
         canvas.height = window.innerHeight;
     }
 }
-window.addEventListener('resize', resizeCanvas);
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+window.addEventListener('resize', debounce(resizeCanvas, 200));
 resizeCanvas();
 
 let particles = [];
@@ -1265,7 +1272,15 @@ function showOnboarding() {
     geoJsonLayer.eachLayer(layer => layers.push(layer));
     if (layers.length > 0) {
         const randomLayer = layers[Math.floor(Math.random() * layers.length)];
-        const path = randomLayer.getElement();
+        let path = null;
+        if (randomLayer.getElement) {
+            path = randomLayer.getElement();
+        } else if (randomLayer.getLayers && randomLayer.getLayers().length > 0) {
+             // For MultiPolygons, target the first part
+             const parts = randomLayer.getLayers();
+             if (parts[0].getElement) path = parts[0].getElement();
+        }
+
         if (path) {
             path.classList.add('pulse-animation');
 
@@ -1365,9 +1380,14 @@ function initializeMap() {
                             }
                         },
                         keydown: e => {
-                            if (e.key === 'Enter' || e.key === ' ') {
+                            const key = e.originalEvent ? e.originalEvent.key : e.key;
+                            if (key === 'Enter' || key === ' ') {
                                 e.preventDefault();
-                                openFeature();
+                                if (typeof isQuizActive !== 'undefined' && isQuizActive) {
+                                    handleQuizAttempt(countryName, layer);
+                                } else {
+                                    openFeature();
+                                }
                             }
                         }
                     });
@@ -1392,8 +1412,27 @@ function initializeMap() {
         })
         .catch(error => {
             console.error('Error loading GeoJSON:', error);
-            document.getElementById('error-message').textContent = 'Failed to load map data.';
-            document.getElementById('error-message').classList.remove('hidden');
+            const errorMsg = document.getElementById('error-message');
+            errorMsg.innerHTML = `
+                <p>Failed to load map data.</p>
+                <button id="retry-btn" style="margin-top: 10px; padding: 8px 16px; cursor: pointer; border-radius: 4px; border: none; background: #fb7185; color: white; font-weight: bold;">Retry</button>
+            `;
+            errorMsg.classList.remove('hidden');
+
+            document.getElementById('retry-btn').addEventListener('click', () => {
+                errorMsg.classList.add('hidden');
+                // Recreate loader if it was removed
+                let loader = document.getElementById('loader');
+                if (!loader) {
+                     loader = document.createElement('div');
+                     loader.id = 'loader';
+                     loader.innerHTML = '<div class="spinner"></div>';
+                     document.body.appendChild(loader);
+                }
+                loader.classList.remove('fade-out');
+
+                initializeMap();
+            });
 
             // Hide Loader even on error so user sees message
             const loader = document.getElementById('loader');
@@ -1680,6 +1719,7 @@ searchInput.addEventListener('input', (e) => {
                 });
 
                 if (targetLayer) {
+                    lastFocusedElement = searchInput;
                     showCountryInfo(key, targetLayer);
                     searchInput.value = '';
                     searchResults.classList.add('hidden');

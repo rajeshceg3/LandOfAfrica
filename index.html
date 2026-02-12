@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
@@ -42,7 +42,7 @@
     <main id="main-content">
         <h1 class="sr-only">Interactive Map of Africa</h1>
 
-        <div id="map-container">
+        <div id="map-container" role="application" aria-label="Interactive Map of Africa">
             <div id="error-message" class="hidden"></div>
         </div>
 
@@ -106,7 +106,7 @@
                 <div class="quiz-question">
                     <p>Find <strong id="quiz-target">...</strong> on the map!</p>
                 </div>
-                <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                <div id="quiz-feedback" class="quiz-feedback hidden" aria-live="polite"></div>
             </div>
         </div>
     </main>
