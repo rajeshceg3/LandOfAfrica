@@ -217,6 +217,7 @@ body::before {
     will-change: transform, opacity;
     display: flex;
     flex-direction: column;
+    user-select: none;
 }
 
 .attraction-modal {
@@ -374,6 +375,13 @@ body::before {
         width: 40px; height: 5px;
         background: rgba(0, 0, 0, 0.1);
         border-radius: 10px;
+        cursor: pointer;
+    }
+    .mobile-handle::after {
+        content: "";
+        position: absolute;
+        top: -20px; bottom: -20px;
+        left: -40px; right: -40px;
     }
     .close-btn {
         top: 24px; right: 24px;
@@ -424,6 +432,7 @@ path.leaflet-interactive:focus {
     padding: 12px 20px;
     box-shadow: var(--shadow-md);
     transition: all 0.3s var(--ease-smooth);
+    user-select: none;
 }
 
 .search-wrapper:hover {
@@ -793,6 +802,7 @@ button:active, .reset-btn:active, .close-btn:active {
     min-width: 300px;
     text-align: center;
     animation: bounce-in 0.6s var(--ease-spring);
+    user-select: none;
 }
 
 .quiz-header {
@@ -900,5 +910,15 @@ button:active, .reset-btn:active, .close-btn:active {
         top: auto;
         bottom: 40px;
         width: 90%;
+    }
+}
+
+/* --- ACCESSIBILITY PREFERENCES --- */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
