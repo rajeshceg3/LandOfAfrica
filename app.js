@@ -1325,6 +1325,14 @@ function initializeMap() {
                 countryData.hasOwnProperty(feature.properties.name)
             );
 
+            // Data Consistency Check
+            const foundNames = new Set(relevantFeatures.map(f => f.properties.name));
+            Object.keys(countryData).forEach(key => {
+                if (!foundNames.has(key)) {
+                    console.warn(`[Data Warning] Country "${key}" defined in countryData but not found in GeoJSON features.`);
+                }
+            });
+
             geoJsonLayer = L.geoJSON(relevantFeatures, {
                 style: () => defaultStyle,
                 onEachFeature: (feature, layer) => {
@@ -1361,7 +1369,7 @@ function initializeMap() {
                                 tooltip.classList.remove('hidden');
                             }
                             if (selectedFeatureName !== countryName) {
-                                e.target.setStyle(hoverStyle);
+                                layer.setStyle(hoverStyle);
                                 document.getElementById('map-container').style.cursor = 'none'; // Hide default cursor
                             }
                         },
@@ -1371,7 +1379,7 @@ function initializeMap() {
                                 tooltip.classList.add('hidden');
                             }
                             if (selectedFeatureName !== countryName) {
-                                geoJsonLayer.resetStyle(e.target);
+                                geoJsonLayer.resetStyle(layer);
                                 document.getElementById('map-container').style.cursor = '';
                             }
                         },
@@ -1604,7 +1612,12 @@ function hidePanel() {
     }
 
     if (lastFocusedElement) {
-        lastFocusedElement.focus();
+        if (document.body.contains(lastFocusedElement) && lastFocusedElement.offsetParent !== null) {
+            lastFocusedElement.focus();
+        } else {
+            const fallback = document.getElementById('country-search');
+            if (fallback) fallback.focus();
+        }
         lastFocusedElement = null;
     }
 
@@ -1690,8 +1703,10 @@ const resetViewBtn = document.getElementById('reset-view');
 
 let currentFocus = -1;
 
+const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
 searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
+    const query = normalize(e.target.value);
     searchResults.innerHTML = '';
     currentFocus = -1;
 
@@ -1702,7 +1717,7 @@ searchInput.addEventListener('input', (e) => {
     }
 
     const matches = Object.entries(countryData).filter(([key, country]) =>
-        country.name.toLowerCase().includes(query)
+        normalize(country.name).includes(query)
     );
 
     if (matches.length > 0) {
