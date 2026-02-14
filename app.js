@@ -1038,6 +1038,7 @@ let animationFrameId = null;
 
 function fireConfetti() {
     if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const count = 150;
     const colors = ['#f43f5e', '#fb7185', '#8b5cf6', '#a78bfa', '#2dd4bf', '#fbbf24'];
@@ -1203,6 +1204,7 @@ const map = L.map('map-container', {
     attributionControl: false,
     minZoom: 2,
     maxZoom: 6,
+    maxBounds: [[-40, -30], [45, 65]],
     zoomSnap: 0.1,
     zoomDelta: 0.5,
     wheelPxPerZoomLevel: 120
@@ -1287,6 +1289,8 @@ function showOnboarding() {
             // Create Toast
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
             toast.innerHTML = '<span>👆</span> Tap a country to explore!';
             document.body.appendChild(toast);
 
@@ -1494,7 +1498,7 @@ function showCountryInfo(name, layer) {
         <div class="anim-stagger-1">
             <h2 class="greeting-text">"${encodeHTML(country.greeting || 'Hello')}"</h2>
             <h2>
-                <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag">
+                <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag" onerror="this.style.display='none'">
                 ${encodeHTML(country.name)}
             </h2>
         </div>
@@ -1578,7 +1582,7 @@ function showCountryInfo(name, layer) {
         paddingTopLeft: paddingOptions.paddingTopLeft,
         paddingBottomRight: paddingOptions.paddingBottomRight,
         maxZoom: 6,
-        duration: 1.6,
+        duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.6,
         easeLinearity: 0.1
     });
 }
@@ -1605,7 +1609,7 @@ function hidePanel() {
     }
 
     map.flyTo([1.5, 17], 3.2, {
-        duration: 1.8,
+        duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.8,
         easeLinearity: 0.1
     });
 }
@@ -1799,7 +1803,7 @@ resetViewBtn.addEventListener('click', () => {
     hidePanel();
     searchInput.value = '';
     map.flyTo([1.5, 17], 3.2, {
-        duration: 1.8,
+        duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.8,
         easeLinearity: 0.1
     });
 });
@@ -1861,6 +1865,7 @@ let isQuizActive = false;
 let quizScore = 0;
 let quizTarget = null;
 let quizPreviousView = null;
+let isQuizProcessing = false;
 
 const quizUI = document.getElementById('quiz-ui');
 const quizScoreVal = document.getElementById('quiz-score-val');
@@ -1892,9 +1897,11 @@ function startQuiz() {
     hidePanel(); // Close info panel if open
     document.querySelector('.search-wrapper').classList.add('hidden'); // Hide search
     quizUI.classList.remove('hidden');
+    quizUI.setAttribute('tabindex', '-1');
+    quizUI.focus();
 
     // Zoom out to see whole continent
-    map.flyTo([1.5, 17], 3.2, { duration: 1.5 });
+    map.flyTo([1.5, 17], 3.2, { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.5 });
 
     nextQuestion();
 }
@@ -1911,10 +1918,10 @@ function stopQuiz() {
 
     // Restore view
     if (quizPreviousView) {
-        map.flyTo(quizPreviousView.center, quizPreviousView.zoom, { duration: 1.5 });
+        map.flyTo(quizPreviousView.center, quizPreviousView.zoom, { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.5 });
         quizPreviousView = null;
     } else {
-        map.flyTo([1.5, 17], 3.2, { duration: 1.5 });
+        map.flyTo([1.5, 17], 3.2, { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.5 });
     }
 }
 
@@ -1933,6 +1940,9 @@ function updateScore() {
 }
 
 function handleQuizAttempt(name, layer) {
+    if (isQuizProcessing) return;
+    isQuizProcessing = true;
+
     if (name === quizTarget) {
         // Correct
         quizScore++;
@@ -1957,6 +1967,7 @@ function handleQuizAttempt(name, layer) {
         setTimeout(() => {
             geoJsonLayer.resetStyle(layer);
             nextQuestion();
+            isQuizProcessing = false;
         }, 1500);
 
     } else {
@@ -1982,6 +1993,7 @@ function handleQuizAttempt(name, layer) {
 
         setTimeout(() => {
             geoJsonLayer.resetStyle(layer);
+            isQuizProcessing = false;
         }, 500);
     }
 }
