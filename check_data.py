@@ -11,23 +11,13 @@ def check_consistency():
         if 'name' in feature['properties']:
             geojson_names.add(feature['properties']['name'])
 
-    # Load app.js and extract keys
-    with open('app.js', 'r') as f:
-        app_js = f.read()
+    # Load country-data.js and extract keys
+    with open('country-data.js', 'r') as f:
+        data_js = f.read()
 
     # Extract keys from countryData object
     # Matches: "Key": {
-    # This is a bit fragile but should work for this file structure
-    keys = re.findall(r'"([^"]+)":\s*{', app_js)
-
-    # The first match might be 'Algeria' or similar, but let's filter carefully
-    # We know the structure starts with const countryData = {
-
-    start_index = app_js.find('const countryData = {')
-    end_index = app_js.find('// --- CONFETTI EFFECT ---')
-
-    country_data_block = app_js[start_index:end_index]
-    country_keys = set(re.findall(r'"([^"]+)":\s*{', country_data_block))
+    country_keys = set(re.findall(r'"([^"]+)":\s*{', data_js))
 
     print("GeoJSON Names Count:", len(geojson_names))
     print("CountryData Keys Count:", len(country_keys))
