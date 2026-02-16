@@ -398,6 +398,7 @@ const countryData = {
     "Ivory Coast": {
         "id": "ivory_coast",
         "name": "Ivory Coast",
+        "alt_names": ["Cote d'Ivoire", "Côte d'Ivoire"],
         "capital": "Yamoussoukro",
         "population": "28M",
         "languages": "French",
@@ -845,9 +846,10 @@ const countryData = {
     ,
         "animal": "Fish Eagle",
         "climate": "Tropical"},
-    "Swaziland": {
-        "id": "swaziland",
+    "Eswatini": {
+        "id": "eswatini",
         "name": "Eswatini",
+        "alt_names": ["Swaziland"],
         "capital": "Mbabane",
         "population": "1.2M",
         "languages": "Swazi, English",
