@@ -192,7 +192,7 @@ function updateCursorTooltip(x, y) {
 // Center on Africa
 const map = L.map('map-container', {
     zoomControl: false,
-    attributionControl: false,
+    attributionControl: true,
     minZoom: 2,
     maxZoom: 6,
     maxBounds: [[-40, -30], [45, 65]],
@@ -264,10 +264,10 @@ const activeStyle = {
 
 const dimmedStyle = {
     fillColor: '#cbd5e1',
-    weight: 0.5,
-    color: '#e2e8f0',
-    opacity: 0.4,
-    fillOpacity: 0.05, // Ghostly
+    weight: 1,
+    color: '#94a3b8',
+    opacity: 0.5,
+    fillOpacity: 0.3, // Increased visibility
     className: 'country-poly dimmed'
 };
 
@@ -722,7 +722,7 @@ searchInput.addEventListener('input', (e) => {
     }
 
     const matches = Object.entries(countryData).filter(([key, country]) =>
-        normalize(country.name).includes(query)
+        normalize(country.name).includes(query) || (country.alt_names && country.alt_names.some(alt => normalize(alt).includes(query)))
     );
 
     if (matches.length > 0) {
@@ -1026,6 +1026,16 @@ function handleQuizAttempt(name, layer) {
 // Handle image errors globally (CSP compliant)
 document.addEventListener('error', function(e) {
     if (e.target.tagName === 'IMG' && e.target.classList.contains('country-flag')) {
-        e.target.style.display = 'none';
+        // Fallback to showing Alt text styled as a placeholder
+        e.target.style.display = 'inline-flex';
+        e.target.style.alignItems = 'center';
+        e.target.style.justifyContent = 'center';
+        e.target.style.backgroundColor = '#f1f5f9';
+        e.target.style.color = '#64748b';
+        e.target.style.fontSize = '10px';
+        e.target.style.height = '36px';
+        e.target.style.padding = '4px';
+        e.target.style.textAlign = 'center';
+        // Ensure the broken icon is not the only thing seen if we can style it
     }
 }, true);
