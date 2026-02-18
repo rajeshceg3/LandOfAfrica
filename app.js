@@ -235,6 +235,7 @@ if (mobileHandle) {
 let lastFocusedElement = null;
 let geoJsonLayer;
 let selectedFeatureName = null;
+let availableCountries = [];
 
 // Styles matching CSS variables (Pastel Theme)
 const defaultStyle = {
@@ -330,8 +331,11 @@ function initializeMap() {
                 countryData.hasOwnProperty(feature.properties.name)
             );
 
+            // Populate availableCountries for logic consistency
+            availableCountries = relevantFeatures.map(f => f.properties.name).sort();
+
             // Data Consistency Check
-            const foundNames = new Set(relevantFeatures.map(f => f.properties.name));
+            const foundNames = new Set(availableCountries);
             Object.keys(countryData).forEach(key => {
                 if (!foundNames.has(key)) {
                     console.warn(`[Data Warning] Country "${key}" defined in countryData but not found in GeoJSON features.`);
@@ -507,11 +511,17 @@ function showCountryInfo(name, layer) {
 
     const panelContent = infoPanel.querySelector('.panel-content');
 
+    // Validate ISO code to prevent injection of bad URLs (XSS mitigation)
+    const isoCode = country.iso && /^[a-z]{2}(-[a-z]{2})?$/.test(country.iso) ? country.iso : 'unknown';
+    const flagSrc = isoCode !== 'unknown'
+        ? `https://unpkg.com/flag-icons/country-4x3/${isoCode}.svg`
+        : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAyNCI+PHBhdGggZmlsbD0iI2UzZTNiMyIgZD0iTTAgMGgzMnYyNEgwVjB6Ii8+PC9zdmc+';
+
     const html = `
         <div class="anim-stagger-1">
             <h2 class="greeting-text">"${encodeHTML(country.greeting || 'Hello')}"</h2>
             <h2 id="country-name">
-                <img src="https://unpkg.com/flag-icons/country-4x3/${country.iso}.svg" class="country-flag" alt="${encodeHTML(country.name)} Flag">
+                <img src="${flagSrc}" class="country-flag" alt="${encodeHTML(country.name)} Flag">
                 ${encodeHTML(country.name || 'Unknown Country')}
             </h2>
         </div>
@@ -855,16 +865,16 @@ if (randomBtn) {
 function navigateCountry(direction) {
     if (!selectedFeatureName) return;
 
-    const keys = Object.keys(countryData).sort(); // Ensure consistent order
-    const currentIndex = keys.indexOf(selectedFeatureName);
+    // Use availableCountries to ensure we only navigate to valid map features
+    const currentIndex = availableCountries.indexOf(selectedFeatureName);
 
     if (currentIndex === -1) return;
 
     let newIndex = currentIndex + direction;
-    if (newIndex < 0) newIndex = keys.length - 1;
-    if (newIndex >= keys.length) newIndex = 0;
+    if (newIndex < 0) newIndex = availableCountries.length - 1;
+    if (newIndex >= availableCountries.length) newIndex = 0;
 
-    const newKey = keys[newIndex];
+    const newKey = availableCountries[newIndex];
     let targetLayer;
 
     if (geoJsonLayer) {
@@ -886,6 +896,7 @@ let quizScore = 0;
 let quizTarget = null;
 let quizPreviousView = null;
 let isQuizProcessing = false;
+let visitedCountries = new Set();
 
 const quizUI = document.getElementById('quiz-ui');
 const quizScoreVal = document.getElementById('quiz-score-val');
@@ -903,8 +914,14 @@ if (stopQuizBtn) {
 }
 
 function startQuiz() {
+    if (availableCountries.length === 0) {
+        console.warn("Quiz cannot start: No available countries on map.");
+        return;
+    }
+
     isQuizActive = true;
     quizScore = 0;
+    visitedCountries.clear();
     updateScore();
 
     // Store current view to restore later
@@ -951,9 +968,23 @@ function stopQuiz() {
 }
 
 function nextQuestion() {
-    const keys = Object.keys(countryData);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    // Filter available countries that haven't been visited
+    const remaining = availableCountries.filter(c => !visitedCountries.has(c));
+
+    if (remaining.length === 0) {
+        // Quiz Complete
+        quizTargetEl.textContent = "All Done!";
+        quizFeedback.textContent = "You found all countries! 🎉";
+        quizFeedback.className = 'quiz-feedback success';
+        quizFeedback.classList.remove('hidden');
+        fireConfetti();
+        setTimeout(stopQuiz, 4000);
+        return;
+    }
+
+    const randomKey = remaining[Math.floor(Math.random() * remaining.length)];
     quizTarget = randomKey;
+    visitedCountries.add(randomKey);
 
     quizTargetEl.textContent = countryData[randomKey].name;
     quizFeedback.classList.add('hidden');
