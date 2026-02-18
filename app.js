@@ -236,6 +236,7 @@ let lastFocusedElement = null;
 let geoJsonLayer;
 let selectedFeatureName = null;
 let availableCountries = [];
+const countryLayers = new Map();
 
 // Styles matching CSS variables (Pastel Theme)
 const defaultStyle = {
@@ -276,12 +277,12 @@ function showOnboarding() {
     if (!geoJsonLayer) return;
 
     // Pick a random country to pulse
-    const layers = [];
-    geoJsonLayer.eachLayer(layer => layers.push(layer));
-    if (layers.length > 0) {
-        const randomLayer = layers[Math.floor(Math.random() * layers.length)];
+    if (availableCountries.length > 0) {
+        const randomKey = availableCountries[Math.floor(Math.random() * availableCountries.length)];
+        const randomLayer = countryLayers.get(randomKey);
+
         let path = null;
-        if (randomLayer.getElement) {
+        if (randomLayer && randomLayer.getElement) {
             path = randomLayer.getElement();
         } else if (randomLayer.getLayers && randomLayer.getLayers().length > 0) {
              // For MultiPolygons, target the first part
@@ -320,7 +321,18 @@ function showOnboarding() {
     }
 }
 
-initializeMap();
+if (typeof countryData === 'undefined') {
+    console.error('Critical Error: Country Data failed to load.');
+    const errorMsg = document.getElementById('error-message');
+    if (errorMsg) {
+        errorMsg.innerHTML = '<p>System Error: Data modules failed to initialize.</p>';
+        errorMsg.classList.remove('hidden');
+    }
+    const loader = document.getElementById('loader');
+    if (loader) loader.classList.add('fade-out');
+} else {
+    initializeMap();
+}
 
 function initializeMap() {
     fetch('africa.geojson')
@@ -346,6 +358,7 @@ function initializeMap() {
                 style: () => defaultStyle,
                 onEachFeature: (feature, layer) => {
                     const countryName = feature.properties.name;
+                    countryLayers.set(countryName, layer);
 
                     // Accessibility Setup
                     const applyA11y = (l) => {
@@ -744,18 +757,14 @@ searchInput.addEventListener('input', (e) => {
             li.dataset.key = key;
 
             li.addEventListener('click', () => {
-                if (!geoJsonLayer) return;
-                let targetLayer;
-                geoJsonLayer.eachLayer(layer => {
-                    if (layer.feature.properties.name === key) {
-                        targetLayer = layer;
-                    }
-                });
+                const targetLayer = countryLayers.get(key);
 
                 if (targetLayer) {
                     lastFocusedElement = searchInput;
                     showCountryInfo(key, targetLayer);
-                    searchInput.value = '';
+                    // UX Improvement: Select text instead of clearing to allow easy refinement
+                    // searchInput.value = '';
+                    searchInput.select();
                     searchResults.classList.add('hidden');
                     searchInput.setAttribute('aria-expanded', 'false');
                 }
@@ -843,17 +852,10 @@ const randomBtn = document.getElementById('random-country');
 
 if (randomBtn) {
     randomBtn.addEventListener('click', () => {
-        const keys = Object.keys(countryData);
-        if (keys.length === 0) return;
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        let targetLayer;
-        if (geoJsonLayer) {
-            geoJsonLayer.eachLayer(layer => {
-                if (layer.feature.properties.name === randomKey) {
-                    targetLayer = layer;
-                }
-            });
-        }
+        if (availableCountries.length === 0) return;
+        const randomKey = availableCountries[Math.floor(Math.random() * availableCountries.length)];
+        const targetLayer = countryLayers.get(randomKey);
+
         if (targetLayer) {
             showCountryInfo(randomKey, targetLayer);
             searchInput.value = '';
@@ -875,15 +877,7 @@ function navigateCountry(direction) {
     if (newIndex >= availableCountries.length) newIndex = 0;
 
     const newKey = availableCountries[newIndex];
-    let targetLayer;
-
-    if (geoJsonLayer) {
-        geoJsonLayer.eachLayer(layer => {
-            if (layer.feature.properties.name === newKey) {
-                targetLayer = layer;
-            }
-        });
-    }
+    const targetLayer = countryLayers.get(newKey);
 
     if (targetLayer) {
         showCountryInfo(newKey, targetLayer);
@@ -1057,16 +1051,18 @@ function handleQuizAttempt(name, layer) {
 // Handle image errors globally (CSP compliant)
 document.addEventListener('error', function(e) {
     if (e.target.tagName === 'IMG' && e.target.classList.contains('country-flag')) {
-        // Fallback to showing Alt text styled as a placeholder
-        e.target.style.display = 'inline-flex';
-        e.target.style.alignItems = 'center';
-        e.target.style.justifyContent = 'center';
-        e.target.style.backgroundColor = '#f1f5f9';
-        e.target.style.color = '#64748b';
-        e.target.style.fontSize = '10px';
-        e.target.style.height = '36px';
-        e.target.style.padding = '4px';
-        e.target.style.textAlign = 'center';
-        // Ensure the broken icon is not the only thing seen if we can style it
+        // Robust Fallback: Replace broken image with a placeholder SVG containing the alt text
+        const altText = e.target.alt.replace(' Flag', '') || 'N/A';
+        // Create a safe SVG data URI
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="40" viewBox="0 0 60 40">
+                <rect width="60" height="40" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                <text x="50%" y="50%" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle" dy=".3em">${altText}</text>
+            </svg>
+        `.trim();
+        // Use unescape + encodeURIComponent to handle Unicode characters (e.g., accents) in the SVG string
+        // This ensures the string is treated as binary data which btoa requires.
+        e.target.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
+        e.target.style.border = 'none'; // Remove existing border if any
     }
 }, true);
