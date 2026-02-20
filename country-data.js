@@ -997,7 +997,7 @@ const countryData = {
         "capital": "Harare",
         "population": "16M",
         "languages": "16 Official Languages",
-        "currency": "USD, ZIG",
+        "currency": "USD, ZiG",
         "description": "Known for Victoria Falls, Hwange National Park, and the Great Zimbabwe ruins.",
         "fact": "Great Zimbabwe is the largest collection of medieval ruins in sub-Saharan Africa.",
         "iso": "zw",

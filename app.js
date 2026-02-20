@@ -841,6 +841,8 @@ document.addEventListener('click', (e) => {
 resetViewBtn.addEventListener('click', () => {
     hidePanel();
     searchInput.value = '';
+    searchResults.classList.add('hidden');
+    searchInput.setAttribute('aria-expanded', 'false');
     map.flyTo([1.5, 17], 3.2, {
         duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.8,
         easeLinearity: 0.1
@@ -1015,6 +1017,10 @@ function handleQuizAttempt(name, layer) {
         layer.bringToFront();
 
         setTimeout(() => {
+            if (!isQuizActive) {
+                isQuizProcessing = false;
+                return;
+            }
             geoJsonLayer.resetStyle(layer);
             nextQuestion();
             isQuizProcessing = false;
@@ -1042,6 +1048,10 @@ function handleQuizAttempt(name, layer) {
         layer.bringToFront();
 
         setTimeout(() => {
+            if (!isQuizActive) {
+                isQuizProcessing = false;
+                return;
+            }
             geoJsonLayer.resetStyle(layer);
             isQuizProcessing = false;
         }, 500);
