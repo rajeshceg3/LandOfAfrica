@@ -1,0 +1,8 @@
+{
+  "name": "land-of-africa",
+  "private": true,
+  "scripts": {
+    "test": "node --check app.js && node tests/exploration.cjs"
+  },
+  "devDependencies": { "playwright": "1.56.1" }
+}

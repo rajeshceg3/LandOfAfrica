@@ -410,21 +410,13 @@ function initializeMap() {
                         },
                         click: e => {
                             L.DomEvent.stopPropagation(e);
-                            if (typeof isQuizActive !== 'undefined' && isQuizActive) {
-                                handleQuizAttempt(countryName, layer);
-                            } else {
-                                openFeature();
-                            }
+                            openFeature();
                         },
                         keydown: e => {
                             const key = e.originalEvent ? e.originalEvent.key : e.key;
                             if (key === 'Enter' || key === ' ') {
                                 e.preventDefault();
-                                if (typeof isQuizActive !== 'undefined' && isQuizActive) {
-                                    handleQuizAttempt(countryName, layer);
-                                } else {
-                                    openFeature();
-                                }
+                                openFeature();
                             }
                         }
                     });
@@ -435,8 +427,6 @@ function initializeMap() {
             document.getElementById('country-search').removeAttribute('disabled');
             const randomBtn = document.getElementById('random-country');
             if (randomBtn) randomBtn.removeAttribute('disabled');
-            const startQuizBtn = document.getElementById('start-quiz');
-            if (startQuizBtn) startQuizBtn.removeAttribute('disabled');
 
             showOnboarding();
 
@@ -886,178 +876,6 @@ function navigateCountry(direction) {
 
     if (targetLayer) {
         showCountryInfo(newKey, targetLayer);
-    }
-}
-
-// --- QUIZ LOGIC ---
-let isQuizActive = false;
-let quizScore = 0;
-let quizTarget = null;
-let quizPreviousView = null;
-let isQuizProcessing = false;
-let visitedCountries = new Set();
-
-const quizUI = document.getElementById('quiz-ui');
-const quizScoreVal = document.getElementById('quiz-score-val');
-const quizTargetEl = document.getElementById('quiz-target');
-const quizFeedback = document.getElementById('quiz-feedback');
-const startQuizBtn = document.getElementById('start-quiz');
-const stopQuizBtn = document.getElementById('stop-quiz');
-
-if (startQuizBtn) {
-    startQuizBtn.addEventListener('click', startQuiz);
-}
-
-if (stopQuizBtn) {
-    stopQuizBtn.addEventListener('click', stopQuiz);
-}
-
-function startQuiz() {
-    if (availableCountries.length === 0) {
-        console.warn("Quiz cannot start: No available countries on map.");
-        return;
-    }
-
-    isQuizActive = true;
-    quizScore = 0;
-    visitedCountries.clear();
-    updateScore();
-
-    // Store current view to restore later
-    quizPreviousView = {
-        center: map.getCenter(),
-        zoom: map.getZoom()
-    };
-
-    // UI Updates
-    hidePanel(); // Close info panel if open
-    document.querySelector('.search-wrapper').classList.add('hidden'); // Hide search
-    quizUI.classList.remove('hidden');
-    quizUI.setAttribute('tabindex', '-1');
-    quizUI.focus();
-
-    // Zoom out to see whole continent
-    map.flyTo([1.5, 17], 3.2, { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.5 });
-
-    nextQuestion();
-}
-
-function stopQuiz() {
-    isQuizActive = false;
-    quizUI.classList.add('hidden');
-    document.querySelector('.search-wrapper').classList.remove('hidden');
-
-    // Reset Map Styles
-    if (geoJsonLayer) {
-        geoJsonLayer.eachLayer(l => geoJsonLayer.resetStyle(l));
-    }
-
-    // Restore view
-    if (quizPreviousView) {
-        map.flyTo(quizPreviousView.center, quizPreviousView.zoom, { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.5 });
-        quizPreviousView = null;
-    } else {
-        map.flyTo([1.5, 17], 3.2, { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1.5 });
-    }
-
-    // Restore focus
-    if (startQuizBtn && !startQuizBtn.disabled) {
-        startQuizBtn.focus();
-    }
-}
-
-function nextQuestion() {
-    // Filter available countries that haven't been visited
-    const remaining = availableCountries.filter(c => !visitedCountries.has(c));
-
-    if (remaining.length === 0) {
-        // Quiz Complete
-        quizTargetEl.textContent = "All Done!";
-        quizFeedback.textContent = "You found all countries! 🎉";
-        quizFeedback.className = 'quiz-feedback success';
-        quizFeedback.classList.remove('hidden');
-        fireConfetti();
-        setTimeout(stopQuiz, 4000);
-        return;
-    }
-
-    const randomKey = remaining[Math.floor(Math.random() * remaining.length)];
-    quizTarget = randomKey;
-    visitedCountries.add(randomKey);
-
-    quizTargetEl.textContent = countryData[randomKey].name;
-    quizFeedback.classList.add('hidden');
-    quizFeedback.className = 'quiz-feedback hidden'; // Reset classes
-}
-
-function updateScore() {
-    if (quizScoreVal) quizScoreVal.textContent = quizScore;
-}
-
-function handleQuizAttempt(name, layer) {
-    if (isQuizProcessing) return;
-    isQuizProcessing = true;
-
-    if (name === quizTarget) {
-        // Correct
-        quizScore++;
-        updateScore();
-
-        // Large Overlay Feedback
-        const overlay = document.createElement('div');
-        overlay.id = 'quiz-overlay';
-        overlay.innerHTML = '<div class="quiz-msg">CORRECT! 🎉</div>';
-        document.body.appendChild(overlay);
-        setTimeout(() => overlay.remove(), 1500);
-
-        quizFeedback.textContent = "Correct! 🎉";
-        quizFeedback.className = 'quiz-feedback success';
-        quizFeedback.classList.remove('hidden');
-
-        // Visuals
-        fireConfetti();
-        layer.setStyle({ fillColor: '#10b981', fillOpacity: 0.8, color: '#059669' }); // Green
-        layer.bringToFront();
-
-        setTimeout(() => {
-            if (!isQuizActive) {
-                isQuizProcessing = false;
-                return;
-            }
-            geoJsonLayer.resetStyle(layer);
-            nextQuestion();
-            isQuizProcessing = false;
-        }, 1500);
-
-    } else {
-        // Wrong
-        quizFeedback.textContent = "Try Again! 😅";
-        quizFeedback.className = 'quiz-feedback error';
-        quizFeedback.classList.remove('hidden');
-
-        // Shake Map
-        const mapContainer = document.getElementById('map-container');
-        mapContainer.classList.add('shake');
-        setTimeout(() => mapContainer.classList.remove('shake'), 500);
-
-        // Overlay Feedback
-        const overlay = document.createElement('div');
-        overlay.id = 'quiz-overlay';
-        overlay.innerHTML = '<div class="quiz-msg" style="color: #ef4444;">TRY AGAIN! 😅</div>';
-        document.body.appendChild(overlay);
-        setTimeout(() => overlay.remove(), 1000);
-
-        layer.setStyle({ fillColor: '#ef4444', fillOpacity: 0.6 }); // Red
-        layer.bringToFront();
-
-        setTimeout(() => {
-            if (!isQuizActive) {
-                isQuizProcessing = false;
-                return;
-            }
-            geoJsonLayer.resetStyle(layer);
-            isQuizProcessing = false;
-        }, 500);
     }
 }
 
